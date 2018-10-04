@@ -1,2 +1,3 @@
 # food-cost.io
-food costing angular app
+food costing angular 6 app
+MEAN STACK
