@@ -1,0 +1,11 @@
+<h2>Dish Detail</h2>
+<div *ngIf="dish$ | async as dish">
+  <h3>"{{ dish.name }}"</h3>
+  <div>
+    <label>Id: </label>{{ dish.id }}</div>
+  <div>
+    <label>Name: </label>
+    <input [(ngModel)]="dish.name" placeholder="name"/>
+  </div>
+
+</div>

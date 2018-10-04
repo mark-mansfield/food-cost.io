@@ -1,0 +1,20 @@
+<mat-sidenav-container
+    class="main-container">
+    <mat-sidenav class="side-nav"  #sidenav>
+      <nav class="side-nav">
+        <div><a href="home">home</a></div>
+        <div><a href="login">login</a></div>
+        <div><a href="logout">logout</a></div>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-header class="main__header"></app-header>
+    <p></p>
+    <div class="main">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
