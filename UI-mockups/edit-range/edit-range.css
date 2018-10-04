@@ -1,0 +1,136 @@
+:root {
+    --title-offset : 90px;
+}
+
+.header {
+    justify-content: flex-start;
+}
+
+.header > .header__back-button {
+    margin-left: 20px;
+    color: white;
+
+}
+
+.far:hover {
+    cursor: pointer;
+    color: dodgerblue;
+
+}
+.header > .header__page {
+    position: absolute;
+    left: calc(50vw - var(--title-offset));
+
+}
+
+.header > .header__brand {
+    margin-right: 20px;
+
+}
+
+
+.main > .section >  input {
+    margin: 20px 0px;
+    width: 95vw;
+    height: 80px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+
+
+.main > .section > .button {
+
+    margin: 10px 0;
+    width: 95vw;
+    height: 80px;
+    font-size: 2rem;
+
+}
+
+.main > .section >  .info-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 95vw;
+    margin: 20px;
+    color: white;
+    background-color: rgba(45, 44, 44, 0.3);
+    box-shadow: 5px;
+}
+
+.main > .section > .info-panel > div > p {
+    margin: 20px 20px;
+
+}
+
+.main > .section > .button > div  {
+    margin-left: 20px;
+}
+
+.main > .section >  .action-button  {
+    display: flex;
+    justify-content: center;
+
+}
+
+
+/* ipads and larger */
+@media (min-width: 40rem) {
+
+    .section {
+        margin-top: 100px;
+        width: 30vw;
+    }
+
+    .main {
+        height: 100vh;
+    }
+
+    .main > .section > .info-panel {
+        height: 200px;
+        width: 500px;
+        border-radius: 0px;
+    }
+    .main > .section > .slidecontainer {
+        width: 500px; /* Width of the outside container */
+    }
+    .main > .section > .slidecontainer > .slider {
+        -webkit-appearance: none;
+        border-radius: 5px;
+        border: 1px solid #504f4f;
+        width: 500px; /* Full-width */
+        height: 25px; /* Specified height */
+        background: #383737; /* Grey background */
+        outline: none; /* Remove outline */
+        opacity: 0.9; /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        background: rgb(242, 17, 197);
+        cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+
+    .main > .section > .button {
+
+        margin: 10px 0;
+        width: 500px;
+        height: 80px;
+
+    }
+}

@@ -1,0 +1,188 @@
+@import url('../shared.css');
+
+:root {
+    --title-offset: 92px;
+}
+
+
+
+.far:hover {
+    cursor: pointer;
+    color: dodgerblue;
+
+}
+
+.header>.header__page {
+    position: absolute;
+}
+
+.header>.header__brand {
+    margin-right: 20px;
+}
+
+.main>.section >.info-panel {
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 95vw;
+    color: white;
+    background-color: rgba(45, 44, 44, 0.3);
+    box-shadow: 5px;
+
+}
+
+.main>.section>.info-panel>div>p {
+    margin: 20px;
+}
+
+.main>.section>.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-radius: 5px;
+    background-color: rgba(92, 91, 91, 0.3);
+}
+
+.main>.section>.search-container>input {
+    width: 95vw;
+    margin-left: 20px;
+    text-align: center;
+    height: 50px;
+    color: white;
+    background-color: rgba(92, 91, 91, 0.3);
+}
+
+.main>.section>.button {
+    margin: 10px 0;
+    width: 95vw;
+    height: 80px;
+}
+
+.main > .section > .pagination {
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: stretch;
+    width: 95vw;
+    color: white;
+    background-color: rgba(45, 44, 44, 0.3);
+    box-shadow: 5px;
+    font-size: 1rem;
+}
+
+.main>.section > .pagination > div {
+    flex: 1;
+    border: 1px solid rgb(52, 51, 51);
+    background-color: rgb(70, 69, 69);
+}
+
+.main>.section > .pagination > div:hover {
+    background-color: #00ffbb;
+}
+
+.main>.section >.pagination > div > p {
+    margin-top: 32px
+}
+
+.main>.section >.pagination > div > i {
+    margin-top:24px
+}
+
+.button>div.click-icon {
+    margin-right: 20px;
+}
+
+.info-panel>div {
+    margin-left: 20px;
+}
+
+.button>div {
+    margin-left: 20px;
+}
+
+.action-button {
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 1.3rem;
+}
+
+/* ipads and larger */
+@media (min-width: 40rem) {
+
+    body {
+        font-size: 1rem;
+    }
+
+    .header__page-title {
+        font-size: 1.6rem;
+    }
+
+    .section {
+        width: 30vw;
+    }
+
+    .main>.section >.search-container > input {
+        width: 90%;
+        font-size: 1.5rem;
+    }
+
+    .main>.section>.search-container>input[type=text] {
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+        outline: none;
+        padding: 3px 0px 3px 3px;
+    }
+
+    .main >.section > .search-container > input[type=text]:focus {
+        box-shadow: 0 0 5px rgb(28, 28, 28);
+        padding: 3px 0px 3px 3px;
+        border: 1px solid rgba(81, 203, 238, 1);
+    }
+
+    .main > .section > .info-panel {
+        height: auto;
+        padding: 20px;
+        width: 500px;
+        font-size: 1.3rem;
+    }
+
+    .main > .section > .info-panel > div {
+        padding: 20px;
+    }
+
+    .main > .section > .info-panel > div {
+        margin-left: 20px;
+    }
+    .main >.section > .button {
+        width: 500px;
+    }
+
+    .main > .section > .button > div {
+        margin-left: 20px;
+    }
+
+    .main > .section > .pagination {
+        width: 500px;
+    }
+
+    .main>.section >.pagination > div > p {
+        margin-top: 32px
+    }
+
+    .main>.section >.pagination > div > i {
+        margin-top:24px
+    }
+
+    .main > .section > .button > div.click-icon,
+    .main > .section > .pagination > div.click-icon {
+        font-size: 1.5rem;
+    }
+
+}

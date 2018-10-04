@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>settings 1.0</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./settings.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <header class="header">
+        <div class="header__back-button"><i class="far fa-arrow-alt-circle-left"></i></div>
+        <div class="header__brand">settings 1.0</div>
+        <div class="header__page">
+            <div class="header__page-title"></div>
+        </div>
+
+    </header>
+    <main class="main">
+
+        <section class="section">
+
+            <div class="info-panel">
+                    <div><span class="inline-title">General Settings: </span> <br><small>Set currency, set currency, tax, and units of measure.</small>
+                    </div>
+            </div>
+            <div class="info-panel">
+                <div><span class="inline-title">Currency:</span>
+                    <br><small>Select a currency or use the auto detect option to automagically select the currency
+                        where you are</small></div>
+                <div class="control-switch">
+                    <select>
+                        <option value="AUD">AUD</option>
+                        <option value="GBP">GBP</option>
+                        <option value="USD">USD</option>
+                        <option value="auto-detect">use my current location</option>
+                    </select>
+                    </label>
+                </div>
+            </div>
+            <div class="info-panel">
+                <div><span class="inline-title">Location tracking:</span><br><small>
+                        Turn the location feature on to auto detect currency settings.</small></div>
+                <div class="control-switch">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="info-panel">
+                <div><span class="inline-title">Notifications:</span> <br><small>Turn notifications on to receive app
+                        updates.</small></div>
+                <div class="control-switch">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="info-panel">
+                <div><span class="inline-title">Tax Rate: </span> <br><small>Set a custom tax rate <br> ( gst ,sales
+                        tax, vat )</small></div>
+                <div class="setting-input">
+                    <input type="text" id="tax" value="" placeholder="   tax amount"> %
+                </div>
+            </div>
+            <div class="info-panel">
+                <div><span class="inline-title">Units of Measure: </span> <br><small>Choose a pre defined set of units
+                        to work with</small>
+                </div>
+            </div>
+            <div class="info-panel">
+                <div>Kilograms and grams</div>
+                <div class="control-switch">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="info-panel">
+                <div>Pounds and Ounces</div>
+                <div class="control-switch">
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="footer__page-id">settings 1.0</div>
+    </footer>
+    <script src="" async defer></script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+@import url(../shared.css);
+@import url(../controls.css);
+:root {
+    --title-offset : 51px;
+}
+
+::placeholder {
+    color: var(--dark-text);
+    font-size : 1rem;
+
+}
+
+.header > .header__page {
+    position: absolute;
+    left: calc(50vw - var(--title-offset));
+    flex: 2;
+}
+
+.main > .section > .info-panel > .title {
+    text-align: center;
+}
+
+
+.main > .section > .info-panel {
+
+    margin: 10px 0;
+    width: 95vw;
+    min-height: 80px;
+    text-align: left;
+    background-color: var(--info-panel-dark-background)
+
+}
+
+
+.main > .section > .info-panel > div.control-switch,
+.main > .section > .info-panel > div.setting-input {
+    margin-right: 20px;
+}
+
+.main > .section > .info-panel > .control-switch > select,
+.main > .section > .info-panel > div.setting-input > input{
+    height: 34px;
+    width: 145px;
+    border-radius: 5px;
+}
+
+.main > .section > .button {
+    margin: 10px 0;
+    width: 95vw;
+    height: 80px;
+}
+
+.button > div.click-icon {
+    margin-right: 20px;
+}
+
+.info-panel > div {
+    margin-left: 20px;
+}
+
+.button > div  {
+    margin-left: 20px;
+}
+
+.action-button  {
+    display: flex;
+    justify-content: center;
+
+}
+
+h1 {
+    font-size: 1.3rem;
+}
+
+/* ipads and larger */
+@media (min-width: 40rem) {
+
+    body {
+        font-size: 1rem;
+    }
+    .header__page-title {
+        font-size: 1.6rem;
+    }
+    .section {
+        width: 30vw;
+    }
+
+    .main > .section > .button {
+        width: 500px;
+        font-size: 1.5rem;
+    }
+
+    .main > .section > .button > div  {
+        margin-left: 20px;
+    }
+
+    .main > .section > .info-panel {
+        min-height: 80px;
+        width: 500px;
+    }
+
+    .main > .section > .info-panel > div {
+        margin: 20px;
+    }
+
+
+
+
+}

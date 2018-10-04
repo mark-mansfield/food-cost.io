@@ -1,0 +1,240 @@
+@import url('efx.css') (min-width: 40rem);
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+
+:root {
+    --hover-green : #00ffbb;
+    --action-button-green-background : rgb(13, 216, 13);
+    --info-panel-dark-background: rgba(45, 44, 44, 0.3);
+    --light-background: white;
+    --dark-background:  rgba(0, 0, 0, 0.913);
+    --side-background-light:  rgba(108, 105, 105, 0.3);
+    --blue: dodgerblue;
+    --icon-large: 2rem;
+    --light-text: white;
+    --dark-text: rgb(108, 106, 106);
+    --hover-background: rgba(108, 105, 105, 1);
+    --h1-large-text : 1.5rem;
+    --title-text: #7289DA
+}
+
+/* placeholder text */
+::placeholder {
+    color: var(--light-text);
+    font-size : 1rem;
+}
+
+
+* {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--blue);
+}
+
+a:hover {
+    color: var(--hover-green);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color:var(--dark-background) !important;
+    font-size: 1.1rem !important;
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    background-color: var(--info-panel-dark-background);
+    height: 100px;
+    color: var(--light-text);
+}
+
+.header>.header__back-button , .mobile-back-button{
+    font-size: var(--icon-large);
+    margin: 20px;
+}
+
+
+
+.header > .header__brand {
+    margin-left: 20px;
+    text-align:left;
+    flex: 2;
+}
+
+
+.header__page-title {
+    font-size: 1.4rem;
+}
+
+
+
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.section {
+    margin: 20px 0px;
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    align-items: center;
+    color: var(--light-text);
+    text-align: center;
+}
+
+.hide-element {
+    display: none !important ;
+}
+
+
+.show-element {
+    display: block !important ;
+}
+
+
+
+.sidebar {
+
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--side-background-light);
+    width: 50%;
+    height: 100vh;
+    color: white;
+    z-index: 3;
+
+}
+
+.sidebar > .side-nav {
+
+    margin: 80px;
+}
+
+.click-area {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    width: inherit;
+    height: inherit;
+    background:var(--dark-background);
+    cursor: pointer;
+}
+
+.footer {
+    bottom: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 50px;
+    margin: 20px;
+    color: var(--light-text);
+}
+
+/* font awesome icons */
+.fa-plus, .fa-bars , .far {
+    font-size: var(--icon-large);
+    cursor: pointer;
+}
+
+.fa-plus-small-font {
+    font-size: small;
+    color: var(--blue);
+}
+
+
+/*  search icon  */
+.fa-search , .fa-bars , .far{
+    font-size : 2.3rem;
+    color:var(--blue);
+}
+
+.fa-search:hover , .fa-bars:hover , .far:hover{
+    color: var(--hover-green);
+}
+
+.info-panel {
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    border-radius: 5px;
+    background-color: var(--light-background);;
+}
+
+.button {
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    color: var(--light-text);
+    border-radius: 5px;
+    background-color: var(--blue);
+    cursor: pointer;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: var(--action-button-green-background);
+    color: black
+}
+
+.action-button {
+    background-color: var(--hover-green);
+}
+
+.action-button:hover {
+    background-color: var(--hover-green);
+}
+
+.link-list {
+    cursor: pointer;
+}
+
+.link-list:hover {
+    color: var(--hover-green);
+    background-color: var(--hover-background);
+}
+
+h1,h2,h3,h4,h5,h6, .inline-title {
+    color: var(--title-text);
+}
+
+
+
+.inline-title  {
+    font-size: var(--h1-large-text);
+}
+
+h1 {
+    font-size: var(--h1-large-text);
+}
+
+
+.white {
+    color:var(--light-text);
+}
+
+.blue {
+    color: var(--blue);
+}
+
+
+
+

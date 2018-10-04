@@ -1,0 +1,71 @@
+{
+
+    "dish_name": "Hudson",
+    "id": "",
+    "ingredient_list": [{
+            "ingredient_name": "kale",
+            "ingredient_quantity": "0.15",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": "0.5"
+
+        }, {
+            "ingredient_name": "avocado",
+            "ingredient_quantity": "0.152",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": "1"
+        }, {
+            "ingredient_name": "pepper",
+            "ingredient_quantity": "0.01",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": "1"
+        }, {
+            "ingredient_name": "salt",
+            "ingredient_quantity": "0.01",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": "1"
+        }, {
+            "ingredient_name": "mint",
+            "ingredient_quantity": "0.01",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": ".5"
+        },
+        {
+            "ingredient_name": "corriander",
+            "ingredient_quantity": "0.01",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": ".5"
+        },
+        {
+            "ingredient_name": "parsley",
+            "ingredient_quantity": "0.01",
+            "ingredient_class": "general",
+            "AP_weight": "1",
+            "EP_weight": ".5"
+        }
+
+
+    ],
+    "published": "1",
+    "instructions": ["Draw arc around the top of the bowl from 9 - 3 position then another arc around the bottom of the bowl from 3 - 9",
+        "Draw arc around the top of the bowl from 9 - 3 position then another arc around the bottom of the bowl from 3 - 9",
+        "Draw arc around the top of the bowl from 9 - 3 position then another arc around the bottom of the bowl from 3 - 9",
+        "Draw arc around the top of the bowl from 9 - 3 position then another arc around the bottom of the bowl from 3 - 9"
+    ],
+    "recipeMethod": ["For the Greens Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing",
+        "Put 2 eggs in boiling water Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,",
+        "add salt and saute for 3 min",
+        "add toasted bread and plate up"
+    ],
+    "image": "",
+    "retail_price": "17.00",
+    "total_cost": "6.50",
+    "margin": "22",
+    "parent_menu": ["breakfast v4", "breakfast v1"]
+
+}

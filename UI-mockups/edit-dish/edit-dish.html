@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>edit-dish 1.0</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./edit-dish.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <header class="header">
+        <div class="header__back-button"><i class="far fa-arrow-alt-circle-left  white"></i></div>
+        <div class="header__brand">edit-dish 1.0</div>
+        <div class="header__page">
+            <div class="header__page-title green">Edit Dish</div>
+        </div>
+
+    </header>
+    <main class="main">
+        <section class="section">
+
+            <div class="button" id="dish-name">
+                <div class="field-name">Name: <span class="js-data-dish-name"></span></div>
+                <div class="click-icon"><i class="far fa-arrow-alt-circle-right white"></i></div>
+            </div>
+            <div class="button" id="dish-ingredients">
+                <div>Ingredients: <span class="js-data-ingredients"></span></div>
+                <div class="click-icon"><i class="far fa-arrow-alt-circle-right white"></i></div>
+            </div>
+
+            <div class="button" id="dish-retail">
+                <div> Retail: $<span class="js-data-retail"></span></div>
+                <div class="click-icon"><i class="far fa-arrow-alt-circle-right white"></i></div>
+            </div>
+            <div class="info-panel" id="dish-cost">
+                <div> Cost : <span class="js-data-cost"></span></div>
+            </div>
+            <div class="info-panel" id="dish-margin">
+                <div>Margin <span class="js-data-margin"> %</div>
+            </div>
+            <div class="action-button button hvr-ripple-out">
+                <div>SAVE</div>
+            </div>
+        </section>
+    </main>
+    <script src="edit-dish.js" async defer></script>
+</body>
+
+</html>

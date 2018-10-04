@@ -1,0 +1,62 @@
+@import url('../shared.css');
+
+
+
+h1 {
+    font-size: 1.3rem;
+}
+
+.header > div.header__back-button {
+    display: none;
+}
+
+.header>.header__page {
+    position: absolute;
+    margin-right: 20px;
+}
+
+.header > .nav {
+    display: none;
+}
+
+header > .mobile-nav > div {
+    margin: 0px 20px;
+}
+
+header > .mobile-nav > div > a {
+    text-decoration: none;
+}
+
+
+
+/* ipads and larger */
+@media (min-width: 40rem) {
+
+    body {
+        font-size: 1rem;
+    }
+
+    .header > div.header__back-button {
+        display: block;
+    }
+
+    .header__page-title {
+        font-size: 1.6rem;
+    }
+    .header > .mobile-nav, .mobile-back-button {
+        display: none;
+    }
+    .header > .nav {
+        display: flex;
+    }
+
+    header > .nav > div {
+        margin: 0px 20px;
+    }
+
+    header > .nav > div > a {
+        text-decoration: none;
+    }
+
+
+}
