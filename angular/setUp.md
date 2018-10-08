@@ -21,6 +21,10 @@ ng serve -0
 
 new folder called "backend" on root level
 
+download express
+```
+npm install --save express
+```
 
 5. add server.js file to root level
 

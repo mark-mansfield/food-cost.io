@@ -2,9 +2,9 @@
     class="main-container">
     <mat-sidenav class="side-nav"  #sidenav>
       <nav class="side-nav">
-        <div><a href="home">home</a></div>
-        <div><a href="login">login</a></div>
-        <div><a href="logout">logout</a></div>
+          <div><a [routerLink]="['/home']" routerLinkActive="active" (click)="toggle()">home</a></div>
+          <div><a [routerLink]="['/dishes']" routerLinkActive="active" (click)="toggle()">dishes</a></div>
+          <div><a [routerLink]="['/logout']" routerLinkActive="active" (click)="toggle()">logout</a></div>
     </nav>
   </mat-sidenav>
 

@@ -5,6 +5,7 @@ import { DishDetailsComponent } from './dish-details/dish-details.component';
 import { DishesListComponent } from './dishes-list/dishes-list.component';
 
 import { DishesRoutingModule } from './dishes-routing.module';
+import { DishCreateComponent } from './dish-create/dish-create.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { DishesRoutingModule } from './dishes-routing.module';
   ],
   declarations: [
       DishDetailsComponent,
-      DishesListComponent
+      DishesListComponent,
+      DishCreateComponent
     ]
 })
 export class DishesModule { }

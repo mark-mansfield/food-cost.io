@@ -3,27 +3,31 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { DishService } from '../dish.service';
-import { DishModel } from '../dish.model';
+import { Dish } from '../dish.model';
 @Component({
   selector: 'app-dish-details',
   templateUrl: './dish-details.component.html',
   styleUrls: ['./dish-details.component.css']
 })
 export class DishDetailsComponent implements OnInit {
-  dish$: Observable<DishModel>;
-  selectedId: number;
+  dish$: Observable<Dish>;
+  private selectedId: String;
+  public dish: Dish;
+  ingredients = [];
+  ingredientTotal = this.ingredients.length;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: DishService
-  ) { }
+  constructor(private route: ActivatedRoute, private router: Router, private service: DishService) { }
 
   ngOnInit() {
-    this.dish$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-          this.service.getDish(params.get('id')))
-        );
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('id')) {
+        this.selectedId = paramMap.get('id');
+        this.dish = this.service.getDish(this.selectedId);
+        this.ingredients = this.dish.ingredients;
+      } else {
+        console.log('no id sent');
+      }
+    });
   }
 
 }

@@ -1,10 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route , Router} from '@angular/router';
-
-import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DishService } from '../dish.service';
-import { DishModel } from '../dish.model';
+import { Dish } from '../dish.model';
 
 
 @Component({
@@ -12,25 +9,23 @@ import { DishModel } from '../dish.model';
   templateUrl: './dishes-list.component.html',
   styleUrls: ['./dishes-list.component.css']
 })
-export class DishesListComponent implements OnInit {
 
-  dishes$: Observable<DishModel[]>;
-  selectedId: number;
+export class DishesListComponent  implements OnInit, OnDestroy  {
 
-  constructor(
-    private route: ActivatedRoute,
-    private service: DishService,
-    private router: Router
-  ) { }
+  dishes: Dish[] = [];
+  private dishesSub: Subscription;
+
+  constructor(public dishesService: DishService) {}
 
   ngOnInit() {
-    this.dishes$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        // (+) before `params.get()` turns the string into a number
-        this.selectedId = +params.get('id');
-        return this.service.getDishes();
-      })
-    );
+    this.dishesService.getDishes();
+    this.dishesSub = this.dishesService.getDishUpdateListener()
+      .subscribe((dishes: Dish[]) => {
+        this.dishes = dishes;
+      });
   }
 
+  ngOnDestroy() {
+    this.dishesSub.unsubscribe();
+  }
 }

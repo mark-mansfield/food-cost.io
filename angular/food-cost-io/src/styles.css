@@ -39,6 +39,10 @@ a {
   text-decoration: none;
 }
 
+.active {
+ color: var(--hover-green);
+}
+
 a:hover {
   color: var(--hover-green);
   text-decoration: none;
@@ -73,7 +77,7 @@ body {
 }
 
 /* font awesome icons */
-.fa-plus, .fa-bars  {
+.fa-bars  {
   font-size: var(--icon-large);
   cursor: pointer;
   color: var(--blue);
@@ -84,16 +88,14 @@ body {
   color: var(--blue);
 }
 
-.fa-search , .fa-bars , .far{
+.fa-search , .fa-bars , .far, .fa-plus {
   font-size : 2.3rem;
   color:var(--blue);
+  cursor: pointer;
 }
 
 
-
-
-
-.fa-search:hover , .fa-bars:hover , .far:hover{
+.fa-search:hover , .fa-bars:hover , .far:hover, .fa-plus:hover{
   color: var(--hover-green);
 }
 
@@ -143,3 +145,6 @@ h1 {
 
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }

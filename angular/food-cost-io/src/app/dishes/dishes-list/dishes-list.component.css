@@ -1,4 +1,4 @@
-.main>.section >.info-panel {
+.main>.section > div.info-panel {
 
   display: flex;
   justify-content: space-around;
@@ -21,6 +21,7 @@
   color: white;
   border-radius: 5px;
   background-color: rgba(92, 91, 91, 0.3);
+  width: 95vw;
 }
 
 .main>.section>.search-container>input {
@@ -32,7 +33,23 @@
   background-color: rgba(92, 91, 91, 0.3);
 }
 
-.main>.section>.button {
+.main>.section>.search-container>input[type=text] {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  transition: all 0.30s ease-in-out;
+  outline: none;
+  padding: 3px 0px 3px 3px;
+}
+
+.main >.section > .search-container > input[type=text]:focus {
+  box-shadow: 0 0 5px rgb(28, 28, 28);
+  padding: 3px 0px 3px 3px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.main>.section>div>button {
   margin: 10px 0;
   width: 95vw;
   height: 80px;
@@ -127,27 +144,7 @@ h1 {
       width: 30vw;
   }
 
-  .main>.section >.search-container > input {
-      width: 90%;
-      font-size: 1.5rem;
-  }
-
-  .main>.section>.search-container>input[type=text] {
-      -webkit-transition: all 0.30s ease-in-out;
-      -moz-transition: all 0.30s ease-in-out;
-      -ms-transition: all 0.30s ease-in-out;
-      -o-transition: all 0.30s ease-in-out;
-      outline: none;
-      padding: 3px 0px 3px 3px;
-  }
-
-  .main >.section > .search-container > input[type=text]:focus {
-      box-shadow: 0 0 5px rgb(28, 28, 28);
-      padding: 3px 0px 3px 3px;
-      border: 1px solid rgba(81, 203, 238, 1);
-  }
-
-  .main > .section > .info-panel {
+  .main>.section > div.info-panel {
       height: auto;
       padding: 20px;
       width: 500px;
@@ -161,7 +158,13 @@ h1 {
   .main > .section > .info-panel > div {
       margin-left: 20px;
   }
-  .main >.section > .button {
+
+  .main>.section > div.search-container  {
+    width: 500px;
+    font-size: 1.5rem;
+}
+
+  .main>.section> div> button {
       width: 500px;
   }
 

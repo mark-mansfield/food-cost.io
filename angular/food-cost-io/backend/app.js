@@ -1,70 +1,42 @@
 
-const bodyParser = require('body-parser');
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const app = express();
-const request = require("request");
 
 
+const dishRoutes = require('./routes/dishes');
+const userRoutes = require('./routes/users');
 
 app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
+// mongoDb creds
+// user mark
+// pass jlFedsE5nKIF7i9z
+// mongodb+srv://mark:<PASSWORD>@food-cost-cluster-zlgfs.mongodb.net/test?retryWrites=true
 
-// disable CORS
+mongoose.connect('mongodb+srv://mark:jlFtdiE5nKIF7i9z@food-cost-cluster-zlgfs.mongodb.net/food-cost-cluster')
+  .then(() => {
+    console.log('connected to database');
+  })
+  .catch(() => {
+    console.log('connection failed');
+    (console.error())
+  }
+);
 
-app.use('' , (req,res,next) => {
-  res.setHeader('Access-Control-Allow-Origin' ,'*');
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  // set the methods we can use
-  res.setHeader(
-    "Access-Control-allow-Methods",
-    "GET, POST, DELETE, OPTIONS"
-  )
+// create a middlewear to allow CORS
+// add next to prevent a timeout or endless loop
+app.use((req,res,next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers' , 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST, PUT, PATCH, DELETE, OPTIONS')
   next();
-});
+})
 
-//   app.get('/api/countries' , (req,res,next) => {
-
-//     request.get(config.apiUrl + "/countries", (error, response, body) => {
-//         if(error) {
-//             return console.dir(error);
-//         }
-//         const returnData = [JSON.parse(body)]
-//         const countries = returnData[0].responseData;
-//         res.status(200).json({
-//           message : 'countries listed in the dorsal system',
-//           countries : countries
-//         });
-//     });
-//     // call next if there is more middlewear
-//     // next();
-//   }
-// );
-
-
-// app.post('/api/list-states' , (req,res,body) => {
-
-//   request.get(config.apiUrl + '/' + req.body.name + '/states', (error, response, body) => {
-
-//     if (error) {
-//       return console.dir(error);
-//     }
-
-//     const returnData = [JSON.parse(body)];
-//     const states = returnData[0].responseData;
-
-//     res.status(200).json({
-//       message : `States for ${req.body.name }`,
-//       states: states
-//     });
-//   });
-// });
-
-
-
-
-
+// routes loaded from separate files get forwarded
+// http:localhost:3000 -> /trunk/route = '/api/users'  ('api/users' wont work )
+app.use('/api/users', userRoutes);
+app.use('/api/dishes', dishRoutes);
 
 module.exports = app;
-

@@ -1,11 +1,44 @@
-<h2>Dish Detail</h2>
-<div *ngIf="dish$ | async as dish">
-  <h3>"{{ dish.name }}"</h3>
-  <div>
-    <label>Id: </label>{{ dish.id }}</div>
-  <div>
-    <label>Name: </label>
-    <input [(ngModel)]="dish.name" placeholder="name"/>
-  </div>
+<main class="main">
+  <section class="section">
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Name: {{ dish.name }}</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Ingredients: {{ ingredientTotal }}</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Description:</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Method:</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Plating:</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <button class="button" [routerLink]="['/dish' ,dish.id]">
+      <div>Retail: ${{ dish.retail }}</div>
+      <i class="far fa-arrow-alt-circle-right white"></i>
+    </button>
+    <div class="info-panel">
+      <div>Cost: ${{ dish.cost }}</div>
+    </div>
+    <div class="info-panel">
+      <div>Margin: {{ dish.margin }} %</div>
+    </div>
+  </section>
+</main>
+<!-- {{ dish.name }}
+  {{ dish.ingredients }}
+  {{ dish.description }}
+  {{ dish.plating_guide }}
+  {{ dish.recipe_method }}
+  {{ dish.retail }}
+  {{ dish.cost }}
+  {{ dish.margin }} -->
 
-</div>
+<!-- <input [(ngModel)]="dish.plating" placeholder="ingredients"/> -->

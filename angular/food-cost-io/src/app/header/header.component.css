@@ -27,10 +27,12 @@
 .header > .nav > div {
   margin: 0 20px;
 }
+
+
 @media (min-width: 40rem) {
 
   .header > div.header__back-button {
-    display: block;
+    display: none;
     margin-left: 20px;
   }
   .hamburger-button {

@@ -1,5 +1,11 @@
-export class DishModel {
-  id: number;
+export class Dish {
+  id: 'null';
   name: string;
-  ingredients: number;
+  ingredients: String[] = [];
+  retail: number;
+  cost: number;
+  margin: number;
+  description: string;
+  recipe_method: string;
+  plating_guide: string;
 }
