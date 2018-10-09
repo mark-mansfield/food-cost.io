@@ -21,6 +21,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 
+
 // const appRoutes: Routes = [
 //   { path : 'home' , component: HomepageComponent },
 //   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -37,7 +38,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HomepageComponent,
     PageNotFoundComponent,
     SignupComponent,
-    LoginComponent,
+    LoginComponent
     // ErrorComponent,
     // ReactiveFormsModule,
     // MatPaginatorModule
