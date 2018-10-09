@@ -1,6 +1,6 @@
 <main class="main">
   <section class="section">
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
+    <button class="button" [routerLink]="['/dish', dish.id]">
       <div>Name: {{ dish.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
@@ -9,15 +9,15 @@
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Description:</div>
+      <div>Description: <small>{{ this.description }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Method:</div>
+      <div>Method: <small>{{ this.method }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Plating:</div>
+      <div>Plating: <small>{{ this.plating }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <button class="button" [routerLink]="['/dish' ,dish.id]">
@@ -28,7 +28,7 @@
       <div>Cost: ${{ dish.cost }}</div>
     </div>
     <div class="info-panel">
-      <div>Margin: {{ dish.margin }} %</div>
+      <div>Margin: {{ getMargin(cost,retail) }} %</div>
     </div>
   </section>
 </main>
