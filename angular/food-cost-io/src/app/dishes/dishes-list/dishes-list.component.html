@@ -1,10 +1,10 @@
 
 <main class="main">
-
-  <section class="section">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+  <section class="section" *ngIf='!isLoading'>
       <div class="info-panel" *ngIf="dishes.length ==  0">
           <div>
-              <p class="">You have not create a dish yet</p>
+              <p class="">You have not created a dish yet</p>
           </div>
       </div>
       <div class="info-panel">

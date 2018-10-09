@@ -24,7 +24,6 @@ export class AuthService {
   }
 
   getIsAuth() {
-    console.log('GetIsAuth Says... ' + this.isAuthenticated);
     return this.isAuthenticated;
   }
 
