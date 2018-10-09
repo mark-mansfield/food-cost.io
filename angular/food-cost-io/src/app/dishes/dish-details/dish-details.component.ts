@@ -16,8 +16,9 @@ export class DishDetailsComponent implements OnInit {
   ingredientTotal: number;
   method: string;
   plating: string;
-  cost: number;
-  retail: number;
+  cost: string;
+  retail: string;
+  margin: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private service: DishService) { }
 
@@ -34,16 +35,15 @@ export class DishDetailsComponent implements OnInit {
         this.plating = this.dish.plating_guide.substring(0, 15) + ' ...';
         this.cost = this.dish.cost;
         this.retail = this.dish.retail;
+        this.margin = this.getMargin(parseInt(this.cost, 0), parseInt(this.retail, 0));
       } else {
         console.log('no id sent');
       }
     });
   }
 
-  getMargin(cost, retail){
-    const markup = 100;
-    const tax = 10;
-    const num = cost / retail * 110 * 100;
+  getMargin(cost, retail) {
+    const num = (cost / retail) * 110 ;
     return num.toFixed(2);
   }
 }
