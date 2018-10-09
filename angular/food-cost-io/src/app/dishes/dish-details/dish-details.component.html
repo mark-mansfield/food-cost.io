@@ -1,6 +1,6 @@
 <main class="main">
   <section class="section">
-    <button class="button" [routerLink]="['/dish', dish.id]">
+    <button class="button" [routerLink]="['/dish/edit-field/', dish.id , 'dish_name']">
       <div>Name: {{ dish.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
@@ -20,7 +20,7 @@
       <div>Plating: <small>{{ this.plating }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
+    <button class="button" [routerLink]="['/dish/edit-field/' ,dish.id, 'retail_price']">
       <div>Retail: ${{ dish.retail }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>

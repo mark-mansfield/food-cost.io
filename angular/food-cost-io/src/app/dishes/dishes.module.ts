@@ -9,6 +9,7 @@ import { DishDetailsComponent } from './dish-details/dish-details.component';
 import { DishesListComponent } from './dishes-list/dishes-list.component';
 
 import { DishCreateComponent } from './dish-create/dish-create.component';
+import { EditFieldComponent } from './edit-field/edit-field.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { DishCreateComponent } from './dish-create/dish-create.component';
   declarations: [
       DishDetailsComponent,
       DishesListComponent,
-      DishCreateComponent
+      DishCreateComponent,
+      EditFieldComponent
     ]
 })
 export class DishesModule { }

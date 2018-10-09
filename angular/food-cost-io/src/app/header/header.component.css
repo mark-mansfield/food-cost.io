@@ -32,7 +32,7 @@
 @media (min-width: 40rem) {
 
   .header > div.header__back-button {
-    display: none;
+    display: block;
     margin-left: 20px;
   }
   .hamburger-button {

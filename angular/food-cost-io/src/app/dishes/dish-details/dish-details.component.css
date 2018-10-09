@@ -1,3 +1,6 @@
+
+
+
 .main>.section > div.info-panel {
 
   display: flex;
@@ -52,6 +55,7 @@
   .header__page-title {
       font-size: 1.6rem;
   }
+
 
   .section {
       width: 30vw;
