@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AngularMaterialModule } from '../angular-material';
+import { DishesRoutingModule } from './dishes-routing.module';
+
+
 import { DishDetailsComponent } from './dish-details/dish-details.component';
 import { DishesListComponent } from './dishes-list/dishes-list.component';
 
-import { DishesRoutingModule } from './dishes-routing.module';
 import { DishCreateComponent } from './dish-create/dish-create.component';
 
 @NgModule({
@@ -12,6 +15,7 @@ import { DishCreateComponent } from './dish-create/dish-create.component';
     CommonModule,
     FormsModule,
     DishesRoutingModule,
+    AngularMaterialModule
   ],
   declarations: [
       DishDetailsComponent,
