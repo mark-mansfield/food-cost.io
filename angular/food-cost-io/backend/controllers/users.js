@@ -52,7 +52,7 @@ exports.loginUser = (req, res, next) => {
       'this_should_be_longer',
       { expiresIn: '1h' }
     );
-    console.log(token);
+
     //. send token to front end
     res.status(200).json(
     {

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { DishService } from '../dish.service';
+import { Dish } from '../dish.model';
+
 
 @Component({
   selector: 'app-edit-field',
@@ -7,9 +12,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditFieldComponent implements OnInit {
 
-  constructor() { }
+  public dish: Dish;
+  public field_value: string;
+  private field: string;
+  private id: string;
+
+
+  constructor(
+    private route: ActivatedRoute,
+    private dishService: DishService
+  ) {}
 
   ngOnInit() {
+
+    this.field = this.route.snapshot.paramMap.get('field');
+    this.id = this.route.snapshot.paramMap.get('_id');
+
+    if (this.id) {
+      this.dish = JSON.parse(localStorage.getItem('dish'));
+      this.field_value = this.dish[this.field];
+      console.log(this.field_value);
+      } else {
+      console.log('no id sent');
+    }
   }
 
+  upDateDish() {
+    this.dish[this.field] = this.field_value;
+    console.log(this.dish);
+    this.dishService.updateDish(this.dish);
+  }
 }

@@ -9,8 +9,8 @@ import { EditFieldComponent } from './edit-field/edit-field.component';
 const dishesRoutes: Routes = [
   { path: 'dishes',  component: DishesListComponent, canActivate: [AuthGuard]},
   { path: 'dish/create', component: DishCreateComponent ,  canActivate: [AuthGuard]},
-  { path: 'dish/:id', component: DishDetailsComponent ,  canActivate: [AuthGuard]},
-  { path: 'dish/edit-field/:id/:field', component: EditFieldComponent ,  canActivate: [AuthGuard]}
+  { path: 'dish/:_id', component: DishDetailsComponent ,  canActivate: [AuthGuard]},
+  { path: 'dish/edit-field/:_id/:field', component: EditFieldComponent ,  canActivate: [AuthGuard]}
 ];
 
 @NgModule({

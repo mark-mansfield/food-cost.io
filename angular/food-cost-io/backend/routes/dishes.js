@@ -7,28 +7,59 @@ const checkAuth = require('../middlewear/check-auth');
 // get dishes
 router.get('', checkAuth , (req, res, next) => {
   Dish.find().then(documents => {
-    res.status(200).json({
+      res.status(200).json({
       message: "Dishes fetched successfully!",
       dishes: documents
     });
   });
 });
 
+// get dish
+router.get('/:id', checkAuth , (req, res, next) => {
+  Dish.findById(req.params.id).then (dish => {
+    if (dish) {
+      res.status(200).json(dish);
+      console.log(dish);
+    } else {
+      res.status(404).json({message: "Dish not found."})
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Fetching Dish Failed!'
+    });
+  });
+});
+
+// update dish
+router.put('/:id', checkAuth, (req , res, next) => {
+  console.log(req.params.id);
+  console.log(req.body);
+  Dish.updateOne({
+    _id: req.params.id
+  },
+  req.body
+).then(result => {
+  console.log(result);
+if (result.n > 0 ) {
+  res.status(201).json({message: 'Dish updated successfully', dish:req.body})
+} else {
+  res.status(401).json({message: 'Not Authorized!'})
+}
+})
+.catch(error => {
+  res.status(500).json({
+    message: 'Couldn\'t Update Dish!'
+  });
+});
+})
+
+
 //  save dish
 router.post('', (req, res, next) => {
-  const dish = new Dish({
-    name: req.body.name,
-    id: req.body.id,
-    ingredients: [],
-    retail: req.body.retail,
-    cost: req.body.cost,
-    margin: req.body.margin,
-    description: req.body.description,
-    recipe_method: req.body.recipe_method,
-    plating_guide: req.body.plating_guide,
-  })
-
-  dish.save().then( result => {
+  const dish = new Dish (req.body);
+  console.log(dish);
+  dish.save(dish).then( result => {
     res.status(201).json({
       message: "Dish added successfully",
       dish: dish

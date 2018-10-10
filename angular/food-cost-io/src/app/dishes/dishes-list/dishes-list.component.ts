@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
@@ -16,7 +17,7 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   isLoading = false;
   private dishesSub: Subscription;
 
-  constructor(public dishesService: DishService) {}
+  constructor(public dishesService: DishService, private router: Router) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -26,6 +27,12 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
         this.dishes = dishes;
         this.isLoading = false;
       });
+  }
+
+  // in case user returns to the browser or does a manul page reload
+  saveDishToLocal (id) {
+    this.dishesService.saveDishData(this.dishesService.getDish(id));
+    this.router.navigate(['dish/' + id])
   }
 
   ngOnDestroy() {

@@ -12,7 +12,7 @@ const BACKEND_URL = environment.apiUrl + 'dishes';
 
 export class DishService {
 
-
+  private dish: Dish[] = [];
   private dishes: Dish[] = [];
   private dishesUpdated = new Subject<Dish[]>();
   constructor(private http: HttpClient,  private router: Router) { }
@@ -26,10 +26,10 @@ export class DishService {
       .pipe(map((postData) => {
           return postData.dishes.map(dish => {
           return {
-            id: dish._id,
+            _id: dish._id,
             name: dish.name,
             ingredients: dish.ingredients,
-            retail: dish.retail,
+            retail_price: dish.retail_price,
             cost: dish.cost,
             margin: dish.margin,
             description: dish.description,
@@ -45,7 +45,7 @@ export class DishService {
   }
 
   getDish(dishId) {
-   return  {...this.dishes.find(p => p.id === dishId)};
+    return  {...this.dishes.find(p => p._id === dishId)};
   }
 
 
@@ -55,17 +55,18 @@ export class DishService {
 
 
   addDish( id: null, name: string /*, description: string, image: File*/) {
-    const dishData: Dish = {
-      id: 'null',
+    const dishData = {
+
       name: name,
       ingredients: [],
-      retail: '0.00',
+      retail_price: '0.00',
       cost: '0.00',
       margin: '0',
       description: 'string',
       recipe_method: 'string',
       plating_guide: 'string',
     };
+    console.log('dishData being sent to backend' + dishData);
     this.http
       .post<{message: string; dish: Dish }>(
         'http://localhost:3000/api/dishes',
@@ -79,5 +80,29 @@ export class DishService {
     });
   }
 
+  updateDish(dish: Dish) {
+    this.http
+      .put<{message: string; dish: Dish }>(
+        'http://localhost:3000/api/dishes/' + dish._id,
+        dish
+      )
+      .subscribe(returnedData => {
+        console.log('update status: ' + returnedData.message);
+        console.log('new dish: ' + returnedData.dish);
+        const storedDishIndex = this.dishes.findIndex(p => p._id === dish._id);
+        this.dishes[storedDishIndex] = returnedData.dish;
+        this.saveDishData(this.dishes[storedDishIndex]);
+        this.dishesUpdated.next([...this.dishes]); // inform UI
+        this.router.navigate(['/dish/' + dish._id]);
+    });
+  }
+
+  getSavedDishData() {
+    return  JSON.parse(localStorage.gettItem('dish'));
+  }
+
+  saveDishData(dish: Dish) {
+    localStorage.setItem('dish' , JSON.stringify(dish));
+  }
 
 }

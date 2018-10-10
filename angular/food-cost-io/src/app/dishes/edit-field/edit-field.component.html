@@ -1,3 +1,15 @@
-<p>
-  edit-field works!
-</p>
+<main class="main">
+    <section class="section">
+        <div class="info-panel" id="info-text">
+            <div>
+                <p>Enter some data to update this item</p>
+            </div>
+        </div>
+
+        <input class="input-field" type="text" id="dish-input-text" [(ngModel)]="this.field_value"  value="{{ this.field_value }}">
+
+        <div class="action-button button hvr-ripple-out" (click)="upDateDish()">
+            <div>SAVE</div>
+        </div>
+    </section>
+</main>

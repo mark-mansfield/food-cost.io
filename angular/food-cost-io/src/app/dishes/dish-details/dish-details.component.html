@@ -1,44 +1,36 @@
 <main class="main">
   <section class="section">
-    <button class="button" [routerLink]="['/dish/edit-field/', dish.id , 'dish_name']">
-      <div>Name: {{ dish.name }}</div>
+    <button class="button" [routerLink]="['/dish/edit-field/', selectedId , 'name']">
+      <div *ngIf="hasData">Name: {{ dish.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Ingredients: {{ ingredientTotal }}</div>
+    <button class="button" [routerLink]="['/dish' ,selectedId]">
+      <div *ngIf="hasData">Ingredients: {{ ingredientTotal }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Description: <small>{{ this.description }}</small></div>
+    <button class="button" [routerLink]="['/dish' ,selectedId]">
+      <div *ngIf="hasData">Description: <small>{{ this.dish.description.substring(0, 15) + ' ...' }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Method: <small>{{ this.method }}</small></div>
+    <button class="button" [routerLink]="['/dish' ,selectedId]">
+      <div *ngIf="hasData">Method: <small>{{ this.method.substring(0, 15) + ' ...' }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish' ,dish.id]">
-      <div>Plating: <small>{{ this.plating }}</small></div>
+    <button class="button" [routerLink]="['/dish' ,selectedId]">
+      <div *ngIf="hasData">Plating: <small>{{ this.plating.substring(0, 15) + ' ...' }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button" [routerLink]="['/dish/edit-field/' ,dish.id, 'retail_price']">
-      <div>Retail: ${{ dish.retail }}</div>
+    <button class="button" [routerLink]="['/dish/edit-field/' ,selectedId, 'retail_price']">
+      <div *ngIf="hasData">Retail: ${{ dish.retail_price }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <div class="info-panel">
-      <div>Cost: ${{ dish.cost }}</div>
+      <div *ngIf="hasData">Cost: ${{ dish.cost }}</div>
     </div>
     <div class="info-panel">
-      <div>Margin: {{ this.margin }} %</div>
+      <div *ngIf="hasData">Margin: {{ this.margin }} %</div>
     </div>
   </section>
 </main>
-<!-- {{ dish.name }}
-  {{ dish.ingredients }}
-  {{ dish.description }}
-  {{ dish.plating_guide }}
-  {{ dish.recipe_method }}
-  {{ dish.retail }}
-  {{ dish.cost }}
-  {{ dish.margin }} -->
 
-<!-- <input [(ngModel)]="dish.plating" placeholder="ingredients"/> -->
+

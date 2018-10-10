@@ -55,7 +55,7 @@ exports.updateMenu = (req,res,next) => {
     menu
   ).then(result => {
   if (result.n > 0 ) {
-    res.status(200).json({message: 'Menu updated sucessfully'})
+    res.status(200).json({message: 'Menu updated successfully'})
   } else {
     res.status(401).json({message: 'Not Authorized!'})
   }
