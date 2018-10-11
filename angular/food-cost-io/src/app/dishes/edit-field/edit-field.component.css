@@ -37,7 +37,10 @@
   text-align: center;
 }
 
-
+textarea {
+  width: 95vw;
+  height: 80px;
+}
 
 .main > .section > .button {
 
@@ -48,7 +51,7 @@
 
 }
 
-.main > .section >  .info-panel {
+.main > .section >  .info-panel  {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,6 +100,12 @@
 
       width: 500px;
 
+  }
+  textarea {
+    width: 500px;
+    height: 200px;
+    font-size : 1.1rem;
+    padding: 10px;
   }
   .main > .section > .button {
 

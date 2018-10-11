@@ -32,7 +32,7 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   // in case user returns to the browser or does a manul page reload
   saveDishToLocal (id) {
     this.dishesService.saveDishData(this.dishesService.getDish(id));
-    this.router.navigate(['dish/' + id])
+    this.router.navigate(['dish/' + id]);
   }
 
   ngOnDestroy() {

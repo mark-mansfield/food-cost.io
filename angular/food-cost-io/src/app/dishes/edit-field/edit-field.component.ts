@@ -16,7 +16,7 @@ export class EditFieldComponent implements OnInit {
   public field_value: string;
   private field: string;
   private id: string;
-
+  public field_type: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,9 +25,9 @@ export class EditFieldComponent implements OnInit {
 
   ngOnInit() {
 
-    this.field = this.route.snapshot.paramMap.get('field');
+    this.field = this.route.snapshot.paramMap.get('field_name');
     this.id = this.route.snapshot.paramMap.get('_id');
-
+    this. field_type = this.route.snapshot.paramMap.get('field_type');
     if (this.id) {
       this.dish = JSON.parse(localStorage.getItem('dish'));
       this.field_value = this.dish[this.field];

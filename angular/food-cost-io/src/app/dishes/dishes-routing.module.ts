@@ -10,7 +10,8 @@ const dishesRoutes: Routes = [
   { path: 'dishes',  component: DishesListComponent, canActivate: [AuthGuard]},
   { path: 'dish/create', component: DishCreateComponent ,  canActivate: [AuthGuard]},
   { path: 'dish/:_id', component: DishDetailsComponent ,  canActivate: [AuthGuard]},
-  { path: 'dish/edit-field/:_id/:field', component: EditFieldComponent ,  canActivate: [AuthGuard]}
+  { path: 'dish/edit-field/:_id/:field_name/:field_type', component: EditFieldComponent ,  canActivate: [AuthGuard]}
+  { path: 'dish/:_id/ingredients', component: EditFieldComponent ,  canActivate: [AuthGuard]}
 ];
 
 @NgModule({

@@ -6,7 +6,8 @@
             </div>
         </div>
 
-        <input class="input-field" type="text" id="dish-input-text" [(ngModel)]="this.field_value"  value="{{ this.field_value }}">
+        <input *ngIf="field_type === 'text'" class="input-field" type="text" id="dish-input-text" [(ngModel)]="this.field_value"  value="{{ this.field_value }}">
+        <textarea  *ngIf="field_type === 'text-area'" class="input_field" cols="81" rows="10" [(ngModel)]="this.field_value"  value="{{ this.field_value }}"></textarea>
 
         <div class="action-button button hvr-ripple-out" (click)="upDateDish()">
             <div>SAVE</div>
