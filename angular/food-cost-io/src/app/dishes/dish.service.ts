@@ -108,7 +108,7 @@ export class DishService {
 
   getIngredientsList(dishId) {
     const selectedDish = this.getDish(dishId);
-    // console.log(selectedDish.ingredients);
+    console.log(selectedDish.ingredients);
     return selectedDish.ingredients;
   }
 }
