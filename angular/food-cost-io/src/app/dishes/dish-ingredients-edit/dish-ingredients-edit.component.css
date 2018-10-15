@@ -1,7 +1,6 @@
 
 
-.main>.section> form >div.info-panel {
-
+.main>.section> div.info-panel {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -11,8 +10,6 @@
   box-shadow: 5px;
   margin: 10px 0;
 }
-
-
 
 .main>.section>form>input {
   margin: 20px 0px;
@@ -41,17 +38,18 @@ input[type=text]:focus {
 }
 
 
-.main>.section>form>input:not(:valid) ~ .close-icon {
+input:not(:valid) ~ .close-icon {
 	display: none;
 }
 
 .close-icon {
-  position: relative;
-  background-color: transparent;
-  display: inline-block;
-  vertical-align: middle;
+  border:5px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
   outline: 0;
   cursor: pointer;
+  position: relative;
 }
 
 .close-icon:hover:after {
@@ -78,7 +76,7 @@ input[type=text]:focus {
   cursor: pointer;
 }
 
-.main>.section> form > button {
+.main>.section>  button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,13 +95,13 @@ input[type=text]:focus {
   color: black;
 }
 
-.main>.section> form >.slidecontainer {
+.main>.section> .slidecontainer {
   margin: 20px 0;
   width: 95vw;
   /* Width of the outside container */
 }
 
-.main>.section> form >.slidecontainer>.slider {
+.main>.section> .slidecontainer>.slider {
   -webkit-appearance: none;
   border-radius: 15px;
   border: 1px solid #504f4f;
@@ -148,7 +146,7 @@ input[type=text]:focus {
   color: var(--blue);
 }
 
-.main>.section>form>button>i.far:hover {
+.main>.section>button>i.far:hover {
   color: black;
 }
 
@@ -162,8 +160,8 @@ input[type=text]:focus {
 }
 
 
-.main>.section>form>.info-panel>div,
-.main>.section>form>.button>div {
+.main>.section>.info-panel>div,
+.main>.section>.button>div {
   margin-left: 20px;
 }
 
@@ -181,22 +179,22 @@ input[type=text]:focus {
   .section {
     width: 30vw;
   }
-
-  .main>.section>form>div.info-panel {
+  .main>.section>form> input,
+  .main>.section>div.info-panel {
     height: auto;
     padding: 20px;
     width: 500px;
     font-size: 1.3rem;
   }
 
-  .main>.section>form>.info-panel>div {
+  .main>.section>.info-panel>div {
     padding: 20px;
   }
 
-  .main>.section>form>.slidecontainer,
-  .main>.section>form>button,
-  .main>.section>form>input,
-  .main>.section>form>.slidecontainer>.slider {
+  .main>.section>.slidecontainer,
+  .main>.section>button,
+  .main>.section>input,
+  .main>.section>.slidecontainer>.slider {
     width: 500px;
   }
 }

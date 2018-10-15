@@ -3,9 +3,10 @@
     <div id="info-text">
       <p>Update quantity for this ingredient.</p>
     </div>
-    <form class="form">
-      <input type="text" name="focus" value="{{ this.ingredient.qty }}" [(ngModel)]="this.ingredient.qty" pattern="[0-9]" (input)="qtyChange(this.ingredient.qty)" required placeholder="Enter ingredient quantity" />
+    <form>
+      <input type="text" name="focus" value="{{ this.ingredient.qty }}" [(ngModel)]="this.ingredient.qty"  (input)="qtyChange(this.ingredient.qty)" required placeholder="Enter ingredient quantity" />
       <button class="close-icon" type="reset"></button>
+    </form>
       <div class="info-panel" id="info-text">
       <div>Edible portion after preparing.</div> <span id="slider-value" style="font-weight:bold;color:red">{{ this.ingredient.EP_weight }} %</span>
     </div>
@@ -15,6 +16,6 @@
     <button type="submit" class="action-button button hvr-ripple-out" (click)="updateIngredient()">
       SAVE
     </button>
-  </form>
+
   </section>
 </main>

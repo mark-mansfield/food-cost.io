@@ -2,13 +2,11 @@
     <section class="section">
         <div class="info-panel" id="info-text">
             <div>
-                <p>add ingredient , this will be deprectaed in v2</p>
+                <p>add ingredient , this will be deprecated in v2</p>
                 <p>You can add all the details later..</p>
             </div>
         </div>
-
-        <input class="input-field" type="text" [(ngModel)]="ingredientName"  placeholder="ingredient name.....">
-
+        <input class="input-field" type="text" [(ngModel)]="this.ingredientName"  placeholder="ingredient name.....">
         <button class="action-button button hvr-ripple-out" (click)="onAddIngredient(ingredientName)">
             <div>SAVE</div>
         </button>

@@ -17,7 +17,7 @@ export class DishIngredientsListAddComponent implements OnInit {
   public ingredient: DishIngredient;
   public ingredientsList = [];
   public isLoading = false;
-  private ingredientName: string;
+  public ingredientName: string;
   id: string;
 
   constructor(public service: DishService, private route: ActivatedRoute) { }
