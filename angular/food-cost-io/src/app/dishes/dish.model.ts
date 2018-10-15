@@ -1,7 +1,7 @@
 export class Dish {
   _id: 'null';
   name: string;
-  ingredients: string[] = [];
+  ingredients: any[] = [];
   retail_price: string;
   cost: string;
   margin: string;

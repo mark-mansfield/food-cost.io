@@ -33,6 +33,9 @@ export class AuthService {
 
   autoAuthUser() {
     const authInformation = this.getAuthData();
+    if (authInformation == null ) {
+      return;
+    }
     const now = new Date();
     const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     if (expiresIn > 0) {
@@ -91,7 +94,7 @@ export class AuthService {
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
-    if ( !token || !expirationDate ) {
+    if ( !token || !expirationDate === null) {
       return;
     } else {
       return {

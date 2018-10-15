@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Dish } from '../dish.model';
-import { DishIngredient } from '../dish-ingredient.model.ts';
+
 import { DishService } from '../dish.service';
 import { DishIngredient } from '../dish-ingredient.model';
 
@@ -10,41 +10,60 @@ import { DishIngredient } from '../dish-ingredient.model';
   templateUrl: './dish-ingredients-edit.component.html',
   styleUrls: ['./dish-ingredients-edit.component.css']
 })
-
 export class DishIngredientsEditComponent implements OnInit {
-  //
+
   public dish: Dish;
-  public ingredients;
+  public ingredient: DishIngredient;
   public ingredientsList = [];
-  // public dishIngredient: DishIngredient;
-  private field: string;
-  private id: string;
+  public isLoading = false;
+  private ingredientName: string;
+  public id: string;
+  public qty: string;
   constructor(private service: DishService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
+    this.isLoading = true;
     this.id = this.route.snapshot.paramMap.get('_id');
+    this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name');
 
+    // because a manual page reload removes the body of the http request
+    // if page reload , grab the data from local storage
     if (this.id) {
-      this.dish = JSON.parse(localStorage.getItem('dish'));
-      this.ingredients = this.dish.ingredients[0];
-      // make new object
-
-      this.ingredients.forEach((item) => {
-        const dishIngredient: DishIngredient = {
-          name:  item.name,
-          qty: item.qty,
-          AP_weight: item.AP_weight,
-          EP_weight: item.EP_weight
-        };
-        this.ingredientsList.push(dishIngredient);
-
-      });
-      console.log(this.ingredientsList);
-      } else {
+      this.ingredientsList = this.service.getIngredientsList(this.id);
+      if (!this.ingredientsList) {
+        this.dish = this.service.getSavedDishData();
+        this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
+      }
+      this.ingredient = this.ingredientsList.find(item => item.name === this.ingredientName);
+      this.isLoading = false;
+    } else {
       console.log('no id sent');
     }
 
   }
 
+  updateIngredient() {
+    this.ingredientsList.forEach((item, index) => {
+      if (item.name === this.ingredientName) {
+        this.ingredientsList[index] = this.ingredient;
+      }
+    });
+
+    this.dish.ingredients = this.ingredientsList;
+    console.log(this.dish.ingredients);
+    this.service.updateDish(this.dish);
+  }
+
+  qtyChange (qty) {
+    this.ingredient.qty = qty;
+  }
+
+  sliderChange(slider) {
+      // console.log(slider.value);
+      const val = parseInt(slider.value, 0) / 100;
+      this.ingredient.EP_weight = val.toString();
+      const output = document.querySelector('#slider-value');
+      output.innerHTML = slider.value   + ' %';
+  }
 }

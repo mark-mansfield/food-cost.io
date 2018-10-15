@@ -98,11 +98,17 @@ export class DishService {
   }
 
   getSavedDishData() {
-    return  JSON.parse(localStorage.gettItem('dish'));
+    return  JSON.parse(localStorage.getItem('dish'));
   }
 
   saveDishData(dish: Dish) {
     localStorage.setItem('dish' , JSON.stringify(dish));
   }
 
+
+  getIngredientsList(dishId) {
+    const selectedDish = this.getDish(dishId);
+    // console.log(selectedDish.ingredients);
+    return selectedDish.ingredients;
+  }
 }

@@ -5,7 +5,7 @@ import { DishIngredientsEditComponent } from './dish-ingredients-edit.component'
 describe('DishIngredientsEditComponent', () => {
   let component: DishIngredientsEditComponent;
   let fixture: ComponentFixture<DishIngredientsEditComponent>;
-//
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ DishIngredientsEditComponent ]
