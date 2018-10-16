@@ -23,32 +23,12 @@
 
         <div class="search-container" *ngIf="dishes.length > 0">
           <form action="">
-            <input class="input-field" type="text" id="dish-input-text" placeholder="  search.....">
-            <button class="click-icon fas fa-search"></button>
+            <input class="input-field" type="text" id="dish-input-text" #searchinput [(ngModel)]="searchTerm" name="search" placeholder="  search.....">
+            <button class="click-icon fas fa-search" (click)="search(searchinput)"></button>
           </form>
         </div>
-
         <div class="link-list info-panel " *ngIf="linksList.length > 0">
             <button class="link-list-link blue" *ngFor="let link of linksList" id="{{ link }}">{{ link }}</button>
-            <!-- <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p> -->
         </div>
         <div *ngIf="dishes.length > 0">
         <button  class="button"  *ngFor="let dish of dishes"  >

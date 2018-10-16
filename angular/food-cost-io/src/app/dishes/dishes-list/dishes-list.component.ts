@@ -16,6 +16,7 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   dishes: Dish[] = [];
   linksList = [];
   isLoading = false;
+  searchTerm: String;
   private dishesSub: Subscription;
 
   constructor(public dishesService: DishService, private router: Router) {}
@@ -26,7 +27,6 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
     this.dishesSub = this.dishesService.getDishUpdateListener()
       .subscribe((dishes: Dish[]) => {
         this.dishes = dishes;
-        console.log(this.dishes);
         this.buildLinksList();
         this.isLoading = false;
       });
@@ -38,14 +38,18 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
       this.linksList.push((item.name.substring(0, 1)).toLocaleLowerCase());
       this.linksList.sort();
     });
-
-
-
   }
-  // in case user returns to the browser or does a manul page reload
+
+  // in case user returns to the browser
   saveDishToLocal (id) {
     this.dishesService.saveDishData(this.dishesService.getDish(id));
     this.router.navigate(['dish/' + id]);
+  }
+
+  search(searchValue) {
+    console.log(searchValue.value);
+    console.log(this.dishes);
+    console.log(this.dishes.find(dish => dish.name === searchValue.value ));
   }
 
   onDelete(id) {
