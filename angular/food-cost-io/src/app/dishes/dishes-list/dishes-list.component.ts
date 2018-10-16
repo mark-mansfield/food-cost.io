@@ -14,6 +14,7 @@ import { Dish } from '../dish.model';
 export class DishesListComponent  implements OnInit, OnDestroy  {
 
   dishes: Dish[] = [];
+  linksList = [];
   isLoading = false;
   private dishesSub: Subscription;
 
@@ -25,10 +26,17 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
     this.dishesSub = this.dishesService.getDishUpdateListener()
       .subscribe((dishes: Dish[]) => {
         this.dishes = dishes;
+        console.log(this.dishes);
+        this.buildLinksList();
         this.isLoading = false;
       });
   }
 
+  // links list
+  buildLinksList() {
+    this.linksList = ['A', 'B', 'C', 'D', 'F', 'K'];
+
+  }
   // in case user returns to the browser or does a manul page reload
   saveDishToLocal (id) {
     this.dishesService.saveDishData(this.dishesService.getDish(id));
