@@ -35,6 +35,11 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
     this.router.navigate(['dish/' + id]);
   }
 
+  onDelete(id) {
+    this.dishesService.deleteDish(id);
+
+  }
+
   ngOnDestroy() {
     this.dishesSub.unsubscribe();
   }

@@ -54,6 +54,24 @@ if (result.n > 0 ) {
 });
 })
 
+// delete  dish
+router.delete('/:id', (req,res,next) => {
+  Dish.deleteOne({_id: req.params.id})
+  .then( result => {
+    console.log(result);
+    if (result.n > 0 ) {
+      res.status(200).json({message: 'deletion successful'})
+    } else {
+      res.status(401).json({message: 'Not Authorized!'})
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Deleting Menus Failed!'
+    });
+  });
+});
+
 
 //  save dish
 router.post('', (req, res, next) => {

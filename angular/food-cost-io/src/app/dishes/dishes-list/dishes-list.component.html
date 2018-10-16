@@ -49,10 +49,10 @@
             <p><a class="link-list blue" id="E-search">E</a></p>
         </div>
         <div *ngIf="dishes.length > 0">
-        <button  class="button"  *ngFor="let dish of dishes"  (click)="saveDishToLocal(dish._id)">
+        <button  class="button"  *ngFor="let dish of dishes"  >
             <div>{{ dish.name }}</div>
-            <i class="far fa fa-minus-circle white" (click)="onDelete()" aria-hidden="true"></i>
-            <i class="far fa-arrow-alt-circle-right white"></i>
+            <i class="far fa fa-minus-circle white" (click)="onDelete(dish._id)" aria-hidden="true"></i>
+            <i class="far fa-arrow-alt-circle-right white" (click)="saveDishToLocal(dish._id)"></i>
         </button>
       </div>
         <!-- <button  class="button"  *ngFor="let dish of dishes$ | async"

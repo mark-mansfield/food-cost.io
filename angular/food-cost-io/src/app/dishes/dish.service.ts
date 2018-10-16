@@ -53,6 +53,21 @@ export class DishService {
     return this.dishesUpdated.asObservable();
   }
 
+  // delete a dish
+  deleteDish(id: String) {
+    this.http.delete(BACKEND_URL + '/' + id)
+      .subscribe(result => {
+        // filter returns all entries where the  condition === true and removes entries where the condition === false
+        const updateDishes = this.dishes.filter(dish => dish._id !== id);
+        // update menus array with filtered result
+        this.dishes = updateDishes;
+        // inform UI
+        this.dishesUpdated.next([...this.dishes]);
+        console.log(result);
+
+    });
+  }
+
 
   addDish( id: null, name: string /*, description: string, image: File*/) {
     const dishData = {
