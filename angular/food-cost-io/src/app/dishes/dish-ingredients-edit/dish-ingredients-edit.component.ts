@@ -25,7 +25,7 @@ export class DishIngredientsEditComponent implements OnInit {
 
     this.isLoading = true;
     this.id = this.route.snapshot.paramMap.get('_id');
-    this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name');
+    this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name').toLocaleLowerCase();
 
     // because a manual page reload removes the body of the http request
     // if page reload , grab the data from local storage

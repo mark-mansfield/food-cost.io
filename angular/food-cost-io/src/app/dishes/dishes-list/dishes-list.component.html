@@ -52,7 +52,7 @@
         </div>
         <div *ngIf="dishes.length > 0">
         <button  class="button"  *ngFor="let dish of dishes"  >
-            <div>{{ dish.name }}</div>
+            <div>{{ dish.name.toLocaleLowerCase() }}</div>
             <i class="far fa fa-minus-circle white" (click)="onDelete(dish._id)" aria-hidden="true"></i>
             <i class="far fa-arrow-alt-circle-right white" (click)="saveDishToLocal(dish._id)"></i>
         </button>

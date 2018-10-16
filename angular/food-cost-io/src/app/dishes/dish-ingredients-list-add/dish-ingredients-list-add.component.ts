@@ -45,7 +45,7 @@ export class DishIngredientsListAddComponent implements OnInit {
   onAddIngredient(name) {
     this.ingredientName = name;
     this.ingredient = {
-      name: this.ingredientName,
+      name: this.ingredientName.toLocaleLowerCase(),
       qty: '0',
       AP_weight : '0',
       EP_weight : '0'

@@ -34,7 +34,12 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
 
   // links list
   buildLinksList() {
-    this.linksList = ['A', 'B', 'C', 'D', 'F', 'K'];
+    this.dishes.forEach((item) => {
+      this.linksList.push((item.name.substring(0, 1)).toLocaleLowerCase());
+      this.linksList.sort();
+    });
+
+
 
   }
   // in case user returns to the browser or does a manul page reload
