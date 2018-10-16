@@ -51,6 +51,7 @@
         <div *ngIf="dishes.length > 0">
         <button  class="button"  *ngFor="let dish of dishes"  (click)="saveDishToLocal(dish._id)">
             <div>{{ dish.name }}</div>
+            <i class="far fa fa-minus-circle white" (click)="onDelete()" aria-hidden="true"></i>
             <i class="far fa-arrow-alt-circle-right white"></i>
         </button>
       </div>
