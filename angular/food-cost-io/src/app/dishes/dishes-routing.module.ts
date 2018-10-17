@@ -9,6 +9,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { EditFieldComponent } from './edit-field/edit-field.component';
 import { DishIngredientsListAddComponent } from './dish-ingredients-list-add/dish-ingredients-list-add.component';
 
+
 const dishesRoutes: Routes = [
   //  list all dishes
   { path: 'dishes',  component: DishesListComponent, canActivate: [AuthGuard]},
@@ -29,8 +30,10 @@ const dishesRoutes: Routes = [
 
 @NgModule({
   imports: [
+
     RouterModule.forChild(dishesRoutes)
   ],
+
   exports: [
     RouterModule
   ]

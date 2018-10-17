@@ -40,6 +40,7 @@ export class DishService {
       }))
       .subscribe(transformedPosts => {
         this.dishes = transformedPosts;
+        this.saveDishesData(this.dishes);
         this.dishesUpdated.next([...this.dishes]);
       });
   }
@@ -51,6 +52,18 @@ export class DishService {
 
   getDishUpdateListener() {
     return this.dishesUpdated.asObservable();
+  }
+
+  // search for a dish by name
+  searchDishByName(searchTerm) {
+    const searchResults = this.dishes.filter(p => p.name.includes(searchTerm));
+    this.dishesUpdated.next([...searchResults]);
+
+  }
+  searchDishByFirstletter (letter) {
+    const searchResults = this.dishes.filter(p => p.name[0] === letter);
+    console.log(searchResults);
+    this.dishesUpdated.next([...searchResults]);
   }
 
   // delete a dish
@@ -112,6 +125,13 @@ export class DishService {
     });
   }
 
+
+  showAllDishes() {
+    console.log(this.getDishesData());
+    const dishesData: any = this.getDishesData();
+    this.dishesUpdated.next([...dishesData]);
+  }
+
   getSavedDishData() {
     return  JSON.parse(localStorage.getItem('dish'));
   }
@@ -120,6 +140,13 @@ export class DishService {
     localStorage.setItem('dish' , JSON.stringify(dish));
   }
 
+  saveDishesData(dishes) {
+    localStorage.setItem('dishes' , JSON.stringify(dishes));
+  }
+
+  getDishesData() {
+    return JSON.parse(localStorage.getItem('dishes'));
+  }
 
   getIngredientsList(dishId) {
     const selectedDish = this.getDish(dishId);
