@@ -28,11 +28,14 @@ export class DishIngredientsListAddComponent implements OnInit {
     // if page reload , grab the data from local storage
     // ? Refactor this to just call local storage always?
     if (this.id) {
-      this.ingredientsList = this.service.getIngredientsList(this.id);
-      if (!this.ingredientsList) {
-        this.dish = this.service.getSavedDishData();
-        this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
-      }
+      // this.ingredientsList = this.service.getIngredientsList(this.id);
+      // if (!this.ingredientsList) {
+      //   this.dish = this.service.getSavedDishData();
+      //   this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
+      // }
+      this.dish = this.service.getSavedDishData();
+      console.log(this.dish);
+      this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
       this.isLoading = false;
     } else {
       console.log('no id sent');
@@ -42,14 +45,15 @@ export class DishIngredientsListAddComponent implements OnInit {
   onAddIngredient(name) {
     this.ingredientName = name;
     this.ingredient = {
-      name: this.ingredientName,
+      name: this.ingredientName.toLocaleLowerCase(),
       qty: '0',
       AP_weight : '0',
       EP_weight : '0'
     };
+    console.log(this.dish);
     this.ingredientsList.unshift(this.ingredient);
     this.dish.ingredients = this.ingredientsList;
-    console.log(this.dish);
+
     this.service.updateDish(this.dish);
   }
 }

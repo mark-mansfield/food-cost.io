@@ -25,16 +25,19 @@ export class DishIngredientsEditComponent implements OnInit {
 
     this.isLoading = true;
     this.id = this.route.snapshot.paramMap.get('_id');
-    this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name');
+    this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name').toLocaleLowerCase();
 
     // because a manual page reload removes the body of the http request
     // if page reload , grab the data from local storage
     if (this.id) {
-      this.ingredientsList = this.service.getIngredientsList(this.id);
-      if (!this.ingredientsList) {
-        this.dish = this.service.getSavedDishData();
-        this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
-      }
+      // this.ingredientsList = this.service.getIngredientsList(this.id);
+      // console.log(this.ingredientsList);
+      // if (!this.ingredientsList) {
+      //   this.dish = this.service.getSavedDishData();
+      //   this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
+      // }
+      this.dish = this.service.getSavedDishData();
+      this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
       this.ingredient = this.ingredientsList.find(item => item.name === this.ingredientName);
       this.isLoading = false;
     } else {
@@ -47,12 +50,13 @@ export class DishIngredientsEditComponent implements OnInit {
     this.ingredientsList.forEach((item, index) => {
       if (item.name === this.ingredientName) {
         this.ingredientsList[index] = this.ingredient;
+        console.log(this.ingredient);
       }
     });
 
     this.dish.ingredients = this.ingredientsList;
-    console.log(this.dish.ingredients);
     this.service.updateDish(this.dish);
+    console.log(this.dish);
   }
 
   qtyChange (qty) {

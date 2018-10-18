@@ -24,13 +24,11 @@ export class DishIngredientsListComponent implements OnInit {
   constructor(private service: DishService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
     this.isLoading = true;
     this.id = this.route.snapshot.paramMap.get('_id');
     this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name');
 
     if (this.id) {
-
       this.dish = this.service.getDish(this.id);
       if (this.dish.name) {
         this.ingredients = this.dish.ingredients;
@@ -45,5 +43,9 @@ export class DishIngredientsListComponent implements OnInit {
     }
   }
 
+  onDeleteDishIngredient(ingredientName) {
+    this.dish.ingredients = this.ingredients.filter(item => item.name !== ingredientName);
+    this.service.updateDish(this.dish);
+  }
 
 }

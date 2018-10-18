@@ -2,7 +2,7 @@
 <main class="main">
 <mat-spinner *ngIf="isLoading"></mat-spinner>
   <section class="section" *ngIf='!isLoading'>
-      <div class="info-panel" *ngIf="dishes.length ==  0">
+      <div class="info-panel" *ngIf="dishes.length ===  0">
           <div>
               <p class="">You have not created a dish yet</p>
           </div>
@@ -20,38 +20,25 @@
                 <p>Select a dish from the list below or use the search box to find one.</p>
             </div>
         </div>
-
-        <div class="button search-container" *ngIf="dishes.length > 0">
-            <input class="input-field" type="text" id="dish-input-text" placeholder="  search.....">
-            <div class="click-icon"><i class="fas fa-search"></i></div>
+        <div class="search-container" *ngIf="dishes.length > 0">
+          <form action="">
+            <input class="input-field" type="text" id="dish-input-text" #searchinput [(ngModel)]="searchTerm" name="search" placeholder="  search.....">
+            <button class="click-icon fas fa-search" (click)="search(searchTerm)"></button>
+          </form>
         </div>
-
-        <div class="info-panel" *ngIf="dishes.length > 0">
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
-            <p><a class="link-list blue" id="A-search">A</a></p>
-            <p><a class="link-list blue" id="B-search">B</a></p>
-            <p><a class="link-list blue" id="C-search">C</a></p>
-            <p><a class="link-list blue" id="D-search">D</a></p>
-            <p><a class="link-list blue" id="E-search">E</a></p>
+        <div class="link-list info-panel " *ngIf="linksList.length > 0">
+            <button class="link-list-link blue" (click)="searchByFirstletter(link)" *ngFor="let link of linksList" id="{{ link }}">{{ link }}</button>
+        </div>
+        <br>
+        <div class="info-panel" *ngIf="this.showRefresh">
+            <button class="link-list-link blue" (click)="refreshDishesList()" ><i class="fas fa-sync"></i></button>
         </div>
         <div *ngIf="dishes.length > 0">
-        <button  class="button"  *ngFor="let dish of dishes"  (click)="saveDishToLocal(dish._id)">
-            <div>{{ dish.name }}</div>
-            <i class="far fa-arrow-alt-circle-right white"></i>
+
+        <button  class="button"*ngFor="let dish of dishes">
+            <div>{{ dish.name.toLocaleLowerCase() }}</div>
+            <i class="far fa fa-minus-circle white" (click)="onDelete(dish._id)" aria-hidden="true"></i>
+            <i class="far fa-arrow-alt-circle-right white" (click)="saveDishToLocal(dish._id)"></i>
         </button>
       </div>
         <!-- <button  class="button"  *ngFor="let dish of dishes$ | async"
@@ -59,14 +46,12 @@
           [routerLink]="['/dish', dish.id]"><div>{{ dish.name }}</div>
             <i class="far fa-arrow-alt-circle-right white" [routerLink]="['/dish', dish.id]"></i>
         </button> -->
-
-        <div class="pagination" *ngIf="dishes.length > 0">
+        <mat-paginator [pageSize]="postsPerPage" [pageIndex]="pageIndex" [length]="dishCount" (page)="onChangedPage($event)"></mat-paginator>
+        <!-- <div class="pagination" *ngIf="dishes.length > 0">
             <button class="previous click-icon"><i class="far fa-arrow-alt-circle-left click-icon"></i></button>
-            <button class="pagination-button"><p>2</p></button>
-            <button class="pagination-button"><p>3</p></button>
-            <button class="pagination-button"><p>4</p></button>
+            <button  #paginatorButton class="pagination-button">
             <button class="next click-icon"><i class="far fa-arrow-alt-circle-right white"></i></button>
-        </div>
+        </div> -->
 
   </section>
 </main>

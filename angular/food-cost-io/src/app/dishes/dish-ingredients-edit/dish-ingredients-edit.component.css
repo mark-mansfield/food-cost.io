@@ -64,7 +64,7 @@ input:not(:valid) ~ .close-icon {
   position: absolute;
   background-color:var(--blue);
   z-index: 1;
-  right: 50px;
+  right: 20px;
   top: 0;
   bottom: 0;
   margin: auto;
@@ -83,6 +83,9 @@ input:not(:valid) ~ .close-icon {
   margin: 10px 0;
   width: 95vw;
   height: 80px;
+}
+.main>.section>  button > div{
+  width: 50%;
 }
 
 .action-button {
@@ -154,6 +157,7 @@ input:not(:valid) ~ .close-icon {
 .button>div>i.fa-search {
   margin-right: 20px;
 }
+
 
 .far:hover {
   color: black;

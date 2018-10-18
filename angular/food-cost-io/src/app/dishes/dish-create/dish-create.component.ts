@@ -15,7 +15,7 @@ export class DishCreateComponent {
   onAddDish() {
 
     console.log(this.dishName);
-    this.service.addDish(null, this.dishName);
+    this.service.addDish(null, this.dishName.toLocaleLowerCase());
 
   }
 }
