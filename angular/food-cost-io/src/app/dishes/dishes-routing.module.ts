@@ -9,11 +9,10 @@ import { AuthGuard } from '../auth/auth.guard';
 import { EditFieldComponent } from './edit-field/edit-field.component';
 import { DishIngredientsListAddComponent } from './dish-ingredients-list-add/dish-ingredients-list-add.component';
 
-
 const dishesRoutes: Routes = [
   //  list all dishes
   { path: 'dishes',  component: DishesListComponent, canActivate: [AuthGuard]},
-  // create a dish
+   // create a dish
   { path: 'dish/create', component: DishCreateComponent ,  canActivate: [AuthGuard]},
   // edit selected dish
   { path: 'dish/:_id', component: DishDetailsComponent ,  canActivate: [AuthGuard]},
@@ -26,7 +25,6 @@ const dishesRoutes: Routes = [
   // add ingredient to selected dish
   { path: 'dish/:_id/ingredients/add', component: DishIngredientsListAddComponent ,  canActivate: [AuthGuard]}
 ];
-
 
 @NgModule({
   imports: [

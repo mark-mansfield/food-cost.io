@@ -6,7 +6,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AngularMaterialModule } from './angular-material';
-
+import { DishesModule } from './dishes/dishes.module';
+import { IngredientsModule } from './ingredients/ingredients.module';
+import { AppRoutingModule } from './app-routing.module';
 
 
 import { AppComponent } from './app.component';
@@ -15,12 +17,9 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { AppRoutingModule } from './app-routing.module';
-import { DishesModule } from './dishes/dishes.module';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
-
 
 // const appRoutes: Routes = [
 //   { path : 'home' , component: HomepageComponent },
@@ -47,11 +46,12 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     BrowserModule,
     BrowserAnimationsModule,
     MatSidenavModule,
-    DishesModule,
-    AppRoutingModule,
     HttpClientModule,
     AngularMaterialModule,
-    FormsModule
+    FormsModule,
+    IngredientsModule,
+    DishesModule,
+    AppRoutingModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true}],
   bootstrap: [AppComponent]
