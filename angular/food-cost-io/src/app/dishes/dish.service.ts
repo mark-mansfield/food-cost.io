@@ -14,13 +14,13 @@ export class DishService {
 
   private dish: Dish[] = [];
   private dishes: Dish[] = [];
-  private dishesUpdated = new Subject<Dish[]>();
+  public dishesUpdated = new Subject<Dish[]>();
   constructor(private http: HttpClient,  private router: Router) { }
 
 
   //  use interceptor , function to run on any outgoing http request
   //  we manipulate the request to add our token.
-  getDishes() {
+  getDishes(index, postsPerPage) {
     this.http
       .get<{dishes: any }>(BACKEND_URL)
       .pipe(map((postData) => {
@@ -41,8 +41,10 @@ export class DishService {
       .subscribe(transformedPosts => {
         this.dishes = transformedPosts;
         this.saveDishesData(this.dishes);
-        this.dishesUpdated.next([...this.dishes]);
+        const tmpArr = this.paginate(index, postsPerPage);
+        this.dishesUpdated.next([...tmpArr]);
       });
+
   }
 
   getDish(dishId) {
@@ -54,12 +56,27 @@ export class DishService {
     return this.dishesUpdated.asObservable();
   }
 
+  paginate(index, pageCount) {
+    const sliceStart = index * pageCount;
+    const sliceLength = sliceStart + pageCount;
+    console.log(sliceStart);
+    console.log(sliceLength);
+    console.log(sliceLength);
+    return this.dishes.slice(sliceStart, sliceLength);
+  }
+
+  paginateOnChange (index, pageCount) {
+    this.dishesUpdated.next([...this.paginate(index, pageCount)]);
+  }
+
   // search for a dish by name
   searchDishByName(searchTerm) {
     const searchResults = this.dishes.filter(p => p.name.includes(searchTerm));
+    console.log(searchResults);
     this.dishesUpdated.next([...searchResults]);
 
   }
+
   searchDishByFirstletter (letter) {
     const searchResults = this.dishes.filter(p => p.name[0] === letter);
     console.log(searchResults);

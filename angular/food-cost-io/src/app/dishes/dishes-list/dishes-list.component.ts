@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
-
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-dishes-list',
   templateUrl: './dishes-list.component.html',
@@ -19,25 +19,28 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
 
 
   dishes: Dish[] = [];
+  dishCount: number;
   linksList = [];
   isLoading = false;
   searchTerm: string;
   linkListValue: string;
   showRefresh = false;
-  index = 0;
+  pageIndex = 0;
+  postsPerPage = 3;
   private dishesSub: Subscription;
 
   constructor(public dishesService: DishService, private router: Router) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.dishesService.getDishes();
+    this.dishesService.getDishes(this.pageIndex, this.postsPerPage);
+    this.dishCount = this.dishesService.getDishesData().length;
     this.dishesSub = this.dishesService.getDishUpdateListener()
       .subscribe((dishes: Dish[]) => {
         this.dishes = dishes;
         this.buildLinksList();
         this.isLoading = false;
-      });
+    });
   }
 
   // links list
@@ -52,19 +55,31 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
     }
   }
 
+  onChangedPage(pageData: PageEvent) {
+    this.dishesService.paginateOnChange(pageData.pageIndex, pageData.pageSize);
+    console.log(pageData);
+  }
+
   saveDishToLocal (id) {
     this.dishesService.saveDishData(this.dishesService.getDish(id));
     this.router.navigate(['dish/' + id]);
   }
 
-  showAllDishes() {
-    this.dishesService.showAllDishes();
+  refreshDishesList() {
+    this.pageIndex = 0;
+    this.dishCount = this.dishesService.getDishesData().length;
+    this.dishesService.paginateOnChange(this.pageIndex, this.postsPerPage);
     this.showRefresh = false;
   }
+
+
 
   search(searchValue) {
     if (searchValue) {
       this.dishesService.searchDishByName(searchValue);
+      this.dishCount = this.dishes.length;
+      this.pageIndex = 0;
+      this.dishesService.paginateOnChange(this.pageIndex, this.postsPerPage);
       this.showRefresh = true;
     } else {
       alert('Please enter a serch term');
@@ -73,6 +88,7 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
 
   searchByFirstletter(firstLetter) {
     this.dishesService.searchDishByFirstletter(firstLetter);
+    this.dishCount = this.dishes.length;
     this.showRefresh = true;
   }
 

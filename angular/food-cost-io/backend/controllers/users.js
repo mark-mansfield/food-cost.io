@@ -46,7 +46,7 @@ exports.loginUser = (req, res, next) => {
         message: 'Username or password is incorrect!'
       })
     }
-
+    console.log(fetchedUser);
     const token = jwt.sign(
       { email: fetchedUser.email, userId: fetchedUser._id },
       'this_should_be_longer',
