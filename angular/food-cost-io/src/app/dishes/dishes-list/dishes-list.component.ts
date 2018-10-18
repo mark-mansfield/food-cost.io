@@ -47,7 +47,8 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   buildLinksList() {
     if (this.linksList.length === 0) {
       const tmpArray = [];
-      this.dishes.forEach((item) => {
+      const localDishes: any  = this.dishesService.getDishesData();
+      localDishes.forEach((item) => {
         tmpArray.push((item.name.substring(0, 1))
         .toLocaleLowerCase());
       });
