@@ -81,7 +81,7 @@
   color: black;
 }
 
-.main>.section>.pagination {
+.main>.section>.pagination, mat-paginator {
   height: 80px;
   display: flex;
   justify-content: space-around;
@@ -90,7 +90,9 @@
   background-color: rgba(45, 44, 44, 0.3);
   box-shadow: 5px;
   font-size: 1rem;
+  color:white;
 }
+
 
 .main>.section>.pagination>button {
   flex: 1;
@@ -182,7 +184,7 @@ h1 {
     margin-left: 20px;
   }
 
-  .main>.section>.pagination {
+  .main>.section>.pagination, mat-paginator {
     width: 500px;
   }
 

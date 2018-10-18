@@ -116,7 +116,9 @@ h1,h2,h3,h4,h5,h6, .inline-title {
   color: var(--title-text);
 }
 
-
+.mat-icon-button{
+  color: var(--blue);
+}
 
 .inline-title  {
   font-size: var(--h1-large-text);
