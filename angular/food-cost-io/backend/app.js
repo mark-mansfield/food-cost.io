@@ -7,6 +7,7 @@ const app = express();
 
 const dishRoutes = require('./routes/dishes');
 const userRoutes = require('./routes/users');
+const ingredientsRoutes = require('./routes/ingredients');
 
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,5 +39,6 @@ app.use((req,res,next) => {
 // http:localhost:3000 -> /trunk/route = '/api/users'  ('api/users' wont work )
 app.use('/api/users', userRoutes);
 app.use('/api/dishes', dishRoutes);
+app.use('/api/ingredients', ingredientsRoutes);
 
 module.exports = app;

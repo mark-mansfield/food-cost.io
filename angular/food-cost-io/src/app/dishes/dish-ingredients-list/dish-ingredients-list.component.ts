@@ -29,7 +29,7 @@ export class DishIngredientsListComponent implements OnInit {
     this.ingredientName = this.route.snapshot.paramMap.get('ingredient_name');
 
     if (this.id) {
-      this.dish = this.service.getDish(this.id);
+
       if (this.dish.name) {
         this.ingredients = this.dish.ingredients;
       } else {

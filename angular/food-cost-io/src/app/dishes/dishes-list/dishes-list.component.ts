@@ -1,14 +1,10 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy } from '@angular/core';
-
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
 import { PageEvent } from '@angular/material/paginator';
+
 @Component({
   selector: 'app-dishes-list',
   templateUrl: './dishes-list.component.html',

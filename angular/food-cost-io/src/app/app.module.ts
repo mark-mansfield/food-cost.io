@@ -20,6 +20,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { EditIngredientFieldComponent } from './edit-ingredient-field/edit-ingredient-field.component';
 
 // const appRoutes: Routes = [
 //   { path : 'home' , component: HomepageComponent },
@@ -37,7 +38,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     HomepageComponent,
     PageNotFoundComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    EditIngredientFieldComponent
     // ErrorComponent,
     // ReactiveFormsModule,
     // MatPaginatorModule

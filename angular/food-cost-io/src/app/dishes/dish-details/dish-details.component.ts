@@ -10,9 +10,12 @@ import { empty } from 'rxjs';
 })
 export class DishDetailsComponent implements OnInit {
 
+  public hasData = false;
+
   public dish: Dish;
   public selectedId: string;
   ingredients = [];
+
   description: string;
   ingredientTotal: number;
   method: string;
@@ -27,7 +30,7 @@ export class DishDetailsComponent implements OnInit {
     minimumFractionDigits: 2
   });
 
-  public hasData = false;
+
   constructor(private route: ActivatedRoute, private router: Router, private service: DishService) { }
 
   ngOnInit() {

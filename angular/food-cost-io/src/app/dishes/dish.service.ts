@@ -101,7 +101,6 @@ export class DishService {
 
   addDish( id: null, name: string /*, description: string, image: File*/) {
     const dishData = {
-
       name: name,
       ingredients: [],
       retail_price: '0.00',
@@ -144,7 +143,6 @@ export class DishService {
 
 
   showAllDishes() {
-    console.log(this.getDishesData());
     const dishesData: any = this.getDishesData();
     this.dishesUpdated.next([...dishesData]);
   }
