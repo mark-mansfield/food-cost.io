@@ -8,6 +8,7 @@ import { IngredientsListComponent } from './ingredients-list/ingredients-list.co
 import { IngredientsDetailsComponent } from './ingredients-details/ingredients-details.component';
 import { IngredientsCreateComponent } from './ingredients-create/ingredients-create.component';
 import { IngredientEditFieldComponent } from './ingredient-edit-field/ingredient-edit-field.component';
+
 @NgModule({
   imports: [
     CommonModule,

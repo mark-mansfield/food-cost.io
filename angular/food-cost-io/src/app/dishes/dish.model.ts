@@ -1,4 +1,5 @@
 export class Dish {
+  customerId: string;
   _id: 'null';
   name: string;
   ingredients: any[] = [];

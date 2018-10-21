@@ -5,10 +5,10 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-
+import { Globals } from '../globals';
 
 const BACKEND_URL = environment.apiUrl + 'ingredients';
-const CUST_ID = environment.custId ;
+
 @Injectable({providedIn: 'root'})
 
 export class IngredientsService {
@@ -17,7 +17,7 @@ export class IngredientsService {
   public ingredientsList: any = [];
   public ingredientsUpdated = new Subject<Ingredient[]>();
   public ingredientsDoc;
-  constructor(private http: HttpClient,  private router: Router) { }
+  constructor(private http: HttpClient,  private router: Router, private globals: Globals) { }
 
   geIngredientsUpdateListener() {
     return this.ingredientsUpdated.asObservable();
@@ -25,8 +25,9 @@ export class IngredientsService {
 
 
   // ingredients list by category
-  getIngredients(docId, category) {
-    this.http.get<{ingredients: any[] }>(BACKEND_URL + '/' +  docId)
+  getIngredients(category) {
+
+    this.http.get<{ingredients: any[] }>(BACKEND_URL + '/' + this.globals.custID)
      .subscribe(transformedPosts => {
         this.ingredientsDoc = transformedPosts.ingredients;
         console.log(this.ingredientsDoc);

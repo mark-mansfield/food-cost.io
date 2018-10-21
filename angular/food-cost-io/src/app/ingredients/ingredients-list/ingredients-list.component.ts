@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { IngredientsService } from '../ingredients.service';
 import { Ingredient } from '../ingredient.model';
 
+
 @Component({
   selector: 'app-ingredients-list',
   templateUrl: './ingredients-list.component.html',
@@ -17,8 +18,9 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   linksList = [];
 
   searchTerm: string;
-  public docId = 'mark';
   public category = 'drygoods';
+
+
   private ingredientsSub: Subscription;
   constructor(
     private service: IngredientsService,
@@ -27,7 +29,7 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.service.getIngredients(this.docId, this.category);
+    this.service.getIngredients(this.category);
     this.isLoading = true;
     this.ingredientsSub = this.service
       .geIngredientsUpdateListener()

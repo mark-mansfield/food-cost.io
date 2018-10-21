@@ -4,9 +4,11 @@ const router = express.Router();
 const Dish = require('../models/dish');
 const checkAuth = require('../middlewear/check-auth');
 
+
 // get dishes
-router.get('', checkAuth , (req, res, next) => {
-  Dish.find().then(documents => {
+router.get('/:custID', checkAuth , (req, res, next) => {
+  console.log(req.params.custID)
+  Dish.find({ customerId: req.params.custID}).then(documents => {
       res.status(200).json({
       message: "Dishes fetched successfully!",
       dishes: documents
@@ -15,7 +17,7 @@ router.get('', checkAuth , (req, res, next) => {
 });
 
 // get dish
-router.get('/:id', checkAuth , (req, res, next) => {
+router.get('/:custID/:id', checkAuth , (req, res, next) => {
   Dish.findById(req.params.id).then (dish => {
     if (dish) {
       res.status(200).json(dish);

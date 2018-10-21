@@ -6,10 +6,11 @@ exports.createUser = (req, res, next) => {
   const saltingRounds = 10;
   bcrypt.hash(req.body.password, saltingRounds)
   .then(hash => {
-    console.log("hash = " + hash);
+
     const newUser = new User({
       email: req.body.email,
-      password : hash
+      password : hash,
+      custID: req.body.email
     });
 
     newUser.save()
@@ -58,7 +59,7 @@ exports.loginUser = (req, res, next) => {
     {
       expiresIn: 3600,
       token: token,
-      userId: fetchedUser._id
+      userId: fetchedUser._id,
     });
   })
   .catch (err => {

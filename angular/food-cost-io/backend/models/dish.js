@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const dishSchema = mongoose.Schema({
+  customerId: String,
   name: String,
   ingredients: [],
   retail_price: String,

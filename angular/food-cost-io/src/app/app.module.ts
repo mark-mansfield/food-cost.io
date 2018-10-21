@@ -20,14 +20,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
-import { EditIngredientFieldComponent } from './edit-ingredient-field/edit-ingredient-field.component';
 
-// const appRoutes: Routes = [
-//   { path : 'home' , component: HomepageComponent },
-//   { path: '', redirectTo: '/home', pathMatch: 'full' },
-//   { path: '**', component: PageNotFoundComponent },
-// ];
 
+import { Globals } from './globals';
 
 @NgModule({
   declarations: [
@@ -38,11 +33,7 @@ import { EditIngredientFieldComponent } from './edit-ingredient-field/edit-ingre
     HomepageComponent,
     PageNotFoundComponent,
     SignupComponent,
-    LoginComponent,
-    EditIngredientFieldComponent
-    // ErrorComponent,
-    // ReactiveFormsModule,
-    // MatPaginatorModule
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +46,7 @@ import { EditIngredientFieldComponent } from './edit-ingredient-field/edit-ingre
     DishesModule,
     AppRoutingModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true}, Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

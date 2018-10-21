@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-
+import { Globals } from '../globals';
 
 @Injectable({ providedIn: 'root'})
 
@@ -12,12 +12,15 @@ export class AuthService {
   private isAuthenticated = false;
   private tokenTimer: any;
   expiresInDuration = null;
+
+
+
   // prevent user from being logged out with a manual page reload (we store a token in localStorage) see: autoAuthUser()
   // bounce user after one hour using tokenTimer
   // Subject push the authentication status to interested components
   // return the observable, we just push a boolean from here to the  other parties
   private authStatusListener = new Subject<boolean>();
-  constructor (private http: HttpClient, private router: Router) {}
+  constructor (private http: HttpClient, private router: Router, private globals: Globals) {}
 
   getToken() {
     return this.token;
@@ -47,21 +50,24 @@ export class AuthService {
   }
 
   createUser(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
+    const authData: AuthData = {email: email, password: password , custID: email};
     this.http.post('http://localhost:3000/api/users/signup', authData)
     .subscribe(response => {
         console.log(response);
+        this.router.navigate(['/login']); /* navigate to landing page */
     });
   }
 
-  login(email: string, password: string){
-    const authData: AuthData = { email: email, password: password};
+  login(email: string, password: string) {
+    const authData: AuthData = { email: email, password: password, custID: email};
     this.http.post<{token: string, expiresIn: string}>('http://localhost:3000/api/users/login' , authData)
     .subscribe(response => {
       // store token for later use
       const token = response.token;
       this.token = token;
       if (token) {
+        this.globals.custID = email;
+        console.log(this.globals);
         this.expiresInDuration = response.expiresIn;
         this.setAuthTimer(this.expiresInDuration);
         this.authStatusListener.next(true);

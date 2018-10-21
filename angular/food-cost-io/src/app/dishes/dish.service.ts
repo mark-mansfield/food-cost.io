@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Globals } from '../globals';
 
 const BACKEND_URL = environment.apiUrl + 'dishes';
 
@@ -15,17 +16,19 @@ export class DishService {
   private dish: Dish[] = [];
   private dishes: Dish[] = [];
   public dishesUpdated = new Subject<Dish[]>();
-  constructor(private http: HttpClient,  private router: Router) { }
+  constructor(private http: HttpClient,  private router: Router, private globals: Globals) { }
 
 
   //  use interceptor , function to run on any outgoing http request
   //  we manipulate the request to add our token.
+  // + '/' + this.globals.custID
   getDishes(index, postsPerPage) {
     this.http
-      .get<{dishes: any }>(BACKEND_URL)
+      .get<{dishes: any }>(BACKEND_URL + '/' + this.globals.custID)
       .pipe(map((postData) => {
           return postData.dishes.map(dish => {
           return {
+            customerId: this.globals.custID,
             _id: dish._id,
             name: dish.name,
             ingredients: dish.ingredients,
@@ -84,7 +87,7 @@ export class DishService {
   }
 
   // delete a dish
-  deleteDish(id: String) {
+  deleteDish( id: String) {
     this.http.delete(BACKEND_URL + '/' + id)
       .subscribe(result => {
         // filter returns all entries where the  condition === true and removes entries where the condition === false
@@ -99,8 +102,9 @@ export class DishService {
   }
 
 
-  addDish( id: null, name: string /*, description: string, image: File*/) {
+  addDish( id: null,  name: string /*, description: string, image: File*/) {
     const dishData = {
+      customerId: this.globals.custID,
       name: name,
       ingredients: [],
       retail_price: '0.00',
@@ -131,8 +135,8 @@ export class DishService {
         dish
       )
       .subscribe(returnedData => {
-        console.log('update status: ' + returnedData.message);
-        console.log('new dish: ' + returnedData.dish);
+        // console.log('update status: ' + returnedData.message);
+        // console.log('new dish: ' + returnedData.dish);
         const storedDishIndex = this.dishes.findIndex(p => p._id === dish._id);
         this.dishes[storedDishIndex] = returnedData.dish;
         this.saveDishData(this.dishes[storedDishIndex]);
