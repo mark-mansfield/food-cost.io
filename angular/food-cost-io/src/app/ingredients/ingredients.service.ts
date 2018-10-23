@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Ingredient } from './ingredient.model';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Globals } from '../globals';
+import { Location } from '@angular/common';
 
 const BACKEND_URL = environment.apiUrl + 'ingredients';
 
@@ -17,22 +17,25 @@ export class IngredientsService {
   public ingredientsList: any = [];
   public ingredientsUpdated = new Subject<Ingredient[]>();
   public ingredientsDoc;
-  constructor(private http: HttpClient,  private router: Router, private globals: Globals) { }
+
+
+
+  constructor(private _location: Location, private http: HttpClient,  private router: Router, public globals: Globals) { }
 
   geIngredientsUpdateListener() {
     return this.ingredientsUpdated.asObservable();
   }
 
 
-  // ingredients list by category
-  getIngredients(category) {
-
-    this.http.get<{ingredients: any[] }>(BACKEND_URL + '/' + this.globals.custID)
-     .subscribe(transformedPosts => {
-        this.ingredientsDoc = transformedPosts.ingredients;
-        console.log(this.ingredientsDoc);
-        this.ingredientsList = this.ingredientsDoc.filter((item => item.category === category));
-        this.ingredientsUpdated.next([...this.ingredientsList]);
+  // ingredients list - ALL
+  getIngredients() {
+    const customer = this.globals.getCustomer();
+    this.http.get<{ingredients: any[] }>(BACKEND_URL + '/' + customer.id)
+    .subscribe(transformedPosts => {
+      // prevent too many round trips to the server
+      this.saveLocalIngredientsData(transformedPosts);
+      this.ingredientsDoc = transformedPosts.ingredients;
+      this.ingredientsUpdated.next([...this.ingredientsDoc]);
     });
   }
 
@@ -51,24 +54,34 @@ export class IngredientsService {
     });
   }
 
-  updateIngredient(custId: string) {
-    console.log('update ingredient call received in the service');
-    // this.http
-    //   .put<{message: string; dish: Ingredient }>(BACKEND_URL + '/' +  custId, this.ingredientsDoc )
-    //   .subscribe(returnedData => {
-    //     console.log('update status: ' + returnedData.message);
-    //     console.log('new ingredient: ' + returnedData.ingredient);
-    //     const storedIndex = this.ingredient.findIndex(p => p.name === ingredient.name);
-    //     this.ingredientsList[storedIndex] = returnedData.dish;
-    //     this.saveIngredientData(this.ingredientsList[storedIndex]);
-    //     this.ingredientsUpdated.next([...this.ingredientsList]); // inform UI
-    //     this.router.navigate(['/ingredient/' + ingredient.name]);
-    // });
+  updateIngredient(ingredient,  ingredientsDoc) {
+    const customer = this.globals.getCustomer();
+    this.http
+    .put<{ message: string; }>(BACKEND_URL + '/' + customer.id, ingredientsDoc )
+      .subscribe(returnedData => {
+        console.log('update status: ' + returnedData.message);
+        this.ingredientsList = ingredientsDoc.ingredients;
+        this.saveLocalIngredientData(ingredient);
+        this.saveLocalIngredientsData(this.ingredientsList);
+        this.ingredientsUpdated.next([this.ingredientsList]); // inform UI
+        this.router.navigate(['/ingredients/list/']);
+    });
+  }
+  // ? so we can access a customers ingredients without going to the server
+  saveLocalIngredientsData(ingredients: any) {
+    localStorage.setItem('ingredients' , JSON.stringify(ingredients));
   }
 
+  loadIngredientsList() {
+    return JSON.parse(localStorage.getItem('ingredients'));
+  }
 
-  // edit local data to save on server round trips
-  saveIngredientData(ingredient: Ingredient) {
+  // so we can access a selected ingredient without going to the server again
+  saveLocalIngredientData(ingredient: Ingredient) {
     localStorage.setItem('ingredient' , JSON.stringify(ingredient));
+  }
+
+  loadIngredientData() {
+    return JSON.parse(localStorage.getItem('ingredient'));
   }
 }

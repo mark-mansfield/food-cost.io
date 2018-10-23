@@ -12,11 +12,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = this.authService.getToken();
-    console.log('Authorization: Bearer ' + authToken);
+
     // must clone request before manipulating it
     const authRequest = req.clone({
       // set() adds Authorization to the header or if the item being added to the header exists it get overwritten
       headers: req.headers.set('Authorization', 'Bearer ' + authToken)
+
     });
     return next.handle(authRequest);
   }

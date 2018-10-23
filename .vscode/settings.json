@@ -35,5 +35,6 @@
         "searchresults",
         "slidecontainer",
         "zlgfs"
-    ]
+    ],
+    "editor.formatOnType": true
 }

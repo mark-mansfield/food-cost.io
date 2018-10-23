@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
     const isAuth = this.authService.getIsAuth();
-    console.log('isAuth is set to : ' + isAuth);
+    // console.log('isAuth is set to : ' + isAuth);
 
     //  so a user cannot access route via the address bar if they are not logged in.
     if (!isAuth) {

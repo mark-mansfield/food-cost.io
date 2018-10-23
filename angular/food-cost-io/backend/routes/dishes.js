@@ -37,23 +37,20 @@ router.get('/:custID/:id', checkAuth , (req, res, next) => {
 router.put('/:id', checkAuth, (req , res, next) => {
   console.log(req.params.id);
   console.log(req.body);
-  Dish.updateOne({
-    _id: req.params.id
-  },
-  req.body
-).then(result => {
-  console.log(result);
-if (result.n > 0 ) {
-  res.status(201).json({message: 'Dish updated successfully', dish:req.body})
-} else {
-  res.status(401).json({message: 'Not Authorized!'})
-}
-})
-.catch(error => {
-  res.status(500).json({
-    message: 'Couldn\'t Update Dish!'
-  });
-});
+  Dish.updateOne({ _id: req.params.id }, req.body )
+    .then(result => {
+    console.log(result);
+    if (result.n > 0 ) {
+      res.status(201).json({message: 'Dish updated successfully', dish:req.body})
+    } else {
+      res.status(401).json({message: 'Not Authorized!'})
+    }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Couldn\'t Update Dish!'
+      });
+    });
 })
 
 // delete  dish

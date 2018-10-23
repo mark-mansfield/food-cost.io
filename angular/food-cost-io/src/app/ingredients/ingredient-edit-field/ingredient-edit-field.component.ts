@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IngredientsService } from '../ingredients.service';
 import { Ingredient } from '../ingredient.model';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 @Component({
   selector: 'app-ingredient-edit-field',
@@ -12,10 +13,14 @@ import { Ingredient } from '../ingredient.model';
 export class IngredientEditFieldComponent implements OnInit {
 
   public ingredient: Ingredient;
+  public ingredientsList = [];
+  public ingredientsDoc;
+
   public field_value: string;
   private field: string;
-  private id: string;
+  public objIndex: number;
   public field_type: string;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -23,20 +28,24 @@ export class IngredientEditFieldComponent implements OnInit {
 
   ngOnInit() {
     this.field = this.route.snapshot.paramMap.get('field_name');
-    this. field_type = this.route.snapshot.paramMap.get('field_type');
-    if (this.id) {
-      this.ingredient = JSON.parse(localStorage.getItem('ingredient'));
+    this.field_type = this.route.snapshot.paramMap.get('field_type');
+    if (this.field) {
+      this.ingredient = this.service.loadIngredientData();
+      this.ingredientsDoc = this.service.loadIngredientsList();
+      this.ingredientsList = this.ingredientsDoc.ingredients;
       this.field_value = this.ingredient[this.field];
-      console.log(this.field_value);
+      this.objIndex = this.ingredientsList.findIndex(item => item[this.field] ===  this.field_value);
       } else {
-      console.log('no id sent');
+      console.log('no field name sent');
     }
   }
 
   onUpdateItem() {
-    this.ingredient[this.field] = this.field_value;
-    console.log(this.ingredient);
-    // this.service.updateIngredient(this.ingredient);
+
+    this.ingredient = this.ingredientsList[this.objIndex];
+    this.ingredientsList[this.objIndex][this.field] = this.field_value;
+    this.ingredientsDoc.ingredients = this.ingredientsList;
+    this.service.updateIngredient(this.ingredient, this.ingredientsDoc);
   }
 
 }

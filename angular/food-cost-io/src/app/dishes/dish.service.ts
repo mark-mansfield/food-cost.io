@@ -23,12 +23,13 @@ export class DishService {
   //  we manipulate the request to add our token.
   // + '/' + this.globals.custID
   getDishes(index, postsPerPage) {
-    this.http
-      .get<{dishes: any }>(BACKEND_URL + '/' + this.globals.custID)
+    const customer = this.globals.getCustomer();
+      this.http
+      .get<{dishes: any }>(BACKEND_URL + '/' + customer.id)
       .pipe(map((postData) => {
           return postData.dishes.map(dish => {
           return {
-            customerId: this.globals.custID,
+            customerId: customer.id,
             _id: dish._id,
             name: dish.name,
             ingredients: dish.ingredients,
@@ -102,9 +103,10 @@ export class DishService {
   }
 
 
-  addDish( id: null,  name: string /*, description: string, image: File*/) {
+  addDish(id: null, name: string /*, description: string, image: File*/) {
+    const customer = this.globals.getCustomer();
     const dishData = {
-      customerId: this.globals.custID,
+      customerId: customer.id,
       name: name,
       ingredients: [],
       retail_price: '0.00',

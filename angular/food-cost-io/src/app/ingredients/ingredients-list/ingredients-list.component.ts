@@ -11,17 +11,14 @@ import { Ingredient } from '../ingredient.model';
   styleUrls: ['./ingredients-list.component.css']
 })
 export class IngredientsListComponent implements OnInit, OnDestroy {
+
   public isLoading = false;
-  showRefresh = false;
-
+  public showRefresh = false;
   public ingredients: Ingredient[] = [];
-  linksList = [];
-
-  searchTerm: string;
-  public category = 'drygoods';
-
-
+  public linksList = [];
+  public searchTerm: string;
   private ingredientsSub: Subscription;
+
   constructor(
     private service: IngredientsService,
     private route: ActivatedRoute,
@@ -29,7 +26,9 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.service.getIngredients(this.category);
+
+
+    this.service.getIngredients();
     this.isLoading = true;
     this.ingredientsSub = this.service
       .geIngredientsUpdateListener()
@@ -37,7 +36,6 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
         this.ingredients = ingredientData;
         // this.buildLinksList();
         this.isLoading = false;
-        console.log(this.ingredients);
       });
   }
 
@@ -56,7 +54,7 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   }
 
   saveIngredientToLocal(ingredient) {
-    this.service.saveIngredientData(ingredient);
+    this.service.saveLocalIngredientData(ingredient);
     this.router.navigate(['ingredients/' + ingredient.name]);
   }
 }

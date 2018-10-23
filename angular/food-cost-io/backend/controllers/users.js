@@ -9,8 +9,7 @@ exports.createUser = (req, res, next) => {
 
     const newUser = new User({
       email: req.body.email,
-      password : hash,
-      custID: req.body.email
+      password : hash
     });
 
     newUser.save()
@@ -47,14 +46,13 @@ exports.loginUser = (req, res, next) => {
         message: 'Username or password is incorrect!'
       })
     }
-    console.log(fetchedUser);
+
     const token = jwt.sign(
       { email: fetchedUser.email, userId: fetchedUser._id },
       'this_should_be_longer',
       { expiresIn: '1h' }
     );
-
-    //. send token to front end
+    // send token to front end
     res.status(200).json(
     {
       expiresIn: 3600,

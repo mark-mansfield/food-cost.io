@@ -9,7 +9,7 @@ import { IngredientEditFieldComponent } from './ingredient-edit-field/ingredient
 
 const ingredientsRoutes: Routes = [
   //  list all ingredients
-  { path: 'ingredients',  component: IngredientsListComponent, canActivate: [AuthGuard]},
+  { path: 'ingredients/list',  component: IngredientsListComponent, canActivate: [AuthGuard]},
   // add ingredient
   { path: 'ingredients/create' , component: IngredientsCreateComponent, canActivate: [AuthGuard]},
   // ingredient details
