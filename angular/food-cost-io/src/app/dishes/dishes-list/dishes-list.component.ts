@@ -10,10 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './dishes-list.component.html',
   styleUrls: ['./dishes-list.component.css']
 })
-
-export class DishesListComponent  implements OnInit, OnDestroy  {
-
-
+export class DishesListComponent implements OnInit, OnDestroy {
   dishes: Dish[] = [];
   dishCount: number;
   linksList = [];
@@ -30,36 +27,36 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   ngOnInit() {
     this.isLoading = true;
     this.dishesService.getDishes(this.pageIndex, this.postsPerPage);
-    this.dishCount = this.dishesService.getDishesData().length;
-    this.dishesSub = this.dishesService.getDishUpdateListener()
+    this.dishCount = this.dishesService.dishCount;
+    this.dishesSub = this.dishesService
+      .getDishesUpdateListener()
       .subscribe((dishes: Dish[]) => {
         this.dishes = dishes;
         this.buildLinksList();
         this.isLoading = false;
-    });
+      });
   }
 
   // links list
   buildLinksList() {
     if (this.linksList.length === 0) {
       const tmpArray = [];
-      const localDishes: any  = this.dishesService.getDishesData();
-      localDishes.forEach((item) => {
-        tmpArray.push((item.name.substring(0, 1))
-        .toLocaleLowerCase());
+      const localDishes: any = this.dishesService.getDishesData();
+      localDishes.sort().forEach(item => {
+        tmpArray.push(item.name.substring(0, 1).toLocaleLowerCase());
       });
       this.linksList = Array.from(new Set(tmpArray));
+      this.linksList.sort();
     }
   }
 
   onChangedPage(pageData: PageEvent) {
     this.dishesService.paginateOnChange(pageData.pageIndex, pageData.pageSize);
-    console.log(pageData);
   }
 
-  saveDishToLocal (id) {
-    this.dishesService.saveDishData(this.dishesService.getDish(id));
-    this.router.navigate(['dish/' + id]);
+  saveDishToLocal(dish) {
+    this.dishesService.saveLocalDishData(dish);
+    this.router.navigate(['dish/' + dish._id]);
   }
 
   refreshDishesList() {
@@ -68,8 +65,6 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
     this.dishesService.paginateOnChange(this.pageIndex, this.postsPerPage);
     this.showRefresh = false;
   }
-
-
 
   search(searchValue) {
     if (searchValue) {
@@ -90,8 +85,8 @@ export class DishesListComponent  implements OnInit, OnDestroy  {
   }
 
   onDelete(id) {
+    this.isLoading = true;
     this.dishesService.deleteDish(id);
-
   }
 
   ngOnDestroy() {

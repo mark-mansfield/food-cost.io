@@ -39,30 +39,16 @@ export class IngredientsService {
     });
   }
 
-  // delete a dish
-  deleteIngredient(id: String) {
-    this.http.delete(BACKEND_URL + '/' + id)
-      .subscribe(result => {
-        // filter returns all entries where the  condition === true and removes entries where the condition === false
-        // const updateDishes = this.dishes.filter(dish => dish._id !== id);
-        // // update menus array with filtered result
-        // this.dishes = updateDishes;
-        // // inform UI
-        // this.dishesUpdated.next([...this.dishes]);
-        console.log(result);
-
-    });
-  }
-
+  // update ingredients doc [ add ,edit, delete ]
+  // this document is never deleted only the content of it get changed
   updateIngredient(ingredient,  ingredientsDoc) {
     const customer = this.globals.getCustomer();
     this.http
     .put<{ message: string; }>(BACKEND_URL + '/' + customer.id, ingredientsDoc )
       .subscribe(returnedData => {
         console.log('update status: ' + returnedData.message);
-        this.ingredientsList = ingredientsDoc.ingredients;
         this.saveLocalIngredientData(ingredient);
-        this.saveLocalIngredientsData(this.ingredientsList);
+        this.saveLocalIngredientsData(ingredientsDoc);
         this.ingredientsUpdated.next([this.ingredientsList]); // inform UI
         this.router.navigate(['/ingredients/list/']);
     });
@@ -72,7 +58,7 @@ export class IngredientsService {
     localStorage.setItem('ingredients' , JSON.stringify(ingredients));
   }
 
-  loadIngredientsList() {
+  loadLocalIngredientsData() {
     return JSON.parse(localStorage.getItem('ingredients'));
   }
 
@@ -81,7 +67,7 @@ export class IngredientsService {
     localStorage.setItem('ingredient' , JSON.stringify(ingredient));
   }
 
-  loadIngredientData() {
+  loadLocalIngredientData() {
     return JSON.parse(localStorage.getItem('ingredient'));
   }
 }

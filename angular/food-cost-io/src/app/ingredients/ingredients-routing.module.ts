@@ -15,7 +15,8 @@ const ingredientsRoutes: Routes = [
   // ingredient details
   { path: 'ingredients/:id',  component: IngredientsDetailsComponent, canActivate: [AuthGuard]},
   // editing root level properties on an ingredient we re-use the same component and pass in :field_name and :field_type
-  { path: 'ingredient/edit-field/:field_name/:field_type', component: IngredientEditFieldComponent ,  canActivate: [AuthGuard]},
+  { path: 'ingredient/edit-field/:field_name/:field_type', component: IngredientEditFieldComponent, canActivate: [AuthGuard] },
+  // delete ingredient
 
 
 ];

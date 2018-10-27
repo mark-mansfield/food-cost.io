@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IngredientsService } from '../ingredients.service';
 import { Ingredient } from '../ingredient.model';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 
 @Component({
@@ -26,17 +27,28 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    // preloading ingredients data to local storage is  done in auth.service.
+    const ingredientData = this.service.loadLocalIngredientsData();
+    console.log(ingredientData);
+    if (ingredientData) {
+      this.ingredients = ingredientData.ingredients;
+      this.isLoading = false;
+      this.ingredientsSub = this.service
+        .geIngredientsUpdateListener()
+        .subscribe();
+    } else {
+      console.log('no local ingredient data found');
+      this.service.getIngredients();
+      this.isLoading = true;
+      this.ingredientsSub = this.service
+        .geIngredientsUpdateListener()
+        .subscribe((data: Ingredient[]) => {
+          this.ingredients = data;
+          // this.buildLinksList();
+          this.isLoading = false;
+        });
+    }
 
-
-    this.service.getIngredients();
-    this.isLoading = true;
-    this.ingredientsSub = this.service
-      .geIngredientsUpdateListener()
-      .subscribe((ingredientData: Ingredient[]) => {
-        this.ingredients = ingredientData;
-        // this.buildLinksList();
-        this.isLoading = false;
-      });
   }
 
   search(searchvalue) { }
@@ -45,8 +57,9 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
 
   searchByFirstletter(link) { }
 
-  onDelete(id) {
-    this.service.deleteIngredient(id);
+  onDelete(index) {
+    console.log(index);
+    console.log(this.ingredients.slice(index, 1));
   }
 
   ngOnDestroy() {

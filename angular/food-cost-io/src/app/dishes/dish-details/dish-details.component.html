@@ -1,5 +1,6 @@
 <main class="main">
-  <section class="section">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <section class="section" *ngIf='!isLoading'>
     <button class="button" [routerLink]="['/dish/edit-field/', selectedId , 'name', 'text']">
       <div *ngIf="hasData">Name: {{ dish.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
@@ -16,7 +17,7 @@
       <div *ngIf="hasData">Method: <small>{{ this.method.substring(0, 15) + ' ...' }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
-    <button class="button"  [routerLink]="['/dish/edit-field/' ,selectedId,  'plating_guide', 'text-area']">
+    <button class="button" [routerLink]="['/dish/edit-field/' ,selectedId,  'plating_guide', 'text-area']">
       <div *ngIf="hasData">Plating: <small>{{ this.plating.substring(0, 15) + ' ...' }}</small></div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
@@ -25,12 +26,10 @@
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
     <div class="info-panel">
-      <div *ngIf="hasData">Cost: ${{ dish.cost }}</div>
+      <div *ngIf="hasData">Cost: ${{ this.getIngredientsTotal() }}</div>
     </div>
     <div class="info-panel">
       <div *ngIf="hasData">Margin: {{ this.margin }} %</div>
     </div>
   </section>
 </main>
-
-

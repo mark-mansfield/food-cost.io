@@ -4,7 +4,7 @@ import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Globals } from '../globals';
-
+import { IngredientsService } from '../ingredients/ingredients.service';
 @Injectable({ providedIn: 'root'})
 
 export class AuthService {
@@ -21,7 +21,7 @@ export class AuthService {
   // Subject push the authentication status to interested components
   // return the observable, we just push a boolean from here to the  other parties
   private authStatusListener = new Subject<boolean>();
-  constructor (private http: HttpClient, private router: Router, private globals: Globals) {}
+  constructor (private http: HttpClient, private router: Router, private globals: Globals, public service: IngredientsService) {}
 
   getToken() {
     return this.token;
@@ -85,8 +85,10 @@ export class AuthService {
 
         const now = new Date;
         const expirationDate = new Date( now.getTime() + this.expiresInDuration * 1000);
-
         this.saveAuthData(token, expirationDate);
+
+        // preload data for costing functions
+        this.getIngredientsDoc();
         this.router.navigate(['']);
       }
     });
@@ -98,10 +100,13 @@ export class AuthService {
     this.authStatusListener.next(false);
     this.router.navigate(['/']); /* navigate to landing page */
     this.clearAuthData();
+    this.clearCustomerData();
     clearTimeout(this.tokenTimer);
   }
 
-
+  getIngredientsDoc() {
+    this.service.getIngredients();
+  }
 
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
@@ -130,6 +135,13 @@ export class AuthService {
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+  }
+
+  private clearCustomerData() {
+    localStorage.removeItem('customer');
+    localStorage.removeItem('ingredients');
+    localStorage.removeItem('ingredient');
+    localStorage.removeItem('dishes');
   }
 }
 

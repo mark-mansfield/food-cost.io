@@ -30,8 +30,8 @@ export class IngredientEditFieldComponent implements OnInit {
     this.field = this.route.snapshot.paramMap.get('field_name');
     this.field_type = this.route.snapshot.paramMap.get('field_type');
     if (this.field) {
-      this.ingredient = this.service.loadIngredientData();
-      this.ingredientsDoc = this.service.loadIngredientsList();
+      this.ingredient = this.service.loadLocalIngredientData();
+      this.ingredientsDoc = this.service.loadLocalIngredientsData();
       this.ingredientsList = this.ingredientsDoc.ingredients;
       this.field_value = this.ingredient[this.field];
       this.objIndex = this.ingredientsList.findIndex(item => item[this.field] ===  this.field_value);
@@ -41,7 +41,6 @@ export class IngredientEditFieldComponent implements OnInit {
   }
 
   onUpdateItem() {
-
     this.ingredient = this.ingredientsList[this.objIndex];
     this.ingredientsList[this.objIndex][this.field] = this.field_value;
     this.ingredientsDoc.ingredients = this.ingredientsList;

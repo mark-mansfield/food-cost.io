@@ -1,14 +1,17 @@
+<!--  add an ingredient from a master list to the current dish ingredient list-->
 <main class="main">
-    <section class="section">
-        <div class="info-panel" id="info-text">
-            <div>
-                <p>add ingredient , this will be deprecated in v2</p>
-                <p>You can add all the details later..</p>
-            </div>
-        </div>
-        <input class="input-field" type="text" [(ngModel)]="this.ingredientName"  placeholder="ingredient name.....">
-        <button class="action-button button hvr-ripple-out" (click)="onAddIngredient(ingredientName)">
-            <div>SAVE</div>
-        </button>
-    </section>
-  </main>
+  <section class="section">
+    <div class="info-panel" id="info-text">
+      <div>
+        <p>add ingredient from your list</p>
+        <p>You will add some measurements later..</p>
+      </div>
+    </div>
+
+
+    <button class="button" *ngFor="let ingredient of ingredientsList; let i = index" [attr.data-index]="i">
+      <div>{{ ingredient.name }}</div>
+      <i class="fa fa-plus" (click)="onAddIngredient(ingredient.name)"></i>
+    </button>
+  </section>
+</main>

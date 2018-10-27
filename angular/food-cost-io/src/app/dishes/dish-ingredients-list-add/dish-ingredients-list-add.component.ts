@@ -1,9 +1,11 @@
-import { Component, OnInit} from '@angular/core';
-import { DishService } from '../dish.service';
-import { ActivatedRoute , Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DishIngredient } from '../dish-ingredient.model';
 import { Dish } from '../dish.model';
+import { Ingredient } from 'src/app/ingredients/ingredient.model';
+import { IngredientsService } from '../../ingredients/ingredients.service';
+import { DishService } from '../dish.service';
 
 @Component({
   selector: 'app-dish-ingredients-list-add',
@@ -11,49 +13,50 @@ import { Dish } from '../dish.model';
   styleUrls: ['./dish-ingredients-list-add.component.css']
 })
 export class DishIngredientsListAddComponent implements OnInit {
-
-
   public dish: Dish;
-  public ingredient: DishIngredient;
   public ingredientsList = [];
   public isLoading = false;
-  public ingredientName: string;
+  private ingredientsSub: Subscription;
+  private dishesSub: Subscription;
   id: string;
 
-  constructor(public service: DishService, private route: ActivatedRoute) { }
+  constructor(
+    public dishesService: DishService,
+    private route: ActivatedRoute,
+    public router: Router,
+    public ingredientService: IngredientsService
+  ) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('_id');
-    // because a manual page reload removes the body of the http request
-    // if page reload , grab the data from local storage
-    // ? Refactor this to just call local storage always?
-    if (this.id) {
-      // this.ingredientsList = this.service.getIngredientsList(this.id);
-      // if (!this.ingredientsList) {
-      //   this.dish = this.service.getSavedDishData();
-      //   this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
-      // }
-      this.dish = this.service.getSavedDishData();
-      console.log(this.dish);
-      this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
+    this.dish = this.dishesService.loadLocalDishData();
+    const ingredientData = this.ingredientService.loadLocalIngredientsData();
+    if (ingredientData) {
+      this.ingredientsList = ingredientData.ingredients;
       this.isLoading = false;
+      this.ingredientsSub = this.ingredientService
+        .geIngredientsUpdateListener()
+        .subscribe();
     } else {
-      console.log('no id sent');
+      this.ingredientService.getIngredients();
+      this.isLoading = true;
+      this.ingredientsSub = this.ingredientService
+        .geIngredientsUpdateListener()
+        .subscribe((ingredientList: Ingredient[]) => {
+          this.ingredientsList = ingredientList;
+          this.isLoading = false;
+        });
     }
   }
 
   onAddIngredient(name) {
-    this.ingredientName = name;
-    this.ingredient = {
-      name: this.ingredientName.toLocaleLowerCase(),
+    const ingredient: DishIngredient = {
+      name: name.toLocaleLowerCase(),
       qty: '0',
-      AP_weight : '0',
-      EP_weight : '0'
+      AP_weight: '0',
+      EP_weight: '0'
     };
-    console.log(this.dish);
-    this.ingredientsList.unshift(this.ingredient);
-    this.dish.ingredients = this.ingredientsList;
-
-    this.service.updateDish(this.dish);
+    this.dish.ingredients.unshift(ingredient);
+    this.dishesService.updateDish(this.dish, 'ingredients');
+    // this.router.navigate(['/dish/' + this.dish._id + '/ingredients']);
   }
 }

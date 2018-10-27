@@ -1,0 +1,17 @@
+{
+  "autorun": false,
+  "terminals": [
+    {
+      "name": "BUILD ANGULAR",
+      "description": "builds angular project",
+      "focus": true,
+      "command": "ng serve -o"
+    },
+    {
+      "name": "START NODE SERVER",
+      "description": "start local node server",
+      "focus": true,
+      "command": "npm run start:server"
+    }
+  ]
+}
