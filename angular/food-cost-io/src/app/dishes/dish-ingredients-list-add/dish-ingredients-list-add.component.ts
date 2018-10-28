@@ -52,7 +52,7 @@ export class DishIngredientsListAddComponent implements OnInit {
     const ingredient: DishIngredient = {
       name: name.toLocaleLowerCase(),
       qty: '0',
-      AP_weight: '0',
+      AP_weight: '1',
       EP_weight: '0'
     };
     this.dish.ingredients.unshift(ingredient);

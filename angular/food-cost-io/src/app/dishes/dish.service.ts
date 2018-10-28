@@ -179,6 +179,10 @@ export class DishService {
     return JSON.parse(localStorage.getItem('dish'));
   }
 
+  loadLocalIngredientsData() {
+    return JSON.parse(localStorage.getItem('ingredients'));
+  }
+
   saveLocalDishData(dish: Dish) {
     localStorage.setItem('dish', JSON.stringify(dish));
   }

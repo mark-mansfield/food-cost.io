@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
-
 import { Subscription } from 'rxjs';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-dish-details',
@@ -11,14 +11,13 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dish-details.component.css']
 })
 export class DishDetailsComponent implements OnInit {
-  public hasData = false;
   public isLoading = false;
   public dish: Dish;
-  private dishSub: Subscription;
+  public dishSub: Subscription;
 
   public selectedId: string;
   ingredients = [];
-
+  name: string;
   description: string;
   ingredientTotal: number;
   method: string;
@@ -50,14 +49,9 @@ export class DishDetailsComponent implements OnInit {
           .subscribe((dish: Dish) => {
             this.dish = dish;
             this.setDishObjectData(dish);
-            this.getMargin(
-              parseInt(this.cost, 0),
-              parseInt(this.retail_price, 0)
-            );
           });
-        this.hasData = true;
         this.setDishObjectData(this.dish);
-        this.getMargin(parseInt(this.cost, 0), parseInt(this.retail_price, 0));
+        // this.getMargin(parseInt(this.cost, 0), parseInt(this.retail_price, 0));
         // TODO FIX the margin function to work correctly// these values are truthy / falsey so i reverse the comaprison for each
         // if (0 <= parseInt(this.cost, 0) &&  0 <= parseInt(this.retail_price, 0) ) {
 
@@ -69,26 +63,62 @@ export class DishDetailsComponent implements OnInit {
       }
     });
   }
-
+  // {customerId: "5bbac8e83913a6394d42d8b2", _id: "5bd38dcbaa4adf145e2f86b1", name: "Burrito",…}
   setDishObjectData(dish) {
+    this.name = this.dish.name;
     this.ingredients = this.dish.ingredients;
     this.ingredientTotal = this.ingredients.length;
     this.description = this.dish.description;
     this.method = this.dish.recipe_method;
     this.plating = this.dish.plating_guide;
-    this.cost = this.dish.cost;
-    this.retail_price = '0.10';
+    this.retail_price = this.dish.retail_price;
+    this.cost = this.getIngredientsTotal().toFixed(2);
+    this.margin = this.getMargin(this.cost, this.retail_price);
+    // console.log(this.dish);
   }
 
   getMargin(cost, retail) {
-    console.log(cost);
-    console.log(retail);
-    // const num = (0.05 / 0.1 ) * 110 ;
-    // console.log(num);
-    // return num.toFixed(2);
+    const tax = 10;
+    const markup = 100;
+    const margin = (cost / retail) * (tax + markup);
+    console.log(margin);
+    return margin.toFixed(2);
   }
 
+  // searches an array of objects
+  // {  name: "green kale", price: "2.50", unit_amount: "3", unit_type: "bunch", supplier: "xyz", …}
   getIngredientsTotal() {
-    return '1000.00';
+    const customerIngredients = this.service.loadLocalIngredientsData();
+    const ingredientList = customerIngredients.ingredients;
+    let total = 0.0;
+    this.ingredients.forEach(dishIngredient => {
+      const item = ingredientList.find(function(obj) {
+        return dishIngredient.name === obj.name;
+      });
+      total += parseFloat(this.getActualCost(dishIngredient, item));
+    });
+    return total;
+  }
+
+  // get actual cost after wastage of an ingredient
+  // ingredient object looks like this
+  // {name: "sea salt", qty: "0", AP_weight: "0", EP_weight: "0"}
+  getActualCost(dishIngredient, item) {
+    const itemYield =
+      (parseFloat(dishIngredient.EP_weight) /
+        parseFloat(dishIngredient.AP_weight)) *
+      100;
+    const factor = 100 / itemYield;
+    const unitCost = item.price / item.purchase_amount;
+    const itemCost = unitCost * dishIngredient.qty;
+    const realCost = factor * itemCost;
+    // console.log(dishIngredient);
+    // console.log(item);
+    // console.log('item yeild: ' + itemYield);
+    // console.log('factor: ' + factor);
+    // console.log('unit cost: ' + unitCost);
+    // console.log('ingredient item cost: ' + itemCost);
+    // console.log('real cost for this ingredient is: ' + realCost);
+    return realCost.toFixed(2);
   }
 }
