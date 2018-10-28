@@ -13,8 +13,8 @@
         this.ingredient.EP_weight }} %</span>
     </div>
     <div class="slidecontainer">
-      <input type="range" min="1" max="100" value="{{ this.ingredient.EP_weight * 100 }}" #slider class="slider"
-        (input)="sliderChange(slider)" id="myRange">
+      <input type="range" min="1" max="100" value="{{ this.EP_weight }}" #slider class="slider" (input)="sliderChange(slider)"
+        id="myRange">
     </div>
     <button type="submit" class="action-button button hvr-ripple-out" (click)="updateIngredient()">
       SAVE

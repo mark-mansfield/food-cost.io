@@ -18,6 +18,7 @@ export class DishIngredientsEditComponent implements OnInit {
   private ingredientName: string;
   public id: string;
   public qty: string;
+  public EP_weight: string;
   constructor(private service: DishService, private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -30,17 +31,12 @@ export class DishIngredientsEditComponent implements OnInit {
     // because a manual page reload removes the body of the http request
     // if page reload , grab the data from local storage
     if (this.id) {
-      // this.ingredientsList = this.service.getIngredientsList(this.id);
-      // console.log(this.ingredientsList);
-      // if (!this.ingredientsList) {
-      //   this.dish = this.service.getSavedDishData();
-      //   this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
-      // }
       this.dish = this.service.loadLocalDishData();
       this.ingredientsList = JSON.parse(JSON.stringify(this.dish.ingredients));
       this.ingredient = this.ingredientsList.find(
         item => item.name === this.ingredientName
       );
+      this.EP_weight = (parseFloat(this.ingredient.EP_weight) * 100).toFixed(2);
       this.isLoading = false;
     } else {
       console.log('no id sent');
