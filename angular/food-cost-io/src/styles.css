@@ -1,9 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
-html,
-body {
-  height: 100%;
-}
-
 :root {
   --hover-green: #00ffbb;
   --info-panel-dark-background: rgba(45, 44, 44, 0.3);
@@ -13,13 +8,31 @@ body {
   --side-background-light: rgba(20, 20, 20, 0.9);
   /* colors */
   --blue: dodgerblue;
-  --icon-large: 2rem;
   --light-text: white;
   --title-text: #7289da;
   --dark-text: rgb(108, 106, 106);
   /*  text sizes */
   --h1-large-text: 1.5rem;
   --button-text-size-med: 1.3rem;
+  --lge-icon: 2.3rem;
+  --xlge-icon: 3rem;
+  --red: red;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.mat-expansion-panel-header-title,
+/* need next 2 selectors to override the arrow color */
+.mat-expansion-indicator::after,
+.mat-expansion-panel-header-description,
+.mat-expansion-panel>mat-panel-title>a {
+  color: var(--blue) !important;
+  cursor: pointer;
 }
 
 /* placeholder text */
@@ -58,7 +71,6 @@ body {
 }
 
 .main {
-  margin-top: 20px;
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
@@ -78,7 +90,7 @@ body {
 
 /* font awesome icons */
 .fa-bars {
-  font-size: var(--icon-large);
+  font-size: var(--lge-icon);
   cursor: pointer;
   color: var(--blue);
 }
@@ -88,15 +100,26 @@ body {
   color: var(--blue);
 }
 
+.fa-minus-circle {
+  color: var(--red);
+  font-size: var(--xlge-icon);
+}
+
+.fa-minus-circle:hover {
+  color: var(--hover-green);
+  cursor: pointer;
+}
+
+.fa-sync,
 .fa-search,
 .fa-bars,
-.far,
 .fa-plus {
-  font-size: 2.3rem;
+  font-size: var(--lge-icon);
   color: var(--blue);
   cursor: pointer;
 }
 
+.fa-sync:hover,
 .fa-search:hover,
 .fa-bars:hover,
 .far:hover,
@@ -156,13 +179,4 @@ button,
 .button:hover {
   background-color: var(--hover-green);
   color: black;
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
 }

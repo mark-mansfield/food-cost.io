@@ -1,5 +1,6 @@
 <main class="main">
   <section class="section">
+    <i class="fa fa-minus-circle lge-icon" tabIndex='auto' (click)="onDelete()" aria-hidden="true"></i>
     <button class="button" [routerLink]="['/ingredient/edit-field/', 'name', 'text' ]">
       <div *ngIf="hasData">Name: {{ ingredient.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
@@ -30,5 +31,3 @@
     </button>
   </section>
 </main>
-
-

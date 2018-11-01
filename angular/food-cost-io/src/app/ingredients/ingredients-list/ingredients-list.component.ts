@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IngredientsService } from '../ingredients.service';
 import { Ingredient } from '../ingredient.model';
-import { CompileShallowModuleMetadata } from '@angular/compiler';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-ingredients-list',
@@ -13,63 +13,69 @@ import { CompileShallowModuleMetadata } from '@angular/compiler';
 export class IngredientsListComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public showRefresh = false;
+  multi = true;
   public ingredients: Ingredient[] = [];
+  public categories = [];
   public linksList = [];
+  public ingredientCount: number;
+  public selectedCat: string;
   public searchTerm: string;
   private ingredientsSub: Subscription;
   public ingredientData;
-  constructor(
-    private service: IngredientsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  public category;
+
+  constructor(private service: IngredientsService, private router: Router) {}
+
+  @ViewChild('accordion')
+  accordion: MatAccordion;
 
   ngOnInit() {
-    // preloading ingredients data to local storage is  done in auth.service.
-    this.ingredientData = this.service.loadLocalIngredientsData();
+    this.service.getIngredients();
+    this.isLoading = true;
+    this.ingredientsSub = this.service
+      .geIngredientsUpdateListener()
+      .subscribe((data: Ingredient[]) => {
+        this.ingredients = data;
+        this.categories = this.service.ingredientsDoc.categories;
+        this.ingredientCount = this.ingredients.length;
+        console.log(this.ingredientCount);
+        this.isLoading = false;
+      });
+  }
 
-    console.log(this.ingredientData);
-    if (this.ingredientData) {
-      this.ingredients = this.ingredientData.ingredients;
-      this.isLoading = false;
-      this.buildLinksList();
-      this.ingredientsSub = this.service
-        .geIngredientsUpdateListener()
-        .subscribe();
-    } else {
-      console.log('no local ingredient data found');
-      this.service.getIngredients();
-      this.isLoading = true;
-      this.ingredientsSub = this.service
-        .geIngredientsUpdateListener()
-        .subscribe((data: Ingredient[]) => {
-          this.ingredients = data;
-          this.buildLinksList();
-          this.isLoading = false;
-        });
-    }
+  refreshList() {
+    this.service.refreshingredientsList();
+    this.showRefresh = false;
+    this.accordion.closeAll();
   }
 
   // links list
   buildLinksList() {
     if (this.linksList.length === 0) {
       const tmpArray = [];
-      // const localIngredients: any = this.service.loadLocalIngredientsData();
-      console.log(this.ingredientData.ingredients);
-
       this.ingredients.sort().forEach(item => {
         tmpArray.push(item.name.substring(0, 1).toLocaleLowerCase());
       });
       this.linksList = Array.from(new Set(tmpArray));
       this.linksList.sort();
-      console.log(this.linksList);
     }
   }
 
-  search(searchvalue) {
-    console.log(searchvalue);
+  search(searchValue) {
+    if (searchValue) {
+      this.service.searchIngredientByName(searchValue);
+    }
   }
 
+  filterByCat(cat) {
+    this.service.searchIngredientByCategory(cat);
+  }
+
+  // filterByCat(event) {
+  //   const arr = event.target.value.split(':');
+  //   this.selectedCat = arr[1].trim();
+  //   this.service.searchIngredientByCategory(this.selectedCat);
+  // }
   refresh() {}
 
   searchByFirstletter(link) {

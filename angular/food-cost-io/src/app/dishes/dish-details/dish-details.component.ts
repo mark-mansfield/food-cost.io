@@ -3,7 +3,6 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
 import { Subscription } from 'rxjs';
-import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'app-dish-details',
@@ -112,13 +111,12 @@ export class DishDetailsComponent implements OnInit {
     const unitCost = item.price / item.purchase_amount;
     const itemCost = unitCost * dishIngredient.qty;
     const realCost = factor * itemCost;
-    // console.log(dishIngredient);
-    // console.log(item);
-    // console.log('item yeild: ' + itemYield);
-    // console.log('factor: ' + factor);
-    // console.log('unit cost: ' + unitCost);
-    // console.log('ingredient item cost: ' + itemCost);
-    // console.log('real cost for this ingredient is: ' + realCost);
     return realCost.toFixed(2);
+  }
+
+  onDelete(id, index, pageCount) {
+    this.isLoading = true;
+    this.service.deleteDish(id);
+    // this.service.paginate(index, pageCount);
   }
 }

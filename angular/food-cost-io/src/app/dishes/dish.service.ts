@@ -23,19 +23,6 @@ export class DishService {
     private globals: Globals
   ) {}
 
-  //  costing functions
-  /// Calculate the actual price of an ingredient
-  /// premise that an ingredient may or may not have wastage
-  /// - Parameters:
-  ///   - itemIndex: index of ingredient
-  ///   - apWeight: the purchased weight of the ingredient
-  ///   - epWeight: the edible portion of the ingredient after any processing
-  ///   - ingredient_purchase_amount units of measure i.e. meters, kg , box of 188, etc...
-  /// - Returns: the edible portion cost as a string
-  getActualPrice(itemIndex, ap_Weight, ep_Weight /*ingredientClass: String*/) {
-    console.log(itemIndex);
-  }
-
   //  use interceptor , function to run on any outgoing http request
   //  we manipulate the request to add our token.
   // + '/' + this.globals.custID
@@ -76,6 +63,8 @@ export class DishService {
   }
 
   getDishesUpdateListener() {
+    console.log('dishes array updated');
+
     return this.dishesUpdated.asObservable();
   }
 
@@ -86,9 +75,6 @@ export class DishService {
   paginate(index, pageCount) {
     const sliceStart = index * pageCount;
     const sliceLength = sliceStart + pageCount;
-    console.log(sliceStart);
-    console.log(sliceLength);
-    console.log(sliceLength);
     return this.dishes.slice(sliceStart, sliceLength);
   }
 
@@ -99,26 +85,24 @@ export class DishService {
   // search for a dish by name
   searchDishByName(searchTerm) {
     const searchResults = this.dishes.filter(p => p.name.includes(searchTerm));
-    console.log(searchResults);
+
     this.dishesUpdated.next([...searchResults]);
   }
 
   searchDishByFirstletter(letter) {
     const searchResults = this.dishes.filter(p => p.name[0] === letter);
-    console.log(searchResults);
     this.dishesUpdated.next([...searchResults]);
   }
 
   // delete a dish
   deleteDish(id: String) {
     this.http.delete(BACKEND_URL + '/' + id).subscribe(result => {
-      // filter returns all entries where the  condition === true and removes entries where the condition === false
-      const updateDishes = this.dishes.filter(dish => dish._id !== id);
-      // update menus array with filtered result
-      this.dishes = updateDishes;
-      // inform UI
+      this.dishes = this.dishes.filter(dish => dish._id !== id);
+      this.dishCount = this.dishes.length;
+      this.saveLocalDishesData(this.dishes);
       this.dishesUpdated.next([...this.dishes]);
     });
+    this.router.navigate(['/dishes']);
   }
 
   addDish(id: null, name: string /*, description: string, image: File*/) {
@@ -161,7 +145,8 @@ export class DishService {
         this.saveLocalDishesData(this.dishes);
         this.dishesUpdated.next([...this.dishes]); // inform UI
         this.dishUpdated.next(this.dishes[storedDishIndex]); // inform UI
-        console.log(property);
+        // because updating a root level property should take us back to the start of the view stack
+        // updating a nested array of objects should take us back to the second view in the view stack
         if (property === 'ingredients') {
           this.router.navigate(['/dish/' + dish._id + '/ingredients']);
         } else {

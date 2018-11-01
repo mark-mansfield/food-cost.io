@@ -1,13 +1,16 @@
 <main class="main">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
   <section class="section" *ngIf='!isLoading'>
-    <div class="info-panel">
+    <i class="fa fa-minus-circle lge-icon" tabIndex='auto' (click)="onDelete(dish._id)" aria-hidden="true"></i>
+    <div class="info-panel delete-tool">
       <h1>{{ dish.name }}</h1>
     </div>
+
     <button class="button" [routerLink]="['/dish/edit-field/', selectedId , 'name', 'text']">
       <div>Name: {{ dish.name }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>
     </button>
+
     <button class="button" [routerLink]="['/dish/', selectedId , 'ingredients']">
       <div>Ingredients: {{ ingredientTotal }}</div>
       <i class="far fa-arrow-alt-circle-right white"></i>

@@ -12,12 +12,13 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class DishesListComponent implements OnInit, OnDestroy {
   dishes: Dish[] = [];
-  dishCount: number;
   linksList = [];
-  isLoading = false;
+  dishCount: number;
   searchTerm: string;
   linkListValue: string;
+  mode = 'list';
   showRefresh = false;
+  isLoading = false;
   pageIndex = 0;
   postsPerPage = 3;
   private dishesSub: Subscription;
@@ -27,11 +28,12 @@ export class DishesListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.dishesService.getDishes(this.pageIndex, this.postsPerPage);
-    this.dishCount = this.dishesService.dishCount;
     this.dishesSub = this.dishesService
       .getDishesUpdateListener()
       .subscribe((dishes: Dish[]) => {
+        this.dishCount = this.dishesService.dishCount;
         this.dishes = dishes;
+        this.linksList = [];
         this.buildLinksList();
         this.isLoading = false;
       });
@@ -39,8 +41,10 @@ export class DishesListComponent implements OnInit, OnDestroy {
 
   // links list
   buildLinksList() {
+    console.log('building links list');
     if (this.linksList.length === 0) {
       const tmpArray = [];
+      this.linksList = [];
       const localDishes: any = this.dishesService.getDishesData();
       localDishes.sort().forEach(item => {
         tmpArray.push(item.name.substring(0, 1).toLocaleLowerCase());
@@ -67,11 +71,10 @@ export class DishesListComponent implements OnInit, OnDestroy {
   }
 
   search(searchValue) {
+    this.mode = 'search';
     if (searchValue) {
       this.dishesService.searchDishByName(searchValue);
       this.dishCount = this.dishes.length;
-      this.pageIndex = 0;
-      this.dishesService.paginateOnChange(this.pageIndex, this.postsPerPage);
       this.showRefresh = true;
     } else {
       alert('Please enter a serch term');
@@ -79,14 +82,10 @@ export class DishesListComponent implements OnInit, OnDestroy {
   }
 
   searchByFirstletter(firstLetter) {
+    this.mode = 'search';
     this.dishesService.searchDishByFirstletter(firstLetter);
     this.dishCount = this.dishes.length;
     this.showRefresh = true;
-  }
-
-  onDelete(id) {
-    this.isLoading = true;
-    this.dishesService.deleteDish(id);
   }
 
   ngOnDestroy() {
