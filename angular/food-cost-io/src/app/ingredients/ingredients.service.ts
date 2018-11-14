@@ -15,9 +15,15 @@ export class IngredientsService {
   public ingredientsUpdated = new Subject<Ingredient[]>();
   public ingredientImportDataUpdated = new Subject<Ingredient[]>();
   public ingredientsDoc;
-  public cleanArr = [];
-  public importDataStructure = [];
+  // public cleanColsArr = []
+  // public importDataStructure = [];
   public mode = 'edit';
+
+  importObject = {
+    cleanColsArr: [],
+    importDataStructure: [],
+    cleanedData: []
+  };
   constructor(private http: HttpClient, private router: Router, public globals: Globals) {}
 
   getIngredientsUpdateListener() {
@@ -138,67 +144,37 @@ export class IngredientsService {
     this.http
       .post<{ message: string; data: any }>(BACKEND_URL + '/' + customer.id + '/import', formData)
       .subscribe(returnedData => {
-        // console.log('upload status: ' + returnedData.message);
         const data = returnedData.data;
-        // number of columns
         let colCount = Object.entries(data[0]).length;
-
-        // build data structure
-        this.importDataStructure = this.buildImportDataStruct(Object.entries(data[0]).length);
-
-        // push each column value into columns structure
-        this.pushColValue(data, colCount);
+        this.importObject.importDataStructure = this.buildImportDataStruct(Object.entries(data[0]).length);
+        this.importObject.importDataStructure = this.pushColValue(data, colCount);
 
         // delete empty column
         // turn each array [csv column] into a string
-        // edge case empty array  = empty column data
+        // edge case empty array  = empty column
 
-        this.importDataStructure.forEach((item, index) => {
-          if (this.importDataStructure[index].join('').length === 0) {
-            this.importDataStructure.splice(index, 1);
+        this.importObject.importDataStructure.forEach((item, index) => {
+          if (this.importObject.importDataStructure[index].join('').length === 0) {
+            this.importObject.importDataStructure.splice(index, 1);
           }
         });
 
-        colCount = this.importDataStructure.length;
-        // now look for blank rows
-        const rowCount = this.importDataStructure[0].length;
-        const tmpArr = [];
-        // loop over rows and cols
-        for (let col = 0; col < colCount; col++) {
-          // tmpArr.push([]);
-          for (let row = 0; row < rowCount; row++) {
-            // look at cell
-            if (this.importDataStructure[col][row] === '') {
-              tmpArr.push(row);
-            }
-          }
-          // array contains list of indexes
-          // console.log(tmpArr);
-        }
+        colCount = this.importObject.importDataStructure.length;
 
-        //  map out all blank cells to an object
-        //  push each blank cell's index into storage object
+        const arrOfIndexes = this.scanImportForEmptyCells(colCount);
+        // eg [2, 3, 7, 2, 3, 7, 2, 3, 7, 2, 3, 7]
+        const emptyCellIndexObj = this.countItemFrequnecy(arrOfIndexes);
+        // e.g. {2: 4, 3: 4, 7: 4}
 
-        const countedItems = this.countItemFrequnecy(tmpArr);
+        this.importObject.cleanColsArr = [...this.importObject.importDataStructure];
 
-        // { rowIndex: occurences }
-        // console.log(countedItems);
-
-        // copy orignal array of arrays
-        this.cleanArr = [...this.importDataStructure];
-        console.log('cleanArr: ' + this.cleanArr.length);
-        // check if we need to remove blank row
-        const itemEntries = Object.entries(countedItems);
-        itemEntries.forEach(item => {
-          if (item[1] === colCount) {
-            for (let i = 0; i < this.importDataStructure.length; i++) {
-              this.cleanArr[i] = this.cleanArr[i].filter(Boolean);
-            }
-          }
-        });
-        this.ingredientImportDataUpdated.next([...this.cleanArr]);
-        this.importDataStructure = [];
-        this.cleanArr = [];
+        // delete empty cells if a whole row is empty
+        const emptyCellItems = Object.entries(emptyCellIndexObj);
+        this.importObject.cleanedData = this.removeBlankRows(emptyCellItems, colCount);
+        this.ingredientImportDataUpdated.next([...this.importObject.cleanedData]);
+        this.importObject.importDataStructure = [];
+        this.importObject.cleanedData = [];
+        this.importObject.cleanColsArr = [];
       });
   }
 
@@ -211,16 +187,40 @@ export class IngredientsService {
   }
 
   pushColValue(data, colCount) {
+    const tmpArray = [...this.importObject.importDataStructure];
     data.forEach(item => {
       const row = Object.entries(item);
-      console.log(row);
+      // console.log(row);
       for (let i = 0; i < colCount; i++) {
-        this.importDataStructure[i].push(row[i][1]);
+        tmpArray[i].push(row[i][1]);
       }
     });
+    return tmpArray;
   }
+
+  /**  scanImportForEmptyCells()
+   * params: { columnCount : int }
+   * loop over a 2d array by column(n) rows(n) and look look for empty row cell
+   * A row cell is defined by its [col][rowIndex]
+   * if [col][rowindex] === '' add rowIndex to tmp array
+   * create an array of empty cell indexes
+   */
+  scanImportForEmptyCells(columnCount) {
+    const rowCount = this.importObject.importDataStructure[0].length;
+    const arr = [];
+    for (let col = 0; col < columnCount; col++) {
+      for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        // look at cell if empty push its index into a tmpArray
+        if (this.importObject.importDataStructure[col][rowIndex] === '') {
+          arr.push(rowIndex);
+        }
+      }
+    }
+    return arr;
+  }
+
   countItemFrequnecy(arr) {
-    const countedItems = arr.reduce(function(allItems, name) {
+    const tmpArr = arr.reduce(function(allItems, name) {
       if (name in allItems) {
         allItems[name]++;
       } else {
@@ -228,6 +228,19 @@ export class IngredientsService {
       }
       return allItems;
     }, {});
-    return countedItems;
+    return tmpArr;
+  }
+
+  removeBlankRows(arr, rowSize) {
+    const tmpArr = [...this.importObject.cleanColsArr];
+    arr.forEach(item => {
+      if (item[1] === rowSize) {
+        console.log('row ' + item[0] + ' is blank');
+        for (let i = 0; i < this.importObject.importDataStructure.length; i++) {
+          tmpArr[i] = tmpArr[i].filter(Boolean);
+        }
+      }
+    });
+    return tmpArr;
   }
 }
