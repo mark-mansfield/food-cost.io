@@ -145,6 +145,7 @@ export class IngredientsImportComponent implements OnInit {
           this.reviewTableData.data = this.reviewTableDataSource;
         });
       }
+      console.log('Review table data source::');
       console.log(this.reviewTableDataSource);
     });
   }

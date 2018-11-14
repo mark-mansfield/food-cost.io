@@ -62,7 +62,7 @@
           </form>
         </mat-card>
       </mat-step>
-      <mat-step *ngFor="let col of Columns" [completed]="false">
+      <mat-step [completed]="false">
         <ng-template matStepLabel>Step 2. set first column name</ng-template>
         <mat-card class="matt-card">
           <table mat-table [dataSource]="previewDataSource[0]" class="mat-elevation-z8">
