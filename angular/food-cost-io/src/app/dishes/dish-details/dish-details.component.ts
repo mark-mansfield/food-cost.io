@@ -43,6 +43,7 @@ export class DishDetailsComponent implements OnInit {
       if (paramMap.has('_id')) {
         this.selectedId = paramMap.get('_id');
         this.dish = this.service.getDish();
+        console.log(this.dish);
         this.dishSub = this.service
           .getDishUpdateListener()
           .subscribe((dish: Dish) => {
@@ -94,6 +95,7 @@ export class DishDetailsComponent implements OnInit {
       const item = ingredientList.find(function(obj) {
         return dishIngredient.name === obj.name;
       });
+      console.log(item);
       total += parseFloat(this.getActualCost(dishIngredient, item));
     });
     return total;
@@ -103,12 +105,13 @@ export class DishDetailsComponent implements OnInit {
   // ingredient object looks like this
   // {name: "sea salt", qty: "0", AP_weight: "0", EP_weight: "0"}
   getActualCost(dishIngredient, item) {
+    console.log(dishIngredient);
     const itemYield =
       (parseFloat(dishIngredient.EP_weight) /
         parseFloat(dishIngredient.AP_weight)) *
       100;
     const factor = 100 / itemYield;
-    const unitCost = item.price / item.purchase_amount;
+    const unitCost = item.ingredient_price / item.purchase_amount;
     const itemCost = unitCost * dishIngredient.qty;
     const realCost = factor * itemCost;
     return realCost.toFixed(2);

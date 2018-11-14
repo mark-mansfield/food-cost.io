@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { DishService } from '../dish.service';
 import { Dish } from '../dish.model';
 import { PageEvent } from '@angular/material/paginator';
-
+import { IngredientsService } from '../../ingredients/ingredients.service';
 @Component({
   selector: 'app-dishes-list',
   templateUrl: './dishes-list.component.html',
@@ -23,10 +23,15 @@ export class DishesListComponent implements OnInit, OnDestroy {
   postsPerPage = 3;
   private dishesSub: Subscription;
 
-  constructor(public dishesService: DishService, private router: Router) {}
+  constructor(
+    public dishesService: DishService,
+    private router: Router,
+    public igredientsService: IngredientsService
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
+    this.igredientsService.getIngredients();
     this.dishesService.getDishes(this.pageIndex, this.postsPerPage);
     this.dishesSub = this.dishesService
       .getDishesUpdateListener()

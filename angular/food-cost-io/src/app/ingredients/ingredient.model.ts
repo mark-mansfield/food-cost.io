@@ -1,6 +1,6 @@
 export class Ingredient {
-  name: string;
-  price: string;
+  ingredient_name: string;
+  ingredient_price: string;
   unit_amount: string;
   purchase_amount: string;
   unit_type: string;

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IngredientsService } from '../ingredients.service';
+
 @Component({
   selector: 'app-ingredients-create',
   templateUrl: './ingredients-create.component.html',
@@ -7,11 +10,20 @@ import { IngredientsService } from '../ingredients.service';
 })
 export class IngredientsCreateComponent implements OnInit {
   name = '';
-  constructor(private service: IngredientsService) {}
+  filename = '';
+  message = '';
+  form: FormGroup;
+  nextEnabled = false;
+  isLoading = false;
+  fileData: any;
+  constructor(
+    private ingredientsService: IngredientsService,
+    public route: ActivatedRoute
+  ) {}
 
   ngOnInit() {}
 
   onCreate() {
-    this.service.createIngredient(this.name);
+    this.ingredientsService.createIngredient(this.name);
   }
 }

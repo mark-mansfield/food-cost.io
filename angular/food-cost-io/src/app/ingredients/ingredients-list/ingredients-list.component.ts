@@ -13,9 +13,11 @@ import { MatAccordion } from '@angular/material/expansion';
 export class IngredientsListComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public showRefresh = false;
+  public subscriptionActive = false;
   multi = true;
   public ingredients: Ingredient[] = [];
   public categories = [];
+  public suppliers = [];
   public linksList = [];
   public ingredientCount: number;
   public selectedCat: string;
@@ -33,14 +35,37 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
     this.service.getIngredients();
     this.isLoading = true;
     this.ingredientsSub = this.service
-      .geIngredientsUpdateListener()
+      .getIngredientsUpdateListener()
       .subscribe((data: Ingredient[]) => {
+        this.subscriptionActive = true;
         this.ingredients = data;
         this.categories = this.service.ingredientsDoc.categories;
+        this.suppliers = this.service.ingredientsDoc.suppliers;
         this.ingredientCount = this.ingredients.length;
-        console.log(this.ingredientCount);
         this.isLoading = false;
       });
+
+    // const ingredientsDoc = this.service.loadLocalIngredientsData();
+    // if (ingredientsDoc === null) {
+    //   this.service.getIngredients();
+    //   this.isLoading = true;
+    //   this.ingredientsSub = this.service
+    //     .getIngredientsUpdateListener()
+    //     .subscribe((data: Ingredient[]) => {
+    //       this.subscriptionActive = true;
+    //       this.ingredients = data;
+    //       this.categories = this.service.ingredientsDoc.categories;
+    //       this.suppliers = this.service.ingredientsDoc.suppliers;
+    //       this.ingredientCount = this.ingredients.length;
+    //       this.isLoading = false;
+    //     });
+    // } else {
+    //   this.ingredients = ingredientsDoc.ingredients;
+    //   this.categories = ingredientsDoc.categories;
+    //   this.suppliers = ingredientsDoc.suppliers;
+    //   this.ingredientCount = this.ingredients.length;
+    //   this.isLoading = false;
+    // }
   }
 
   refreshList() {
@@ -54,7 +79,7 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
     if (this.linksList.length === 0) {
       const tmpArray = [];
       this.ingredients.sort().forEach(item => {
-        tmpArray.push(item.name.substring(0, 1).toLocaleLowerCase());
+        tmpArray.push(item.ingredient_name.substring(0, 1).toLocaleLowerCase());
       });
       this.linksList = Array.from(new Set(tmpArray));
       this.linksList.sort();
@@ -68,14 +93,15 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   }
 
   filterByCat(cat) {
+    console.log(cat);
     this.service.searchIngredientByCategory(cat);
   }
 
-  // filterByCat(event) {
-  //   const arr = event.target.value.split(':');
-  //   this.selectedCat = arr[1].trim();
-  //   this.service.searchIngredientByCategory(this.selectedCat);
-  // }
+  filterBySupplier(supplier) {
+    console.log(supplier);
+    this.service.searchIngredientBySupplier(supplier);
+  }
+
   refresh() {}
 
   searchByFirstletter(link) {
@@ -88,11 +114,13 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.ingredientsSub.unsubscribe();
+    if (this.subscriptionActive) {
+      this.ingredientsSub.unsubscribe();
+    }
   }
 
   saveIngredientToLocal(ingredient) {
     this.service.saveLocalIngredientData(ingredient);
-    this.router.navigate(['ingredients/' + ingredient.name]);
+    this.router.navigate(['ingredients/' + ingredient.ingredient_name]);
   }
 }

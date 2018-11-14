@@ -24,13 +24,16 @@ input[type='text']:focus {
   border: 1px solid rgba(81, 203, 238, 1);
 }
 
+/* form > button.mat-raised-button {
+  display: none;
+} */
+
 .main > .section > .button {
   margin: 10px 0;
   width: 95vw;
   height: 80px;
   font-size: 2rem;
 }
-
 .main > .section > .info-panel {
   display: flex;
   justify-content: center;

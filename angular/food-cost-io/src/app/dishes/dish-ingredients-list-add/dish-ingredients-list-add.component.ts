@@ -47,7 +47,7 @@ export class DishIngredientsListAddComponent implements OnInit {
       this.ingredientsList = ingredientData.ingredients;
       this.isLoading = true;
       this.ingredientsSub = this.ingredientService
-        .geIngredientsUpdateListener()
+        .getIngredientsUpdateListener()
         .subscribe((ingredientList: Ingredient[]) => {
           this.ingredientsList = ingredientList;
           this.isLoading = false;
@@ -56,7 +56,7 @@ export class DishIngredientsListAddComponent implements OnInit {
       this.ingredientService.getIngredients();
       this.isLoading = true;
       this.ingredientsSub = this.ingredientService
-        .geIngredientsUpdateListener()
+        .getIngredientsUpdateListener()
         .subscribe((ingredientList: Ingredient[]) => {
           console.log(ingredientList);
           this.ingredientsList = ingredientList;
