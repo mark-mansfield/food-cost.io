@@ -154,9 +154,11 @@ export class IngredientsImportComponent implements OnInit {
   import() {
     //  get current data
     const ingredientsDoc = this.ingredientsService.loadLocalIngredientsData();
+
     this.reviewTableDataSource.forEach(item => {
       ingredientsDoc.ingredients.push(item);
     });
+    ingredientsDoc.ingredients = this.ingredientsService.removeDuplicateIngredients(ingredientsDoc.ingredients);
     this.ingredientsService.importIngredients(ingredientsDoc);
   }
 

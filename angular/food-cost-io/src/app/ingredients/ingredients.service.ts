@@ -15,8 +15,6 @@ export class IngredientsService {
   public ingredientsUpdated = new Subject<Ingredient[]>();
   public ingredientImportDataUpdated = new Subject<Ingredient[]>();
   public ingredientsDoc;
-  // public cleanColsArr = []
-  // public importDataStructure = [];
   public mode = 'edit';
 
   importObject = {
@@ -60,6 +58,19 @@ export class IngredientsService {
     };
     this.ingredientsDoc.ingredients.push(obj);
     this.updateIngredient(obj, this.ingredientsDoc);
+  }
+
+  removeDuplicateIngredients(arr) {
+    const seenIngredients = Object.create(null);
+    const deDupedIngredients = arr.filter((item, index) => {
+      const key = item.ingredient_name + '**' + item.supplier;
+      if (seenIngredients[key]) {
+        return false;
+      }
+      seenIngredients[key] = true;
+      return true;
+    });
+    return deDupedIngredients;
   }
 
   importIngredients(ingredientsDoc) {
