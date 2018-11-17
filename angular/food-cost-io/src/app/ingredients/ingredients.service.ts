@@ -47,6 +47,7 @@ export class IngredientsService {
     const customer = this.globals.getCustomer();
     this.ingredientsDoc = this.loadLocalIngredientsData();
     const obj: Ingredient = {
+      hash_key: ingredient_name + '**',
       ingredient_name: ingredient_name,
       ingredient_price: '',
       unit_amount: '',
@@ -64,13 +65,63 @@ export class IngredientsService {
     const seenIngredients = Object.create(null);
     const deDupedIngredients = arr.filter((item, index) => {
       const key = item.ingredient_name + '**' + item.supplier;
+      // if we have seen it before omit
       if (seenIngredients[key]) {
         return false;
       }
+      // otherwise we havent see it before and now we flag it
       seenIngredients[key] = true;
+      console.log('ingredient seen');
       return true;
     });
     return deDupedIngredients;
+  }
+
+  // hasDupes check if the current inport dat ahas an item
+  //  that already exists in the stsyem.
+  hasDupes(arr) {
+    const ingredientsDoc = this.loadLocalIngredientsData();
+    const hashTable = this.buildHashTable(ingredientsDoc.ingredients);
+    let found = false;
+    arr.forEach((item, index) => {
+      const foundIndex = hashTable.indexOf(item.hash_key);
+      // ingredient exists , overwrite
+      if (foundIndex !== -1) {
+        found = true;
+        return;
+      }
+    });
+    return found;
+  }
+
+  // builds a hash table of current ingredients
+  // take the hash key which is a combination of props ingredient_name + ** + supplier
+  buildHashTable(arr) {
+    const hashTable = [];
+    arr.forEach(item => {
+      hashTable.push(item.hash_key);
+    });
+    return hashTable;
+  }
+
+  // overwrite existing ingredients and add new
+  overwriteAndAddNewIngredients(arr) {
+    // all ingredients exisit on current list
+    // some ingredients exist on current list
+    // no ingredients exist on current list
+    const ingredientsDoc = this.loadLocalIngredientsData();
+    const hashTable = this.buildHashTable(ingredientsDoc.ingredients);
+    arr.forEach((item, index) => {
+      const foundIndex = hashTable.indexOf(item.hash_key);
+      // ingredient exists , overwrite
+      if (foundIndex !== -1) {
+        ingredientsDoc.ingredients[foundIndex] = item;
+      } else {
+        // ingredient not found add new
+        ingredientsDoc.ingredients.push(item);
+      }
+    });
+    return ingredientsDoc;
   }
 
   importIngredients(ingredientsDoc) {

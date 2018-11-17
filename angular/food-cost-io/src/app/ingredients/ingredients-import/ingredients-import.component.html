@@ -27,14 +27,14 @@
 
 <main class="main">
   <section class="section">
-    <button
-      class="button"
-      style="display:flex; justify-content: center"
-      (click)="this.stepper.reset(); filePicker.value = ''"
-    >
-      Oops! I want to start again!
-    </button>
-
+    <div class="info-panel" style="display:flex; flex-direction: row; justify-content: flex-start; align-items: center">
+      <a
+        style="cursor:pointer; margin-left: 20px "
+        (click)="this.stepper.reset(); filePicker.value = ''; showTick = false"
+      >
+        start again
+      </a>
+    </div>
     <mat-horizontal-stepper #stepper linear>
       <mat-step [completed]="false">
         <ng-template matStepLabel>Step 1. Select a file</ng-template>
@@ -102,7 +102,7 @@
         <mat-card class="matt-card">
           <table mat-table [dataSource]="previewDataSource[1]" class="mat-elevation-z8">
             <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef (click)="showTick = 'false'">
+              <th mat-header-cell *matHeaderCellDef (click)="showTick = false">
                 <br /><br />
                 <h1 style="text-align: center">select a column name for this data</h1>
                 <br /><br />
@@ -270,7 +270,7 @@
           <h1>Finish</h1>
           <br /><br />
           You are ready to upload your data
-          <button class="button" style="margin: 20px;" (click)="import()" mat-raised-button>finish</button>
+          <button class="button" style="margin: 20px;" (click)="onImport()" mat-raised-button>finish</button>
         </mat-card>
       </mat-step>
     </mat-horizontal-stepper>

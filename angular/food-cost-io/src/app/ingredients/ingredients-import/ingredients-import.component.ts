@@ -4,10 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { IngredientsService } from '../ingredients.service';
 import { mimeType } from '../ingredients-import/mime-type.validator';
 import { Subscription } from 'rxjs';
-import { MatStepper } from '@angular/material';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatStepper, MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
 import { Ingredient } from '../ingredient.model';
-import { invalid } from '@angular/compiler/src/render3/view/util';
+import { DialogLargeComponent } from '../../dialogs/dialog-large/dialog-large.component';
 
 @Component({
   selector: 'app-ingredients-import',
@@ -70,7 +69,8 @@ export class IngredientsImportComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private ingredientsService: IngredientsService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -115,13 +115,10 @@ export class IngredientsImportComponent implements OnInit {
     // listen for changes
     this.importDataSub = this.ingredientsService.getIngredientsImportDataUpdateListener().subscribe(data => {
       if (data) {
+        const previewColData = [];
         this.uploadedData = data;
         this.message = 'click next to continue';
         this.hasData = true;
-
-        // console.log(this.uploadedData);
-        //  make some preview column data
-        const previewColData = [];
         this.uploadedData.forEach(item => {
           previewColData.push(item.slice(0, 5));
         });
@@ -130,6 +127,7 @@ export class IngredientsImportComponent implements OnInit {
         this.reviewTableDataSource = [];
         this.uploadedData[0].forEach(el => {
           const object: Ingredient = {
+            hash_key: '',
             ingredient_name: '',
             ingredient_price: '',
             unit_amount: '',
@@ -150,27 +148,97 @@ export class IngredientsImportComponent implements OnInit {
     });
   }
 
-  // do the importing
-  import() {
-    //  get current data
-    const ingredientsDoc = this.ingredientsService.loadLocalIngredientsData();
+  // open dialog
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogLargeComponent, { disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      switch (result) {
+        case 'overwrite':
+          console.log('overwriting exisitng items and adding new items');
+          this.overWriteDupedIngredThenImport();
+          break;
+        default:
+          console.log('removeing duplicates only adding new items');
+          this.removeDupeIngredientsThenImport();
+          break;
+      }
+    });
+  }
 
+  // check for dupes in import and current data
+  onCheckForDupes() {
+    const hasDupes = this.ingredientsService.hasDupes(this.reviewTableDataSource);
+    return hasDupes;
+  }
+
+  // merge all import and existing ingredients together
+  mergeIngredients() {
+    const ingredientsDoc = this.ingredientsService.loadLocalIngredientsData();
     this.reviewTableDataSource.forEach(item => {
       ingredientsDoc.ingredients.push(item);
     });
+    return ingredientsDoc;
+  }
+
+  // adds new data to old data then imports
+  mergeThenImport() {
+    const ingredientsDocMerged = this.mergeIngredients();
+    this.ingredientsService.importIngredients(ingredientsDocMerged);
+  }
+
+  // keeps existing and adds new
+  removeDupeIngredientsThenImport() {
+    const ingredientsDoc = this.mergeIngredients();
     ingredientsDoc.ingredients = this.ingredientsService.removeDuplicateIngredients(ingredientsDoc.ingredients);
     this.ingredientsService.importIngredients(ingredientsDoc);
   }
 
+  // overwrites exisiting ingredients and adds new ingredients
+  overWriteDupedIngredThenImport() {
+    const ingredientsDoc = this.ingredientsService.overwriteAndAddNewIngredients(this.reviewTableDataSource);
+    this.ingredientsService.importIngredients(ingredientsDoc);
+  }
+
+  onImport() {
+    //  perform dupe checking and upload
+    if (this.onCheckForDupes()) {
+      this.openDialog();
+    } else {
+      // just import the data direct
+      this.mergeThenImport();
+    }
+  }
   //  bind selected column name property to ingredient import column
   setColumnName(colNum, idx) {
     //  so we can't select a column name twice from the select list
     this.columnKeys[idx][1] = true;
     // bind property selected column name to the users column data
     const propertyName = this.columnKeys[idx][0];
+    let addNameToHashKey = false;
+    let addSupplierToHashKey = false;
+    switch (propertyName) {
+      case 'ingredient_name':
+        // add name to hash key
+        addNameToHashKey = true;
+        break;
+      case 'supplier':
+        // add supplier to hash key
+        addSupplierToHashKey = true;
+        break;
+      default:
+        break;
+    }
     this.uploadedData[colNum].forEach((item, index) => {
+      if (addNameToHashKey) {
+        this.reviewTableDataSource[index].hash_key = item;
+      }
+      if (addSupplierToHashKey) {
+        this.reviewTableDataSource[index].hash_key += '**' + item;
+      }
+
       this.reviewTableDataSource[index][propertyName] = item;
     });
+    console.log(this.reviewTableDataSource);
     this.stepper.selected.completed = true;
   }
 

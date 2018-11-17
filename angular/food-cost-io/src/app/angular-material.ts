@@ -10,19 +10,21 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   exports: [
-    MatInputModule,
-    MatCardModule,
     MatButtonModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDialogModule,
     MatExpansionModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     MatPaginatorModule,
     MatStepperModule,
     MatSelectModule,
-    MatChipsModule,
+    MatToolbarModule,
     MatTableModule
   ]
 })

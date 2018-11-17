@@ -11,13 +11,7 @@ import { IngredientEditFieldComponent } from './ingredient-edit-field/ingredient
 import { IngredientsImportComponent } from './ingredients-import/ingredients-import.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    IngredientsRoutingModule,
-    AngularMaterialModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, IngredientsRoutingModule, AngularMaterialModule],
   declarations: [
     IngredientsListComponent,
     IngredientsDetailsComponent,

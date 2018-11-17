@@ -1,4 +1,3 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -10,7 +9,6 @@ import { DishesModule } from './dishes/dishes.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { AppRoutingModule } from './app-routing.module';
 
-
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { HeaderComponent } from './header/header.component';
@@ -21,8 +19,9 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
 
-
 import { Globals } from './globals';
+import { MatDialogModule } from '@angular/material';
+import { DialogLargeComponent } from './dialogs/dialog-large/dialog-large.component';
 
 @NgModule({
   declarations: [
@@ -33,20 +32,23 @@ import { Globals } from './globals';
     HomepageComponent,
     PageNotFoundComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    DialogLargeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatSidenavModule,
+    MatDialogModule,
     HttpClientModule,
     AngularMaterialModule,
     FormsModule,
     IngredientsModule,
     DishesModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true}, Globals],
+  entryComponents: [DialogLargeComponent],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, Globals],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
