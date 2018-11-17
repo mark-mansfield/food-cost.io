@@ -46,7 +46,7 @@
             <br /><br />
             <h2>Upload File</h2>
             <br /><br />
-            <button mat-button type="button" (click)="filePicker.click()">
+            <button mat-button type="button" color="accent" (click)="filePicker.click()">
               <span class="material-icons" style="font-size: 6rem; background-color: none">computer</span>
             </button>
             <small>browse</small>
@@ -56,7 +56,7 @@
               Acceptable file types: <br /><strong> CSV or tab-delimited text files.</strong>
             </p>
             <input type="file" #filePicker (change)="onFilePicked($event)" />
-            <button class="button" mat-raised-button type="submit" [disabled]="this.uploadForm.control.disabled">
+            <button mat-raised-button color="accent" type="submit" [disabled]="this.uploadForm.control.disabled">
               upload
             </button>
           </form>
