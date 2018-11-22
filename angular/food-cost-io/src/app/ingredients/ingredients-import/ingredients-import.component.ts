@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { MatStepper, MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
 import { Ingredient } from '../ingredient.model';
 import { DialogLargeComponent } from '../../dialogs/dialog-large/dialog-large.component';
-
+import { v4 as uuid } from 'uuid';
 @Component({
   selector: 'app-ingredients-import',
   templateUrl: './ingredients-import.component.html',
@@ -127,6 +127,7 @@ export class IngredientsImportComponent implements OnInit {
         this.reviewTableDataSource = [];
         this.uploadedData[0].forEach(el => {
           const object: Ingredient = {
+            id: uuid(),
             hash_key: '',
             ingredient_name: '',
             ingredient_price: '',

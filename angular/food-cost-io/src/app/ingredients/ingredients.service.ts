@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Globals } from '../globals';
-
+import { v4 as uuid } from 'uuid';
 const BACKEND_URL = environment.apiUrl + 'ingredients';
 
 @Injectable({ providedIn: 'root' })
@@ -31,6 +31,16 @@ export class IngredientsService {
   getIngredientsImportDataUpdateListener() {
     return this.ingredientImportDataUpdated.asObservable();
   }
+
+  getSuppliers() {
+    const ingredientsData = this.loadLocalIngredientsData();
+    return ingredientsData.suppliers;
+  }
+
+  getUnitTypes() {
+    const ingredientsData = this.loadLocalIngredientsData();
+    return ingredientsData.unit_types;
+  }
   // ingredients list - ALL
   getIngredients() {
     const customer = this.globals.getCustomer();
@@ -43,19 +53,29 @@ export class IngredientsService {
     });
   }
 
-  createIngredient(ingredient_name: string) {
+  createIngredient(
+    ingredient_name: string,
+    ingredient_price: string,
+    unit_amount: string,
+    purchase_amount: string,
+    unit_type: string,
+    supplier: string,
+    category: string,
+    sub_category: string
+  ) {
     const customer = this.globals.getCustomer();
     this.ingredientsDoc = this.loadLocalIngredientsData();
     const obj: Ingredient = {
-      hash_key: ingredient_name + '**',
-      ingredient_name: ingredient_name,
-      ingredient_price: '',
-      unit_amount: '',
-      purchase_amount: '',
-      unit_type: '',
-      supplier: '',
-      category: '',
-      sub_category: ''
+      id: uuid(),
+      hash_key: ingredient_name.toLowerCase() + '**' + supplier,
+      ingredient_name: ingredient_name.toLowerCase(),
+      ingredient_price: ingredient_price,
+      unit_amount: unit_amount,
+      purchase_amount: purchase_amount,
+      unit_type: unit_type,
+      supplier: supplier,
+      category: category,
+      sub_category: sub_category
     };
     this.ingredientsDoc.ingredients.push(obj);
     this.updateIngredient(obj, this.ingredientsDoc);
@@ -185,7 +205,6 @@ export class IngredientsService {
   searchIngredientByCategory(searchTerm) {
     this.ingredientsList = this.loadLocalIngredientsData();
     const searchResults = this.ingredientsList.ingredients.filter(item => item.category.includes(searchTerm));
-
     this.ingredientsUpdated.next([...searchResults]);
   }
 
@@ -193,7 +212,6 @@ export class IngredientsService {
   searchIngredientBySupplier(searchTerm) {
     this.ingredientsList = this.loadLocalIngredientsData();
     const searchResults = this.ingredientsList.ingredients.filter(item => item.supplier.includes(searchTerm));
-
     this.ingredientsUpdated.next([...searchResults]);
   }
 
@@ -254,7 +272,7 @@ export class IngredientsService {
       const row = Object.entries(item);
       // console.log(row);
       for (let i = 0; i < colCount; i++) {
-        tmpArray[i].push(row[i][1]);
+        tmpArray[i].push(row[i][1]).toLowerCase();
       }
     });
     return tmpArray;

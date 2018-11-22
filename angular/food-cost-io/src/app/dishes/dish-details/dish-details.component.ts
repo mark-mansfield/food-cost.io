@@ -31,11 +31,7 @@ export class DishDetailsComponent implements OnInit {
     minimumFractionDigits: 2
   });
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: DishService
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router, private service: DishService) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -44,12 +40,10 @@ export class DishDetailsComponent implements OnInit {
         this.selectedId = paramMap.get('_id');
         this.dish = this.service.getDish();
         console.log(this.dish);
-        this.dishSub = this.service
-          .getDishUpdateListener()
-          .subscribe((dish: Dish) => {
-            this.dish = dish;
-            this.setDishObjectData(dish);
-          });
+        this.dishSub = this.service.getDishUpdateListener().subscribe((dish: Dish) => {
+          this.dish = dish;
+          this.setDishObjectData(dish);
+        });
         this.setDishObjectData(this.dish);
         // this.getMargin(parseInt(this.cost, 0), parseInt(this.retail_price, 0));
         // TODO FIX the margin function to work correctly// these values are truthy / falsey so i reverse the comaprison for each
@@ -65,7 +59,7 @@ export class DishDetailsComponent implements OnInit {
   }
   // {customerId: "5bbac8e83913a6394d42d8b2", _id: "5bd38dcbaa4adf145e2f86b1", name: "Burrito",…}
   setDishObjectData(dish) {
-    this.name = this.dish.name;
+    this.name = dish.name;
     this.ingredients = this.dish.ingredients;
     this.ingredientTotal = this.ingredients.length;
     this.description = this.dish.description;
@@ -86,16 +80,17 @@ export class DishDetailsComponent implements OnInit {
   }
 
   // searches an array of objects
-  // {  name: "green kale", price: "2.50", unit_amount: "3", unit_type: "bunch", supplier: "xyz", …}
+  // {  name: "green kale", retail_price: "2.50", unit_amount: "3", unit_type: "bunch", supplier: "xyz", …}
   getIngredientsTotal() {
     const customerIngredients = this.service.loadLocalIngredientsData();
     const ingredientList = customerIngredients.ingredients;
+    console.log(ingredientList);
     let total = 0.0;
-    this.ingredients.forEach(dishIngredient => {
+    this.ingredients.forEach((dishIngredient, index) => {
+      const searchVar = 'sunflower kernels kg';
       const item = ingredientList.find(function(obj) {
-        return dishIngredient.name === obj.name;
+        return dishIngredient.name === obj.ingredient_name;
       });
-      console.log(item);
       total += parseFloat(this.getActualCost(dishIngredient, item));
     });
     return total;
@@ -105,11 +100,7 @@ export class DishDetailsComponent implements OnInit {
   // ingredient object looks like this
   // {name: "sea salt", qty: "0", AP_weight: "0", EP_weight: "0"}
   getActualCost(dishIngredient, item) {
-    console.log(dishIngredient);
-    const itemYield =
-      (parseFloat(dishIngredient.EP_weight) /
-        parseFloat(dishIngredient.AP_weight)) *
-      100;
+    const itemYield = (parseFloat(dishIngredient.EP_weight) / parseFloat(dishIngredient.AP_weight)) * 100;
     const factor = 100 / itemYield;
     const unitCost = item.ingredient_price / item.purchase_amount;
     const itemCost = unitCost * dishIngredient.qty;

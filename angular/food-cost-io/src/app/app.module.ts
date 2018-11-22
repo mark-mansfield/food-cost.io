@@ -22,6 +22,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { Globals } from './globals';
 import { MatDialogModule } from '@angular/material';
 import { DialogLargeComponent } from './dialogs/dialog-large/dialog-large.component';
+import { IngredientCreateHelpDialogComponent } from './dialogs/ingredient-create-help-dialog/ingredient-create-help-dialog.component';
+import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { DialogLargeComponent } from './dialogs/dialog-large/dialog-large.compon
     PageNotFoundComponent,
     SignupComponent,
     LoginComponent,
-    DialogLargeComponent
+    DialogLargeComponent,
+    IngredientCreateHelpDialogComponent,
+    NumpadDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,7 @@ import { DialogLargeComponent } from './dialogs/dialog-large/dialog-large.compon
     DishesModule,
     AppRoutingModule
   ],
-  entryComponents: [DialogLargeComponent],
+  entryComponents: [DialogLargeComponent, IngredientCreateHelpDialogComponent, NumpadDialogComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, Globals],
   bootstrap: [AppComponent]
 })

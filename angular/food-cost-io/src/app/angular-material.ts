@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material';
-
+import { MatGridListModule } from '@angular/material/grid-list';
 @NgModule({
   exports: [
     MatButtonModule,
@@ -25,7 +25,8 @@ import { MatDialogModule } from '@angular/material';
     MatStepperModule,
     MatSelectModule,
     MatToolbarModule,
-    MatTableModule
+    MatTableModule,
+    MatGridListModule
   ]
 })
 export class AngularMaterialModule {}

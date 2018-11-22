@@ -1,82 +1,158 @@
-.main > .section > input {
-  margin: 20px 0px;
+.help {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+
+.main {
+  height: 100vh;
+}
+.section {
+  margin-top: 10px;
   width: 95vw;
-  height: 80px;
-  font-size: 2rem;
-  background-color: rgba(92, 91, 91, 0.3);
+}
+
+.form__node {
+  width: 95vw;
+  height: auto;
+  margin: 10px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.wrap {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.form__node-label {
+  margin-top: 10px;
+  margin-bottom: 3px;
+  text-align: left;
+  width: 90vw;
+}
+
+.form__node-button {
+  width: 100%;
   text-align: center;
+  border-radius: 5px;
+  color: white;
+  background-color: var(--blue);
+}
+
+.form__node-button:hover {
+  cursor: pointer;
+  background-color: var(--hover-green);
+  color: black;
+}
+button {
+  height: 100px;
+  font-size: 2rem;
+}
+
+.form__node-input {
+  display: flex;
+}
+
+.form__node-input > input.input-half-size,
+.form__node-input > button.input-half-size {
+  width: 260px;
+  height: 50px;
+}
+.input,
+select {
+  width: 90vw;
+  height: 50px;
+  padding: 10px 15px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  color: var(--light-text);
+  background-color: rgba(92, 91, 91, 0.3);
+  background-image: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+.input.input-half-size {
+  background-color: rgba(92, 91, 91, 0.3);
   color: var(--light-text);
 }
 
-input[type='text'] {
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  outline: none;
-  padding: 3px 0px 3px 3px;
+.input-half-size {
+  height: 50px;
+  flex: 1;
+  padding: 10px 15px;
+  font-size: 15px;
+  line-height: 1.42857143;
+
+  background-image: none;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 
-input[type='text']:focus {
+input[type='text'],
+input[type='select'] {
+  outline: none;
+  padding: 10px 15px;
+}
+
+input[type='text']:focus,
+input[type='select']:focus {
   box-shadow: 0 0 5px rgb(28, 28, 28);
-  padding: 3px 0px 3px 3px;
+  padding: 10px 15px;
   border: 1px solid rgba(81, 203, 238, 1);
 }
 
-/* form > button.mat-raised-button {
-  display: none;
-} */
-
-.main > .section > .button {
-  margin: 10px 0;
-  width: 95vw;
-  height: 80px;
-  font-size: 2rem;
-}
-.main > .section > .info-panel {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  width: 95vw;
-  margin: 20px;
-  color: white;
+.dark-background {
   background-color: rgba(45, 44, 44, 0.3);
-  box-shadow: 5px;
 }
 
-.main > .section > .info-panel > div > p {
-  margin: 20px 20px;
+/* validation error classes  */
+.ng-valid[required],
+.ng-valid.required,
+.ng-valid {
+  border-left: 5px solid #42a948; /* green */
 }
 
-.main > .section > .action-button {
-  display: flex;
-  justify-content: center;
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.alert-danger {
+  text-align: right;
+  margin: 5px 0px;
+  color: dodgerBlue;
 }
 
 /* ipads and larger */
-@media (min-width: 40rem) {
-  .section {
-    margin-top: 100px;
-    width: 30vw;
-  }
-
+@media (min-width: 35rem) {
   .main {
     height: 100vh;
   }
+  .section {
+    margin-top: 100px;
+    width: 600px;
+  }
 
-  .main > .section > .info-panel {
-    height: 200px;
-    width: 500px;
-    border-radius: 0px;
+  .form__node {
+    width: 550px;
   }
-  .main > .section > input {
-    width: 500px;
+
+  .form__node-label {
+    width: 520px;
   }
-  .main > .section > .button {
-    margin: 10px 0;
-    width: 500px;
-    height: 80px;
+
+  .input {
+    width: 520px;
   }
 }

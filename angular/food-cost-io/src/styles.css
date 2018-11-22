@@ -16,6 +16,7 @@
   --button-text-size-med: 1.3rem;
   --lge-icon: 2.3rem;
   --xlge-icon: 3rem;
+  --medium-icon: 1.5rem;
   --red: red;
 }
 
@@ -101,6 +102,14 @@ a,
   min-height: inherit;
 }
 
+.mat-dialog-container {
+  background: rgb(20, 48, 58);
+}
+.mat-figure {
+  color: white !important;
+  font-size: 2rem;
+}
+
 div#cdk-step-content-0-5 {
   width: 80vw !important;
   display: flex;
@@ -177,12 +186,16 @@ body {
 .fa-bars,
 .fa-plus,
 .fa-arrow-alt-circle-left,
-.fa-arrow-alt-circle-right {
+.fa-arrow-alt-circle-right,
+.fa-question-circle {
   font-size: var(--lge-icon);
   color: var(--blue);
   cursor: pointer;
 }
 
+.fa-question-circle {
+  font-size: var(--medium-icon);
+}
 .fa-sync:hover,
 .fa-search:hover,
 .fa-bars:hover,
