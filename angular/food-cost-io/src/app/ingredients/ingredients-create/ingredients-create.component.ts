@@ -43,18 +43,11 @@ export class IngredientsCreateComponent implements OnInit {
   }
 
   onAddIngredient(form: NgForm) {
-    console.log(form.status);
+    // console.log(form.status);
     if (form.invalid) {
       return;
     }
-    console.log('ingredient_name: ' + form.value.ingredient_name);
-    console.log('ingredient_price: ' + this.inputPrice);
-    console.log('unit_amount: ' + this.inputUnitAmount);
-    console.log('purchase_amount: ' + this.inputPurchaseAmount);
-    console.log('unit_type: ' + form.value.unit_type);
-    console.log('supplier: ' + form.value.supplier);
-    console.log('category: ' + form.value.category);
-    console.log('sub_category: ' + form.value.sub_category);
+
     this.ingredientsService.createIngredient(
       form.value.ingredient_name,
       this.inputPrice,
