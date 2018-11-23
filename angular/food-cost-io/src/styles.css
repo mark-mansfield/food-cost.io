@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
+@import url('./material-custom.css');
+@import url('./font-awesome.css');
 :root {
   --hover-green: #00ffbb;
   --info-panel-dark-background: rgba(45, 44, 44, 0.3);
@@ -12,34 +14,13 @@
   --title-text: #7289da;
   --dark-text: rgb(108, 106, 106);
   /*  text sizes */
-  --h1-large-text: 1.5rem;
+  --h1-large-text: 1.8rem;
+  --h2-medium-text: 1.5rem;
   --button-text-size-med: 1.3rem;
   --lge-icon: 2.3rem;
   --xlge-icon: 3rem;
   --medium-icon: 1.5rem;
   --red: red;
-}
-
-html,
-body {
-  height: 100%;
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-.mat-expansion-panel-header-title,
-/* need next 2 selectors to override the arrow color */
-.mat-expansion-indicator::after,
-.mat-expansion-panel-header-description,
-.mat-expansion-panel>mat-panel-title>a {
-  color: var(--blue) !important;
-  cursor: pointer;
-}
-
-/* placeholder text */
-::placeholder {
-  color: var(--light-text);
-  font-size: 1rem;
 }
 
 * {
@@ -50,83 +31,14 @@ body {
   outline-color: 1px solid var(--hover-green);
 }
 
-a,
-.mat-button,
-.mat-icon-button,
-.mat-stroked-button {
-  color: var(--blue);
-  text-decoration: none;
-}
-
-.mat-button {
-  font-size: var(--h1-large-text) !important;
-}
-
-.mat-stepper-horizontal,
-.mat-stepper-vertical {
-  display: flex;
-  background-color: var(white);
-  color: var(--dark-text);
-  height: 100vh;
-  width: 100vw;
-}
-
-.mat-horizontal-stepper-header-container {
-  margin: 20px 0;
-}
-
-.mat-step-header .mat-step-label.mat-step-label-active {
-  color: var(--dark-text) !important;
-}
-
-.mat-step-header .mat-step-label,
-.mat-step-header .mat-step-optional {
-  color: var(--dark-text) !important;
-}
-
-.mat-horizontal-content-container {
-  overflow: scroll !important;
-}
-
-.mat-horizontal-stepper-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.mat-cell,
-.mat-footer-cell,
-.mat-header-cell {
-  text-align: left;
-  width: 100px;
-  min-height: inherit;
-}
-
-.mat-dialog-container {
-  background: rgb(20, 48, 58);
-}
-.mat-figure {
-  color: white !important;
-  font-size: 2rem;
-}
-
-div#cdk-step-content-0-5 {
-  width: 80vw !important;
-  display: flex;
-  justify-content: center;
-}
-
-.mat-form-field-label {
-  left: 10px;
-  color: var(--dark-text) !important;
-}
-.active {
-  color: var(--hover-green);
-}
-
-a:hover {
-  color: var(--hover-green);
-  text-decoration: none;
+html {
+  /* background: url('../src/assets/CBP-for-Commercial-Kitchens-slide.png') black no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+  height: 100%;
+  margin: 0;
 }
 
 body {
@@ -135,12 +47,20 @@ body {
   width: 100%;
   height: 100%;
 }
+/* placeholder text */
+::placeholder {
+  color: var(white);
+  font-size: 1rem;
+}
+
+/* layout */
 
 .main {
   margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-content: center;
+  align-items: center;
   text-align: center;
 }
 
@@ -154,57 +74,18 @@ body {
   text-align: center;
 }
 
-/* font awesome mat-icon icons */
-
-.arrow-forward {
-  margin-right: 10px;
+/* links */
+a {
+  color: var(--blue);
+  text-decoration: none;
 }
 
-.fa-bars {
-  font-size: var(--lge-icon);
+a:hover,
+.active {
   cursor: pointer;
-  color: var(--blue);
-}
-
-.fa-plus-small-font {
-  font-size: small;
-  color: var(--blue);
-}
-
-.fa-minus-circle {
-  color: var(--red);
-  font-size: var(--xlge-icon);
-}
-
-.fa-minus-circle:hover {
   color: var(--hover-green);
-  cursor: pointer;
+  text-decoration: none;
 }
-
-.fa-sync,
-.fa-search,
-.fa-bars,
-.fa-plus,
-.fa-arrow-alt-circle-left,
-.fa-arrow-alt-circle-right,
-.fa-question-circle {
-  font-size: var(--lge-icon);
-  color: var(--blue);
-  cursor: pointer;
-}
-
-.fa-question-circle {
-  font-size: var(--medium-icon);
-}
-.fa-sync:hover,
-.fa-search:hover,
-.fa-bars:hover,
-.fa-arrow-alt-circle-left:hover,
-.fa-arrow-alt-circle-right:hover,
-.fa-plus:hover {
-  color: var(--hover-green);
-}
-
 .link-list-link {
   cursor: pointer;
   background-color: transparent;
@@ -215,6 +96,7 @@ body {
   background-color: var(--hover-background);
 }
 
+/* typography */
 h1,
 h2,
 h3,
@@ -235,6 +117,14 @@ h6,
 
 h1 {
   font-size: var(--h1-large-text);
+}
+
+/* UI elements */
+
+input {
+  width: 100%;
+  color: white;
+  border-color: black;
 }
 
 button,
