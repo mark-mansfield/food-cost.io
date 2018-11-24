@@ -27,7 +27,7 @@ import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.com
 import { ErrorComponent } from './error/error.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MenusListComponent } from './menus-list/menus-list.component';
+import { MenusListComponent } from './menus/menus-list/menus-list.component';
 
 @NgModule({
   declarations: [
