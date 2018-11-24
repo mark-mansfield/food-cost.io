@@ -13,6 +13,7 @@
   --light-text: white;
   --title-text: #7289da;
   --dark-text: rgb(108, 106, 106);
+  --error: rgb(255, 196, 0);
   /*  text sizes */
   --h1-large-text: 1.8rem;
   --h2-medium-text: 1.5rem;
@@ -55,7 +56,7 @@ body {
   display: flex;
   justify-content: center;
   align-content: center;
-  align-items: center;
+  align-items: start;
   text-align: center;
 }
 

@@ -18,12 +18,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthInterceptor } from './auth/auth-interceptor';
-
+import { ErrorInterceptor } from '../error-interceptor';
 import { Globals } from './globals';
 import { MatDialogModule } from '@angular/material';
 import { DialogLargeComponent } from './dialogs/dialog-large/dialog-large.component';
 import { IngredientCreateHelpDialogComponent } from './dialogs/ingredient-create-help-dialog/ingredient-create-help-dialog.component';
 import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.com
     LoginComponent,
     DialogLargeComponent,
     IngredientCreateHelpDialogComponent,
-    NumpadDialogComponent
+    NumpadDialogComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +53,12 @@ import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.com
     DishesModule,
     AppRoutingModule
   ],
-  entryComponents: [DialogLargeComponent, IngredientCreateHelpDialogComponent, NumpadDialogComponent],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, Globals],
+  entryComponents: [DialogLargeComponent, IngredientCreateHelpDialogComponent, NumpadDialogComponent, ErrorComponent],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    Globals
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

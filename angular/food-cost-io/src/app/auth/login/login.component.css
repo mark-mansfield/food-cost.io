@@ -1,14 +1,10 @@
 .login {
-  height: 100vh;
+  height: auto;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin-top: 10%;
-}
-
-.login__section-button {
-  margin: 20px 0px;
 }
 
 .input-password {

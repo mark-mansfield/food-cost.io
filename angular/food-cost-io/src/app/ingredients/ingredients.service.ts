@@ -224,6 +224,7 @@ export class IngredientsService {
     this.http
       .post<{ message: string; data: any }>(BACKEND_URL + '/' + customer.id + '/import', formData)
       .subscribe(returnedData => {
+        console.log(returnedData);
         const data = returnedData.data;
         let colCount = Object.entries(data[0]).length;
         this.importObject.importDataStructure = this.buildImportDataStruct(Object.entries(data[0]).length);
@@ -267,12 +268,12 @@ export class IngredientsService {
   }
 
   pushColValue(data, colCount) {
+    const dataObjLowercased = JSON.parse(JSON.stringify(data).toLowerCase());
     const tmpArray = [...this.importObject.importDataStructure];
-    data.forEach(item => {
+    dataObjLowercased.forEach(item => {
       const row = Object.entries(item);
-      // console.log(row);
       for (let i = 0; i < colCount; i++) {
-        tmpArray[i].push(row[i][1]).toLowerCase();
+        tmpArray[i].push(row[i][1]);
       }
     });
     return tmpArray;

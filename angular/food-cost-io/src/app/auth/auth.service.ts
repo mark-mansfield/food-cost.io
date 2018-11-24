@@ -17,11 +17,7 @@ export class AuthService {
   // Subject push the authentication status to interested components
   // return the observable, we just push a boolean from here to the  other parties
   private authStatusListener = new Subject<boolean>();
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private globals: Globals
-  ) {}
+  constructor(private http: HttpClient, private router: Router, private globals: Globals) {}
 
   getToken() {
     return this.token;
@@ -61,12 +57,15 @@ export class AuthService {
       password: password,
       custID: email
     };
-    this.http
-      .post('http://localhost:3000/api/users/signup', authData)
-      .subscribe(response => {
+    return this.http.post('http://localhost:3000/api/users/signup', authData).subscribe(
+      response => {
         console.log(response);
         this.router.navigate(['/login']); /* navigate to landing page */
-      });
+      },
+      error => {
+        this.authStatusListener.next(false); /* push status to entire app */
+      }
+    );
   }
 
   login(email: string, password: string) {
@@ -76,32 +75,32 @@ export class AuthService {
       custID: null
     };
     this.http
-      .post<{ token: string; expiresIn: string; userId: string }>(
-        'http://localhost:3000/api/users/login',
-        authData
-      )
-      .subscribe(response => {
-        // store token for later use
-        const token = response.token;
-        this.token = token;
+      .post<{ token: string; expiresIn: string; userId: string }>('http://localhost:3000/api/users/login', authData)
+      .subscribe(
+        response => {
+          // store token for later use
+          const token = response.token;
+          this.token = token;
 
-        if (token) {
-          this.globals.setCustomer(response);
-          this.custId = response.userId;
-          this.expiresInDuration = response.expiresIn;
+          if (token) {
+            this.globals.setCustomer(response);
+            this.custId = response.userId;
+            this.expiresInDuration = response.expiresIn;
 
-          this.setAuthTimer(this.expiresInDuration);
-          this.authStatusListener.next(true);
-          this.isAuthenticated = true;
+            this.setAuthTimer(this.expiresInDuration);
+            this.authStatusListener.next(true);
+            this.isAuthenticated = true;
 
-          const now = new Date();
-          const expirationDate = new Date(
-            now.getTime() + this.expiresInDuration * 1000
-          );
-          this.saveAuthData(token, expirationDate);
-          this.router.navigate(['']);
+            const now = new Date();
+            const expirationDate = new Date(now.getTime() + this.expiresInDuration * 1000);
+            this.saveAuthData(token, expirationDate);
+            this.router.navigate(['']);
+          }
+        },
+        error => {
+          this.authStatusListener.next(false); /* push status to entire app */
         }
-      });
+      );
   }
 
   logout() {

@@ -1,21 +1,27 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   @ViewChild('passField') passField: ElementRef;
   @ViewChild('showHide') showHide: ElementRef;
 
   isLoading = false;
   shown = false;
+  private authStatusSub: Subscription;
   constructor(public authService: AuthService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe(authStatus => {
+      this.isLoading = false;
+    });
+  }
 
   togglePassword() {
     this.shown = !this.shown;
@@ -34,5 +40,9 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.authService.login(form.value.email, form.value.password);
+  }
+
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
   }
 }

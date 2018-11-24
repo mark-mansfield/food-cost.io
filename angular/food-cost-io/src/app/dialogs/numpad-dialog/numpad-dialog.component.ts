@@ -41,18 +41,18 @@ export class NumpadDialogComponent implements OnInit {
   };
 
   tiles: Tile[] = [
-    { text: '1', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '2', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '3', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '5', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '6', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '7', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '8', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '9', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '0', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: '.', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: 'x', cols: 1, rows: 1, color: 'dodgerBlue' },
-    { text: 'clear', cols: 1, rows: 1, color: 'dodgerBlue' }
+    { text: '1', cols: 1, rows: 1, color: '' },
+    { text: '2', cols: 1, rows: 1, color: '' },
+    { text: '3', cols: 1, rows: 1, color: '' },
+    { text: '5', cols: 1, rows: 1, color: '' },
+    { text: '6', cols: 1, rows: 1, color: '' },
+    { text: '7', cols: 1, rows: 1, color: '' },
+    { text: '8', cols: 1, rows: 1, color: '' },
+    { text: '9', cols: 1, rows: 1, color: '' },
+    { text: '0', cols: 1, rows: 1, color: '' },
+    { text: '.', cols: 1, rows: 1, color: '' },
+    { text: 'x', cols: 1, rows: 1, color: '' },
+    { text: 'clear', cols: 1, rows: 1, color: '' }
   ];
 
   // enables listenning for the enter key
