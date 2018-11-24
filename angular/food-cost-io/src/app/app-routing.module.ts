@@ -18,6 +18,10 @@ const appRoutes: Routes = [
     path: 'ingredients',
     loadChildren: './ingredients/ingredients.module#IngredientsModule'
   },
+  {
+    path: 'menus',
+    loadChildren: './menus/menus.module#MenusModule'
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
