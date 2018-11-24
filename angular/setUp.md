@@ -1,6 +1,7 @@
 ## install angular
+
 1. create new angular project
-cd into project directory
+   cd into project directory
 
 ```
 ng new [app-name]
@@ -8,11 +9,13 @@ ng new dorsal-angular
 ```
 
 2.  Get predefined components
+
 ```
 ng add @angular/material
 ```
 
 3. bring up dev server ## no backend capabilities
+
 ```
 ng serve -0
 ```
@@ -22,46 +25,50 @@ ng serve -0
 new folder called "backend" on root level
 
 download express
+
 ```
 npm install --save express
 ```
 
 5. add server.js file to root level
 
+6) cd into root level and download a tool to help with restarting the node server
+   it watches our node.js files and of we change something it automatically restarts the server
+   `npm install --save-dev nodemon`
 
-6. cd into root level and download a tool to help with restarting the node server
- it watches our node.js files and of we change something it automatically restarts the server
-```npm install --save-dev nodemon```
+## IF not global install register nodemon inside package.json
 
-## IF not global install  register nodemon inside package.json
 ```
 "start:server" : "nodemon server.js"
 ```
 
 7. now run the node server with
+
 ```
 npm run start:server
 ```
 
 8. install node body parser - node express package used as a middlewaer allows access to the body of a request
+
 ```
 npm install --save-dev body-parser
 ```
 
-
 9. Start node server
+
 ```
 node server.js
 ```
 
 10. MULTER to extract incoming file on node js/ express install package
+
 ```
 npm install --save multer
 ```
 
-
 # Start Up
-``` javascript
+
+```javascript
 1. cd into project root
 
 2. start angular
@@ -70,9 +77,15 @@ ng serve -o
 
 3. wait till angular loads then run node server
 npm run start:server
+
 ```
 
 ## DEVELOPING
+
+## cli commands
+
+ng generate module [module_name]
+ng g c [component_name]
 
 ## Development server
 
