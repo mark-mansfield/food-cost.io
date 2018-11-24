@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 // import { IngredientsListComponent } from './ingredients-list/ingredients-list.component';
 
-const ingredientsRoutes: Routes = [
+const menusRoutes: Routes = [
   //  list all menus
   {
     // path: 'menus/list',
@@ -31,8 +31,8 @@ const ingredientsRoutes: Routes = [
   }
 ];
 @NgModule({
-  imports: [RouterModule.forChild(ingredientsRoutes)],
+  imports: [RouterModule.forChild(menusRoutes)],
 
   exports: [RouterModule]
 })
-export class IngredientsRoutingModule {}
+export class MenusRoutingModule {}
