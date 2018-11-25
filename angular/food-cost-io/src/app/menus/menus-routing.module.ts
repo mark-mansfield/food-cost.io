@@ -1,38 +1,24 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
-// import { IngredientsListComponent } from './ingredients-list/ingredients-list.component';
 
-const menusRoutes: Routes = [
-  //  list all menus
+import { MenusListComponent } from './menus-list/menus-list.component';
+import { MenuDetailsComponent } from './menu-details/menu-details.component';
+const routes: Routes = [
   {
-    // path: 'menus/list',
-    // component: IngredientsListComponent,
-    // canActivate: [AuthGuard]
+    path: 'list',
+    component: MenusListComponent,
+    canActivate: [AuthGuard]
   },
-  // add menu
   {
-    // path: 'menus/create',
-    // component: IngredientsCreateComponent,
-    // canActivate: [AuthGuard]
-  },
-  // menu details
-  {
-    // path: 'menus/:id',
-    // component: IngredientsDetailsComponent,
-    // canActivate: [AuthGuard]
-  },
-
-  // add dish to menu
-  {
-    // path: 'menus/update',
-    // component: IngredientsCreateComponent,
-    // canActivate: [AuthGuard]
+    path: 'details',
+    component: MenuDetailsComponent,
+    canActivate: [AuthGuard]
   }
 ];
-@NgModule({
-  imports: [RouterModule.forChild(menusRoutes)],
 
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class MenusRoutingModule {}

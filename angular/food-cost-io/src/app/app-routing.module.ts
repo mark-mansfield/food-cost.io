@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { CommonModule } from '@angular/common';
 import { AuthGuard } from './auth/auth.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
-import { IngredientsListComponent } from './ingredients/ingredients-list/ingredients-list.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomepageComponent },
@@ -31,7 +29,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: false
+        enableTracing: true
       } // <-- debugging purposes only
     ),
     CommonModule

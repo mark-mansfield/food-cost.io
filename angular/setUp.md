@@ -87,6 +87,10 @@ npm run start:server
 ng generate module [module_name]
 ng g c [component_name]
 
+### feature module with lazy loading routing
+
+ng generate module [menus] --routing
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

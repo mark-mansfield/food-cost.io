@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LayoutModule } from '@angular/cdk/layout';
+import { AppRoutingModule } from './app-routing.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AngularMaterialModule } from './angular-material';
 import { DishesModule } from './dishes/dishes.module';
 import { IngredientsModule } from './ingredients/ingredients.module';
-import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
@@ -26,8 +27,6 @@ import { IngredientCreateHelpDialogComponent } from './dialogs/ingredient-create
 import { NumpadDialogComponent } from './dialogs/numpad-dialog/numpad-dialog.component';
 import { ErrorComponent } from './error/error.component';
 import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MenusListComponent } from './menus/menus-list/menus-list.component';
 
 @NgModule({
   declarations: [
@@ -43,8 +42,7 @@ import { MenusListComponent } from './menus/menus-list/menus-list.component';
     IngredientCreateHelpDialogComponent,
     NumpadDialogComponent,
     ErrorComponent,
-    MainNavComponent,
-    MenusListComponent
+    MainNavComponent
   ],
   imports: [
     BrowserModule,

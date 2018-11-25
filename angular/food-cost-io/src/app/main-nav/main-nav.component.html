@@ -20,6 +20,7 @@
       <a mat-list-item *ngIf="userIsAuthenticated" [routerLink]="['/ingredients/list']" routerLinkActive="active"
         >ingredients</a
       >
+      <a mat-list-item *ngIf="userIsAuthenticated" [routerLink]="['/menus/list']" routerLinkActive="active">menus</a>
       <a mat-list-item *ngIf="userIsAuthenticated" [routerLink]="['/logout']" (click)="onLogout()">logout</a>
       <a mat-list-item *ngIf="!userIsAuthenticated" [routerLink]="['/login']" routerLinkActive="active">login</a>
       <a mat-list-item *ngIf="!userIsAuthenticated" [routerLink]="['/signup']" routerLinkActive="active">sign up</a>
