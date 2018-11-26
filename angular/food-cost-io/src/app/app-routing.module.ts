@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: true
+        enableTracing: false
       } // <-- debugging purposes only
     ),
     CommonModule

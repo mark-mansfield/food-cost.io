@@ -17,11 +17,7 @@ export class DishService {
   public dishUpdated = new Subject<Dish>();
   public dishCount: number;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private globals: Globals
-  ) {}
+  constructor(private http: HttpClient, private router: Router, private globals: Globals) {}
 
   //  use interceptor , function to run on any outgoing http request
   //  we manipulate the request to add our token.
@@ -56,6 +52,33 @@ export class DishService {
         this.dishesUpdated.next([...tmpArr]);
       });
   }
+  // consumed by other services
+  getDishData() {
+    const customer = this.globals.getCustomer();
+    this.http
+      .get<{ dishes: any }>(BACKEND_URL + '/' + customer.id)
+      .pipe(
+        map(postData => {
+          return postData.dishes.map(dish => {
+            return {
+              customerId: customer.id,
+              _id: dish._id,
+              name: dish.name,
+              ingredients: dish.ingredients,
+              retail_price: dish.retail_price,
+              cost: dish.cost,
+              margin: dish.margin,
+              description: dish.description,
+              recipe_method: dish.recipe_method,
+              plating_guide: dish.plating_guide
+            };
+          });
+        })
+      )
+      .subscribe(transformedPosts => {
+        this.dishesUpdated.next([...transformedPosts]);
+      });
+  }
 
   getDish() {
     return this.loadLocalDishData();
@@ -63,8 +86,6 @@ export class DishService {
   }
 
   getDishesUpdateListener() {
-    console.log('dishes array updated');
-
     return this.dishesUpdated.asObservable();
   }
 
@@ -85,7 +106,6 @@ export class DishService {
   // search for a dish by name
   searchDishByName(searchTerm) {
     const searchResults = this.dishes.filter(p => p.name.includes(searchTerm));
-
     this.dishesUpdated.next([...searchResults]);
   }
 
@@ -120,10 +140,7 @@ export class DishService {
     };
     console.log('dishData being sent to backend' + dishData);
     this.http
-      .post<{ message: string; dish: Dish }>(
-        'http://localhost:3000/api/dishes',
-        dishData
-      )
+      .post<{ message: string; dish: Dish }>('http://localhost:3000/api/dishes', dishData)
       .subscribe(returnedData => {
         console.log(returnedData.message);
         this.dishes.push(returnedData.dish);
@@ -134,10 +151,7 @@ export class DishService {
 
   updateDish(dish: Dish, property: string) {
     this.http
-      .put<{ message: string; dish: Dish }>(
-        'http://localhost:3000/api/dishes/' + dish._id,
-        dish
-      )
+      .put<{ message: string; dish: Dish }>('http://localhost:3000/api/dishes/' + dish._id, dish)
       .subscribe(returnedData => {
         const storedDishIndex = this.dishes.findIndex(p => p._id === dish._id);
         this.dishes[storedDishIndex] = returnedData.dish;

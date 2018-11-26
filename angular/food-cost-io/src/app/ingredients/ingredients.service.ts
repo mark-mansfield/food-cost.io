@@ -48,7 +48,6 @@ export class IngredientsService {
       // prevent too many round trips to the server
       this.saveLocalIngredientsData(transformedPosts);
       this.ingredientsDoc = transformedPosts;
-      console.log(this.ingredientsDoc);
       this.ingredientsUpdated.next([...this.ingredientsDoc.ingredients]);
     });
   }

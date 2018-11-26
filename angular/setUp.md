@@ -86,6 +86,7 @@ npm run start:server
 
 ng generate module [module_name]
 ng g c [component_name]
+ng generate service [hero]
 
 ### feature module with lazy loading routing
 

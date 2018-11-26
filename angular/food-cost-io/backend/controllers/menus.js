@@ -1,5 +1,6 @@
 // we need to access our models
-const Menu = require('../models/menu');
+const Menus = require('../models/menu');
+const checkAuth = require('../middlewear/check-auth');
 
 exports.createmenu = (req, res, next) => {
   const url = req.protocol + '://' + req.get('host');
@@ -50,7 +51,7 @@ exports.updateMenu = (req, res, next) => {
     imagePath: imagePath,
     creator: req.userData.userId
   });
-  Menu.updateOne(
+  Menus.updateOne(
     {
       _id: req.params.id,
       creator: req.userData.userId
@@ -71,13 +72,16 @@ exports.updateMenu = (req, res, next) => {
     });
 };
 
-exports.getMenus = (req, res, next) => {
-  Menu.find()
-    .then(documents => {
+exports.getMenus = ('/:custId',
+checkAuth,
+(req, res, next) => {
+  Menus.findOne({ customerId: req.params.custId })
+    .then(document => {
+      console.log(document);
       // return json object with status code
       res.status(200).json({
         message: 'menus fetched successfully',
-        menus: documents
+        menus: document
       });
     })
     .catch(error => {
@@ -85,7 +89,7 @@ exports.getMenus = (req, res, next) => {
         message: 'Fetching Menus Failed!'
       });
     });
-};
+});
 
 exports.getMenu = (req, res, next) => {
   Menu.findById(req.params.id)
