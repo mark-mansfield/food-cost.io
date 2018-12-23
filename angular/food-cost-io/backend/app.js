@@ -6,7 +6,8 @@ const app = express();
 const dishRoutes = require('./routes/dishes');
 const userRoutes = require('./routes/users');
 const ingredientsRoutes = require('./routes/ingredients');
-const MenuRoutes = require('./routes/menus');
+const menuRoutes = require('./routes/menus');
+const supplierRoutes = require('./routes/suppliers');
 app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: false }));
 // mongoDb creds
@@ -37,7 +38,8 @@ app.use((req, res, next) => {
 // http:localhost:3000 -> /trunk/route = '/api/users'  ('api/users' wont work )
 app.use('/api/users', userRoutes);
 app.use('/api/dishes', dishRoutes);
-app.use('/api/menus', MenuRoutes);
+app.use('/api/menus', menuRoutes);
 app.use('/api/ingredients', ingredientsRoutes);
+app.use('/api/suppliers', supplierRoutes);
 
 module.exports = app;

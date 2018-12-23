@@ -1,91 +1,88 @@
-.main > .section >  input {
-  margin: 20px 0px;
-  width: 95vw;
-  height: 80px;
-  font-size: 2rem;
-  background-color: rgba(92, 91, 91, 0.3);
-  text-align: center;
-  color: var(--light-text);
+.create-form .input,
+.create-form .hint {
+  color: black;
 }
 
-input[type=text] {
-  -webkit-transition: all 0.30s ease-in-out;
-  -moz-transition: all 0.30s ease-in-out;
-  -ms-transition: all 0.30s ease-in-out;
-  -o-transition: all 0.30s ease-in-out;
-  transition: all 0.30s ease-in-out;
-  outline: none;
-  padding: 3px 0px 3px 3px;
+.section {
+  width: 100vw;
+  background-color: azure;
 }
 
-input[type=text]:focus {
-  box-shadow: 0 0 5px rgb(28, 28, 28);
-  padding: 3px 0px 3px 3px;
-  border: 1px solid rgba(81, 203, 238, 1);
-}
-
-.main > .section > .button {
-
-  margin: 10px 0;
-  width: 95vw;
-  height: 80px;
-  font-size: 2rem;
-
-}
-
-.main > .section >  .info-panel {
+.toolbar {
   display: flex;
+  justify-content: center;
+  width: 100vw;
+  margin-bottom: 50px;
+}
+
+.toolbar > div.back-button {
+  flex: 2;
+  text-align: left;
+}
+
+.toolbar > div.main__title {
+  flex: 2;
+}
+
+.toolbar > div.spacer {
+  flex: 2;
+}
+.toolbar > div {
+  margin: 20px;
+}
+
+.main__title {
+  margin: 20px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list {
+  height: 100%;
+  width: 100vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 200px;
-  width: 95vw;
-  margin: 20px;
-  color: white;
-  background-color: rgba(45, 44, 44, 0.3);
-  box-shadow: 5px;
 }
 
-.main > .section > .info-panel > div > p {
-  margin: 20px 20px;
-
+.list__item {
+  margin-top: 10px;
+  width: 95%;
 }
 
-
-
-.main > .section >  .action-button  {
-  display: flex;
-  justify-content: center;
-
+form {
+  width: 100%;
 }
 
-
-/* ipads and larger */
 @media (min-width: 40rem) {
-
   .section {
-      margin-top: 100px;
-      width: 30vw;
+    width: 100%;
   }
 
-  .main {
-      height: 100vh;
+  .toolbar {
+    width: 100%;
   }
 
-  .main > .section > .info-panel {
-      height: 200px;
-      width: 500px;
-      border-radius: 0px;
+  /* .list__item-edit-tools {
+    flex: 0;
+    margin-right: 10px;
+  } */
+  .list {
+    width: 100%;
   }
-  .main > .section >  input {
 
-      width: 500px;
-
+  .list__item {
+    width: 60%;
   }
-  .main > .section > .button {
+  .list__item-input-toolbar {
+    display: flex;
+    flex-direction: row;
+  }
 
-      margin: 10px 0;
-      width: 500px;
-      height: 80px;
-
+  .list__item-input-toolbar-items {
+    width: 100%;
   }
 }

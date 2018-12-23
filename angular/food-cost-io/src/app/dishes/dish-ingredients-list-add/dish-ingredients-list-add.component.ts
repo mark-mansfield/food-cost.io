@@ -70,7 +70,10 @@ export class DishIngredientsListAddComponent implements OnInit {
       name: name.toLocaleLowerCase(),
       qty: '0',
       AP_weight: '1',
-      EP_weight: '0'
+      EP_weight: '0',
+      wastage: '0',
+      cost: '',
+      real_cost: ''
     };
     // avoid expensive array object search
     const tpmStr = JSON.stringify(this.dish.ingredients);

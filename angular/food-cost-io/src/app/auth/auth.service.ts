@@ -94,7 +94,7 @@ export class AuthService {
             const now = new Date();
             const expirationDate = new Date(now.getTime() + this.expiresInDuration * 1000);
             this.saveAuthData(token, expirationDate);
-            this.router.navigate(['']);
+            this.router.navigate(['/home']);
           }
         },
         error => {
@@ -107,7 +107,7 @@ export class AuthService {
     this.token = null;
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
-    this.router.navigate(['/']); /* navigate to landing page */
+    this.router.navigate(['/login']); /* navigate to landing page */
     this.clearAuthData();
     this.clearCustomerData();
     clearTimeout(this.tokenTimer);
@@ -147,5 +147,6 @@ export class AuthService {
     localStorage.removeItem('ingredients');
     localStorage.removeItem('ingredient');
     localStorage.removeItem('dishes');
+    localStorage.removeItem('menus');
   }
 }

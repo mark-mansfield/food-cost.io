@@ -1,19 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { NumpadDialogComponent } from '../../dialogs/numpad-dialog/numpad-dialog.component';
 import { DishService } from '../dish.service';
+import { GlobalService } from '../../global.service';
 import { Dish } from '../dish.model';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-dish-details',
   templateUrl: './dish-details.component.html',
   styleUrls: ['./dish-details.component.css']
 })
-export class DishDetailsComponent implements OnInit {
-  public isLoading = false;
+export class DishDetailsComponent implements OnInit, OnDestroy {
+  isLoading = false;
+  showEditForm = false;
+  showDetails = false;
+  showEditTools = false;
+  showConfirmControls = false;
+
   public dish: Dish;
   public dishSub: Subscription;
-
   public selectedId: string;
   ingredients = [];
   name: string;
@@ -31,7 +40,18 @@ export class DishDetailsComponent implements OnInit {
     minimumFractionDigits: 2
   });
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: DishService) {}
+  myForm: FormGroup;
+  dish_name = '';
+  iconBadgeText = '';
+  editModeButtonText = 'edit';
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private router: Router,
+    private service: DishService,
+    private globalService: GlobalService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -39,36 +59,83 @@ export class DishDetailsComponent implements OnInit {
       if (paramMap.has('_id')) {
         this.selectedId = paramMap.get('_id');
         this.dish = this.service.getDish();
-        console.log(this.dish);
-        this.dishSub = this.service.getDishUpdateListener().subscribe((dish: Dish) => {
-          this.dish = dish;
-          this.setDishObjectData(dish);
-        });
         this.setDishObjectData(this.dish);
-        // this.getMargin(parseInt(this.cost, 0), parseInt(this.retail_price, 0));
-        // TODO FIX the margin function to work correctly// these values are truthy / falsey so i reverse the comaprison for each
-        // if (0 <= parseInt(this.cost, 0) &&  0 <= parseInt(this.retail_price, 0) ) {
+        this.iconBadgeText = this.globalService.getIconBadgeText(this.dish.name);
+        this.myForm = this.fb.group({
+          dishName: [this.dish.name, [Validators.required]],
+          agree: [false, [Validators.requiredTrue]]
+        });
 
-        //   this.margin = this.getMargin(parseInt(this.cost, 0), parseInt(this.retail_price, 0));
-        // }
         this.isLoading = false;
       } else {
         console.log('no id sent');
       }
     });
   }
+
+  get dishName() {
+    return this.myForm.get('dishName');
+  }
+
+  toggleDetails() {
+    this.showDetails ? (this.showDetails = false) : (this.showDetails = true);
+  }
+
+  toggleEditMode() {
+    if (this.showEditTools) {
+      this.showEditTools = false;
+      this.showConfirmControls = false;
+      this.editModeButtonText = 'edit';
+    } else {
+      this.showEditTools = true;
+      this.editModeButtonText = 'cancel';
+    }
+    this.toggleEditForm();
+  }
+
+  toggleEditForm() {
+    this.showEditForm ? (this.showEditForm = false) : (this.showEditForm = true);
+  }
+
+  launchNumberPad() {
+    const dialogRef = this.dialog.open(NumpadDialogComponent, {
+      width: '548px',
+      height: '700px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.dish.retail_price = result;
+        this.service.updateDish(this.dish, null);
+      }
+    });
+  }
+
+  onLaunchNumberPad() {
+    this.launchNumberPad();
+  }
+
   // {customerId: "5bbac8e83913a6394d42d8b2", _id: "5bd38dcbaa4adf145e2f86b1", name: "Burrito",…}
+  // convenience object
   setDishObjectData(dish) {
     this.name = dish.name;
-    this.ingredients = this.dish.ingredients;
-    this.ingredientTotal = this.ingredients.length;
+    this.dish.ingredients ? (this.ingredients = this.dish.ingredients) : (this.ingredientTotal = 0);
+    this.ingredientTotal = this.dish.ingredients.length;
     this.description = this.dish.description;
     this.method = this.dish.recipe_method;
     this.plating = this.dish.plating_guide;
     this.retail_price = this.dish.retail_price;
     this.cost = this.getIngredientsTotal().toFixed(2);
     this.margin = this.getMargin(this.cost, this.retail_price);
-    // console.log(this.dish);
+    // // console.log(this.dish);
+  }
+
+  onUpdateDishName(dishId) {
+    console.log(dishId);
+  }
+
+  onCloneDish(dish) {
+    this.service.cloneDish(dish);
   }
 
   getMargin(cost, retail) {
@@ -84,7 +151,7 @@ export class DishDetailsComponent implements OnInit {
   getIngredientsTotal() {
     const customerIngredients = this.service.loadLocalIngredientsData();
     const ingredientList = customerIngredients.ingredients;
-    console.log(ingredientList);
+    // console.log(ingredientList);
     let total = 0.0;
     this.ingredients.forEach((dishIngredient, index) => {
       const searchVar = 'sunflower kernels kg';
@@ -112,5 +179,9 @@ export class DishDetailsComponent implements OnInit {
     this.isLoading = true;
     this.service.deleteDish(id);
     // this.service.paginate(index, pageCount);
+  }
+
+  ngOnDestroy() {
+    // this.dishSub.unsubscribe();
   }
 }

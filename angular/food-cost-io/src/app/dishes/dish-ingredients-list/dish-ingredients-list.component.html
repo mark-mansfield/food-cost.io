@@ -1,34 +1,142 @@
 <main class="main">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <section class="section" *ngIf="!isLoading">
-    <div class="info-panel">
-      <i
-        class="far fa-arrow-alt-circle-left"
-        [routerLink]="['/dish/', this.id]"
-      ></i>
-      <div class="page-title-link">{{ dish.name }}</div>
-    </div>
-    <div class="info-panel">
-      <div><p class="inline-title">Ingredients</p></div>
-      <div class="click-icon">
-        <i
-          class="fa fa-plus"
-          [routerLink]="['/dish', this.id, 'ingredients', 'add']"
-          ><a href=""></a
-        ></i>
+  <section class="section">
+    <div class="toolbar">
+      <div class="back-button">
+        <a [routerLink]="['/dishes']"><i class="fas fa-chevron-left med-icon"></i></a>
+      </div>
+
+      <!-- <div class="cancel-edit-mode" [class.visible]="showEditTools" [class.hidden]="!showEditTools">
+                <a (click)="toggleEditMode()">cancel</a>
+              </div> -->
+      <div class="launch-edit-mode">
+        <a (click)="toggleEditMode()">{{ editModeButtonText }}</a>
       </div>
     </div>
-    <button class="button" *ngFor="let ingredient of ingredients">
-      <div>{{ ingredient.name.toLocaleLowerCase() }}</div>
-      <i
-        class="far fa fa-minus-circle white"
-        (click)="onDeleteDishIngredient(ingredient.name)"
-        aria-hidden="true"
-      ></i>
-      <i
-        class="far fa-arrow-alt-circle-right white"
-        [routerLink]="['/dish/', this.id, 'ingredient', ingredient.name]"
-      ></i>
-    </button>
+    <div class="page__title">
+      <div class="page__title-badge-icon">
+        <h1>{{ iconBadgeText }}</h1>
+      </div>
+      <div class="page__title-toolbar">
+        <div class="page__title-toolbar-label">
+          <h1>{{ dish.name }}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar" [class.visible]="!showEditTools" [class.hidden]="showEditTools">
+      <mat-toolbar>
+        <div class="item-title">Ingredients:</div>
+        <div>
+          <a aria-label="add an ingredient" [routerLink]="['/dish', this.id, 'ingredients', 'add']"
+            ><i class="fa fa-plus"></i
+          ></a>
+        </div>
+      </mat-toolbar>
+    </div>
+    <div class="spinner"><mat-spinner *ngIf="isLoading"></mat-spinner></div>
+    <div class="list">
+      <!-- handset -->
+      <mat-accordion *ngIf="(isHandset$ | async)">
+        <mat-expansion-panel class=" mat-elevation-z0 " *ngFor="let ingredient of ingredients">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ ingredient.name }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-card>
+            <div class="mat-card-list">
+              <mat-list>
+                <mat-list-item>
+                  <div class="list__item-name">qty:</div>
+                  <div class="list__item-value">{{ ingredient.qty }}</div></mat-list-item
+                >
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <div class="list__item-name">cost:</div>
+                  <div class="list__item-value">{{ ingredient.cost }}</div></mat-list-item
+                >
+                <mat-divider></mat-divider>
+                <mat-list-item
+                  ><div class="list__item-name">wastage:</div>
+                  <div class="list__item-value">{{ 100 - ingredient.EP_weight * (100 / 1) }} %</div></mat-list-item
+                >
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <div class="list__item-name">real cost:</div>
+                  <div class="list__item-value">{{ ingredient.real_cost }}</div></mat-list-item
+                >
+              </mat-list>
+            </div>
+          </mat-card>
+          <mat-action-row>
+            <button mat-button color="accent" [routerLink]="['/dish/', this.id, 'ingredient', ingredient.name]">
+              Edit
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <!-- not handset -->
+      <table *ngIf="!(isHandset$ | async)" mat-table [dataSource]="reviewTableData">
+        <!-- 1. ingredient name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- 2. ingredient quantity Column -->
+        <ng-container matColumnDef="qty">
+          <th mat-header-cell *matHeaderCellDef>quantity</th>
+          <td mat-cell *matCellDef="let element">{{ element.qty }}</td>
+        </ng-container>
+
+        <!-- 2. ingredient quantity Column -->
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef>cost</th>
+          <td mat-cell *matCellDef="let element">{{ element.qty }}</td>
+        </ng-container>
+
+        <!-- 3. ingredient wastage Column -->
+        <ng-container matColumnDef="wastage">
+          <th mat-header-cell *matHeaderCellDef>wastage</th>
+          <td mat-cell *matCellDef="let element">{{ 100 - element.EP_weight * (100 / 1) }} %</td>
+        </ng-container>
+
+        <!-- 4. ingredient real cost Column -->
+        <ng-container matColumnDef="real_cost">
+          <th mat-header-cell *matHeaderCellDef>real cost</th>
+          <td mat-cell *matCellDef="let element">{{ element.qty }}</td>
+        </ng-container>
+
+        <!-- 5. chevron  -->
+        <ng-container matColumnDef="chevron">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element"><i class="fas fa-chevron-right "></i></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="reviewDataDisplayedColumnDefs"></tr>
+        <tr
+          mat-row
+          matTooltip="Edit this ingredient"
+          [matTooltipPosition]="toolTipPosition"
+          aria-label="Click to edit this ingredient"
+          *matRowDef="let row; columns: reviewDataDisplayedColumnDefs"
+          [routerLink]="['/dish/', this.id, 'ingredient', row.name]"
+        ></tr>
+      </table>
+
+      <!--
+      <button class="button" *ngFor="let ingredient of ingredients">
+        <div>{{ ingredient.name.toLocaleLowerCase() }}</div>
+        <i
+          class="far fa fa-minus-circle white"
+          (click)="onDeleteDishIngredient(ingredient.name)"
+          aria-hidden="true"
+        ></i>
+        <i
+          class="far fa-arrow-alt-circle-right white"
+          [routerLink]="['/dish/', this.id, 'ingredient', ingredient.name]"
+        ></i>
+      </button>
+    --></div>
   </section>
 </main>

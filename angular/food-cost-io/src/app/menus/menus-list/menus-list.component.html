@@ -1,3 +1,98 @@
-<p>
-  menus-list works!
-</p>
+<main class="main>">
+  <section class="section">
+    <div class="toolbar">
+      <div class="toolbar__spacer"></div>
+      <div class="toolbar__title"><h1>Menus</h1></div>
+      <div class="toolbar__add-button">
+        <a [routerLink]="['/menus/create']" href=""><i class="material-icons  med-icon">add</i></a>
+      </div>
+    </div>
+    <div class="list" *ngIf="!isLoading">
+      <div *ngIf="menus.length === 0" class="list__item">
+        <h1>You have no menus currently</h1>
+        <h2>Create one</h2>
+        <div>
+          <a [routerLink]="['/menus/create']" href=""><i class="material-icons  med-icon">add</i></a>
+        </div>
+      </div>
+
+      <div class="list" *ngIf="menus.length > 0">
+        <div class="spinner"><mat-spinner *ngIf="isLoading"></mat-spinner></div>
+        <mat-list-item *ngFor="let item of menus; let i = index">
+          <div class="list__item" aria-label="the details of this menu">
+            <div class="item-title">
+              {{ item.menu_name }}
+              <div class="list__item-details">
+                <button class="item-tool">
+                  <i
+                    class="fa fa-minus-circle med-icon"
+                    style="left: -5px;"
+                    tabIndex="auto"
+                    (click)="onRemoveMenu(item.id)"
+                  ></i>
+                </button>
+                <button><i class="far fa-clone med-icon" tabIndex="auto" (click)="onCloneMenu(item)"></i></button>
+              </div>
+            </div>
+
+            <button class="list__item-action" aria-label="navigate to menu details" (click)="saveMenuToLocal(item)">
+              <i class="fas fa-chevron-right med-icon" aria-label="selected menu details"></i>
+            </button>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </div>
+      <!--
+        <mat-nav-list class="main__menu-list-tools" *ngIf="menus.length > 0">
+          <mat-list-item id="main__menu-list-tool-item" *ngFor="let item of menus">
+            <i class="fa fa-minus-circle med-icon" style="left: -5px;" tabIndex="auto" aria-hidden="true"></i>
+          </mat-list-item>
+        </mat-nav-list>
+        <mat-nav-list class="main__menu-list-tools" *ngIf="menus.length > 0">
+          <mat-list-item id="main__menu-list-tool-item" *ngFor="let item of menus">
+            <i class="far fa-clone med-icon" tabIndex="auto" aria-hidden="true" (click)="onCloneMenu(item)"></i>
+          </mat-list-item>
+        </mat-nav-list>
+      -->
+    </div>
+  </section>
+
+  <!--
+    <main class="main">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <section class="section" *ngIf="!isLoading">
+        <div *ngIf="menus.length === 0">
+          <h1>You have no menus currently</h1>
+          <h2>Create one</h2>
+          <div>
+            <a [routerLink]="['/menus/create']" href=""><i class="fa fa-plus"></i></a>
+          </div>
+        </div>
+
+        <div class="main__info-panel" *ngIf="menus.length > 0">
+          <div><p class="inline-title">Menus</p></div>
+          <div>
+            <a [routerLink]="['/menus/create']" href=""><i class="fa fa-plus"></i></a>
+          </div>
+        </div>
+        <div class="main__info-panel" *ngIf="menus.length > 0">
+          <mat-nav-list class="main__menu-list" *ngIf="menus.length > 0">
+            <mat-list-item *ngFor="let item of menus; let i = index" (click)="saveMenuToLocal(item)">
+              {{ item.menu_name }}
+            </mat-list-item>
+          </mat-nav-list>
+          <mat-nav-list class="main__menu-list-tools" *ngIf="menus.length > 0">
+            <mat-list-item id="main__menu-list-tool-item" *ngFor="let item of menus" (click)="onRemoveMenu(item.id)">
+              <i class="fa fa-minus-circle med-icon" style="left: -5px;" tabIndex="auto" aria-hidden="true"></i>
+            </mat-list-item>
+          </mat-nav-list>
+          <mat-nav-list class="main__menu-list-tools" *ngIf="menus.length > 0">
+            <mat-list-item id="main__menu-list-tool-item" *ngFor="let item of menus">
+              <i class="far fa-clone med-icon" tabIndex="auto" aria-hidden="true" (click)="onCloneMenu(item)"></i>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+      </section>
+    </main>
+  -->
+</main>

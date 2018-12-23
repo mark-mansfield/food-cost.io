@@ -35,6 +35,7 @@ export class IngredientsListComponent implements OnInit, OnDestroy {
     this.service.getIngredients();
     this.isLoading = true;
     this.ingredientsSub = this.service.getIngredientsUpdateListener().subscribe((data: Ingredient[]) => {
+      console.log(data);
       this.subscriptionActive = true;
       this.ingredients = data;
       this.categories = this.service.ingredientsDoc.categories;

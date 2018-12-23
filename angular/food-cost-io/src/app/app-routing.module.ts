@@ -6,9 +6,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
 
 const appRoutes: Routes = [
-  { path: 'home', component: HomepageComponent },
+  {
+    path: 'home',
+    component: HomepageComponent
+  },
+
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'dishes', loadChildren: './dishes/dishes.module#DishesModule' },
@@ -20,6 +25,10 @@ const appRoutes: Routes = [
     path: 'menus',
     loadChildren: './menus/menus.module#MenusModule'
   },
+  {
+    path: 'suppliers',
+    loadChildren: './suppliers/suppliers.module#SuppliersModule'
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 ];
@@ -29,7 +38,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: false
+        enableTracing: true
       } // <-- debugging purposes only
     ),
     CommonModule
